@@ -43,6 +43,16 @@ public class Storage{
 		}
 	}
 	
+	public void saveNumChips(String playername, int betValue) throws IOException{
+		loadPlayer(playername);
+		numChips += betValue;
+	}
+	
+	public int getNumChips(String playername) throws IOException{
+		loadPlayer(playername);
+		return numChips;
+	}
+	
 	public void saveWin(String playername) throws IOException {
 		loadPlayer(playername);
 		numWins++;
