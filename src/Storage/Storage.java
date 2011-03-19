@@ -74,7 +74,25 @@ public class Storage implements StorageInterface{
 					+ player.numLosses);
 			writer.write("\r\n");
 		}
+		database.clear();
 		writer.close();
+	}
+	
+	public void addNewPlayer(String inputPlayerName, String inputPassword) throws IOException {
+		loadDatabase();
+		for ( Storage player : database ) {
+			if (player.playerName.equals(inputPlayerName)) {
+				saveDatabase();
+				return;
+			}
+		}
+		Storage newPlayer = new Storage();
+		newPlayer.playerName = inputPlayerName;
+		newPlayer.password = inputPassword;
+		newPlayer.realName = "noName";
+		newPlayer.age = -1;
+		database.add(newPlayer);
+		saveDatabase();
 	}
 	
 	public void setPassword(String inputPlayerName, String inputPassword) throws IOException{
@@ -87,11 +105,11 @@ public class Storage implements StorageInterface{
 		saveDatabase();
 	}
 	
-	public void setPlayerName(String inputPlayerName, String inputNewPlayerName) throws IOException{
+	public void changePlayerName(String oldPlayerName, String newPlayerName) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
-				player.playerName = inputNewPlayerName;
+			if (player.playerName.equals(oldPlayerName)) {
+				player.playerName = newPlayerName;
 			}
 		}
 		saveDatabase();
@@ -196,23 +214,7 @@ public class Storage implements StorageInterface{
 		}
 		return -1;
 	}
-	/*
-	public void getStats(String inputPlayerName) throws IOException {
-		loadDatabase();
-		System.out.println(playerName + " scoreboard:");
-		if (!realName.equals("noName")) {
-			System.out.println("Real Name: " + realName);
-		}
-		if (age != -1) {
-			System.out.println("Age: " + age);
-		}
-		System.out.println("Current chip count: " + numChips);
-		System.out.println("Number of games won: " + numWins);
-		System.out.println("Number of games lost: " + numLosses);
-		System.out.println("Percentage games won: " + (double)100*numWins/(double)(numGames) + "%");
-	}
-	*/
-	
+
 	public boolean validatePassword(String inputPlayerName, String inputPassword) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
