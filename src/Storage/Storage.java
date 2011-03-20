@@ -32,11 +32,20 @@ public class Storage implements StorageInterface{
 	Storage() {
 	}
 	
-	// Constructor
+	Storage(String playerName, String password, String realName, int age) {
+		this.playerName = playerName;
+		this.password = password;
+		this.realName = realName;
+		this.age = age;
+	}
+	
+	Storage(String playerName, String password) {
+		this(playerName, password, "noName", -1);
+	}
+	
 	Storage(String line) {
 		String[] fields;
 		fields = line.split(",");
-		
 		this.playerName = fields[0];
 		this.password = fields[1];
 		this.realName = fields[2];
@@ -86,11 +95,7 @@ public class Storage implements StorageInterface{
 				return;
 			}
 		}
-		Storage newPlayer = new Storage();
-		newPlayer.playerName = inputPlayerName;
-		newPlayer.password = inputPassword;
-		newPlayer.realName = "noName";
-		newPlayer.age = -1;
+		Storage newPlayer = new Storage(inputPlayerName, inputPassword);
 		database.add(newPlayer);
 		saveDatabase();
 	}
