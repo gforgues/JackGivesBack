@@ -26,7 +26,7 @@ public class Storage implements StorageInterface{
 	private int numWins;
 	private int numLosses;
 	private int numGames;
-	private ArrayList<Storage> database = new ArrayList();
+	private static ArrayList<Storage> database = new ArrayList();
 
 	// Empty constructor
 	Storage() {
@@ -56,7 +56,7 @@ public class Storage implements StorageInterface{
 		this.numGames = numWins + numLosses;	
 	}
 	
-	private void loadDatabase() throws IOException {
+	private static void loadDatabase() throws IOException {
 		Storage storedPlayer;
 		Scanner reader = new Scanner(new File("database.csv"));
 		String line;
@@ -69,7 +69,7 @@ public class Storage implements StorageInterface{
 		reader.close();
 	}
 	
-	private void saveDatabase() throws IOException {
+	private static void saveDatabase() throws IOException {
 		FileWriter fstream = new FileWriter("database.csv");
 		BufferedWriter writer = new BufferedWriter(fstream);
 		
@@ -87,7 +87,7 @@ public class Storage implements StorageInterface{
 		writer.close();
 	}
 	
-	public void addNewPlayer(String inputPlayerName, String inputPassword) throws IOException {
+	public static void addNewPlayer(String inputPlayerName, String inputPassword) throws IOException {
 		loadDatabase();
 		for ( Storage player : database ) {
 			if (player.playerName.equals(inputPlayerName)) {
@@ -134,6 +134,7 @@ public class Storage implements StorageInterface{
 		loadDatabase();
 		for ( Storage player : database ) {
 			if (player.playerName.equals(this.playerName)) {
+				saveDatabase();
 				return player.realName;
 			}
 		}
@@ -154,9 +155,11 @@ public class Storage implements StorageInterface{
 		loadDatabase();
 		for ( Storage player : database ) {
 			if (player.playerName.equals(this.playerName)) {
+				saveDatabase();
 				return player.age;
 			}
 		}
+		saveDatabase();
 		return -1;
 	}
 	
@@ -174,9 +177,11 @@ public class Storage implements StorageInterface{
 		loadDatabase();
 		for ( Storage player : database ) {
 			if (player.playerName.equals(this.playerName)) {
+				saveDatabase();
 				return player.numChips++;
 			}
 		}
+		saveDatabase();
 		return -1;
 	}
 	
@@ -194,9 +199,11 @@ public class Storage implements StorageInterface{
 		loadDatabase();
 		for ( Storage player : database ) {
 			if (player.playerName.equals(this.playerName)) {
+				saveDatabase();
 				return player.numWins;
 			}
 		}
+		saveDatabase();
 		return -1;
 	}
 	
@@ -214,9 +221,11 @@ public class Storage implements StorageInterface{
 		loadDatabase();
 		for ( Storage player : database ) {
 			if (player.playerName.equals(this.playerName)) {
-				return player.numLosses++;
+				saveDatabase();
+				return player.numLosses;
 			}
 		}
+		saveDatabase();
 		return -1;
 	}
 
@@ -225,9 +234,11 @@ public class Storage implements StorageInterface{
 		for ( Storage player : database ) {
 			if (player.playerName.equals(this.playerName) &&
 				inputPassword.equals(player.password)) {
+				saveDatabase();
 				return true;
 			}
 		}
+		saveDatabase();
 		return false;
 	}	
 }
