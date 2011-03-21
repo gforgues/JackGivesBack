@@ -100,130 +100,130 @@ public class Storage implements StorageInterface{
 		saveDatabase();
 	}
 	
-	public void setPassword(String inputPlayerName, String inputPassword) throws IOException{
+	public void setPassword(String inputPassword) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.password = inputPassword;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public void changePlayerName(String oldPlayerName, String newPlayerName) throws IOException{
+	public void changePlayerName(String newPlayerName) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(oldPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.playerName = newPlayerName;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public void setRealName(String inputPlayerName, String inputRealName) throws IOException{
+	public void setRealName(String inputRealName) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.realName = inputRealName;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public String getRealName(String inputPlayerName) throws IOException{
+	public String getRealName() throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				return player.realName;
 			}
 		}
 		return "Player Not Found";
 	}
 	
-	public void setAge(String inputPlayerName, int inputAge) throws IOException{
+	public void setAge(int inputAge) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.age = inputAge;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public int getAge(String inputPlayerName) throws IOException{
+	public int getAge() throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				return player.age;
 			}
 		}
 		return -1;
 	}
 	
-	public void setNumChips(String inputPlayerName, int betValue) throws IOException{
+	public void setNumChips(int betValue) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.numChips += betValue;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public int getNumChips(String inputPlayerName) throws IOException{
+	public int getNumChips() throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				return player.numChips++;
 			}
 		}
 		return -1;
 	}
 	
-	public void setWin(String inputPlayerName) throws IOException {
+	public void setWin() throws IOException {
 		loadDatabase();		
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.numWins++;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public int getNumWins(String inputPlayerName) throws IOException {
+	public int getNumWins() throws IOException {
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
-				return player.numWins++;
+			if (player.playerName.equals(this.playerName)) {
+				return player.numWins;
 			}
 		}
 		return -1;
 	}
 	
-	public void setLoss(String inputPlayerName) throws IOException {
+	public void setLoss() throws IOException {
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				player.numLosses++;
 			}
 		}
 		saveDatabase();
 	}
 	
-	public int getNumLosses(String inputPlayerName) throws IOException {
+	public int getNumLosses() throws IOException {
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (player.playerName.equals(inputPlayerName)) {
+			if (player.playerName.equals(this.playerName)) {
 				return player.numLosses++;
 			}
 		}
 		return -1;
 	}
 
-	public boolean validatePassword(String inputPlayerName, String inputPassword) throws IOException{
+	public boolean validatePassword(String inputPassword) throws IOException{
 		loadDatabase();
 		for ( Storage player : database ) {
-			if (inputPlayerName.equals(player.playerName) &&
+			if (player.playerName.equals(this.playerName) &&
 				inputPassword.equals(player.password)) {
 				return true;
 			}
