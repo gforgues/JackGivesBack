@@ -6,13 +6,11 @@ import cards.Card;
  * Convenience constants for all cards in the deck.
  */
 public final class AllCards {
-	/**
-	 * Ace of Clubs.
-	 */
+	
 	public static final Card CAC
 		= new Card(Card.Rank.ACE, Card.Suit.CLUBS);
 	/**
-	 * Ace of Clubs. It is built by instructor, may be has some uses later.
+	 * Ace of Clubs.
 	 */
 	public static final Card CAC2
 		= new Card(Card.Rank.ACE, Card.Suit.CLUBS);
