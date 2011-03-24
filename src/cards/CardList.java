@@ -1,5 +1,6 @@
 package cards;
 
+import cards.Card.Rank;
 import cards.Card.Suit;
 import java.util.Collections;
 import java.util.Iterator;
@@ -210,7 +211,7 @@ public class CardList implements Cloneable, Iterable<Card> {
 	 * @param pSuit The suit to match.
 	 * @return A copy of the hand with only the cards matching the suit.
 	 */
-	public CardList getCardsOf(Suit pSuit) {
+	public CardList getCardsOfSuit(Suit pSuit) {
 		CardList fSuitList = new CardList(fMaxLength);
 		for (Card c : fCList) {
 			if (c.getSuit().equals(pSuit)) {
@@ -226,7 +227,7 @@ public class CardList implements Cloneable, Iterable<Card> {
 	 * @param pSuit The suit to avoid.
 	 * @return A copy of the hand with only the cards not matching the suit.
 	 */
-	public CardList getCardsNotOf(Suit pSuit) {
+	public CardList getCardsNotOfSuit(Suit pSuit) {
 		CardList fSuitList = new CardList(fMaxLength);
 		for (Card c : fCList) {
 			if (!c.getSuit().equals(pSuit)) {
@@ -234,6 +235,37 @@ public class CardList implements Cloneable, Iterable<Card> {
 			}
 		}
 		return fSuitList;
+	}
+	
+	/**
+	 * Returns all the cards in the hand that match a particular rank.
+	 * @param pRank The rank to match.
+	 * @return A copy of the hand with only the cards matching the rank.
+	 */
+	public CardList getCardsOfRank(Rank pRank) {
+		CardList fRankList = new CardList(fMaxLength);
+		for (Card c : fCList) {
+			if (c.getRank() == (pRank)) {
+				fRankList.add(c);
+			}
+		}
+		return fRankList;
+	}
+
+	/**
+	 * Returns all the cards in the hand that
+	 * do not match a particular rank.
+	 * @param pRank The rank to avoid.
+	 * @return A copy of the hand with only the cards not matching the rank.
+	 */
+	public CardList getCardsNotOfRank(Rank pRank) {
+		CardList fRankList = new CardList(fMaxLength);
+		for (Card c : fCList) {
+			if (c.getRank() != (pRank)) {
+				fRankList.add(c);
+			}
+		}
+		return fRankList;
 	}
 	
 	/**
