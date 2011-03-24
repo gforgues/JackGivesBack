@@ -36,8 +36,7 @@ public class Blackjack {
     }
 
     public void doubleDown(){
-    		testing;
-
+    		
     }
 
     public void split(){
@@ -54,7 +53,7 @@ public class Blackjack {
     public int getPoints(CardList hand){
         int points;
         
-        return 5;
+        return 55;
     }
 
     public void checkBust(CardList hand){
