@@ -1,4 +1,4 @@
-package Storage;
+package storage;
 
 import java.io.*;
 import java.util.Scanner;
@@ -12,37 +12,54 @@ import java.util.Scanner;
  * @author Gabriel
  */
 
-public class Storage implements StorageInterface {
+public class Storage {
 	private String playerName;
 	private String password;
 	private String realName;
 	private int age;
 	private int numChips;
-	private int numWins;
-	private int numLosses;
-	private int numGames;
+	private int totalMoneyWon;
+	private int gamesWonStreak;
+	private int biggestGamesWonStreak;
+	private int chipsWonStreak;
+	private int biggestChipsWonStreak;
+	private int gamesLostStreak;
+	private int biggestGamesLostStreak;
+	private int chipsLostStreak;
+	private int biggestChipsLostStreak;
 
 	// Constructors
 	Storage(String playerName, String password) {
-		this(playerName, password, "noName", -1, 0, 0, 0);
+		this(playerName, password, "noName", -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	}	
 	Storage(String playerName, String password, String realName, int age) {
-		this(playerName, password, realName, age, 0, 0, 0);
+		this(playerName, password, realName, age, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0 ,0);
 	}
-	Storage(String playerName, String password, String realName,
-			int age, int numChips, int numWins, int numLosses) {
+	Storage(String playerName, String password,
+			String realName, int age, int numChips, int totalMoneyWon,
+			int gamesWonStreak, int biggestGamesWonStreak,
+			int chipsWonStreak, int biggestChipsWonStreak,
+			int gamesLostStreak, int biggestGamesLostStreak,
+			int chipsLostStreak, int biggestChipsLostStreak){
 		this.playerName = playerName;
 		this.password = password;
 		this.realName = realName;
 		this.age = age;
 		this.numChips = numChips;
-		this.numWins = numWins;
-		this.numLosses = numLosses;
-		this.numGames = numWins + numLosses;	
+		this.totalMoneyWon = totalMoneyWon;
+		this.gamesWonStreak = gamesWonStreak;
+		this.biggestGamesWonStreak = biggestGamesWonStreak;
+		this.chipsWonStreak = chipsWonStreak;
+		this.biggestChipsWonStreak = biggestChipsWonStreak;
+		this.gamesLostStreak = gamesLostStreak;
+		this.biggestGamesLostStreak = biggestGamesLostStreak;
+		this.chipsLostStreak = chipsLostStreak;
+		this.biggestChipsLostStreak = biggestChipsLostStreak;
+
 	}
 	
 	/**
-	 * Creates a new profile file the input playerName is not already taken
+	 * Creates a new profile file if the input playerName is not already taken
 	 * @param playerName
 	 * @param password
 	 */
@@ -65,20 +82,37 @@ public class Storage implements StorageInterface {
 	public static Storage loadPlayer(String inputName, String inputPassword) {
 		try {
 			 Scanner reader = new Scanner(new File("profiles/" + inputName + ".csv"));
+			 
+			 // Split line from file into different fields
 			 String[] parsedLine;
 			 parsedLine = reader.nextLine().split(",");
-			 reader.close();
 			 
-			 // Store information from the parsed line
+			 // load variables from the parsed line
 			 String password = parsedLine[0];
 			 String realName = parsedLine[1];
 			 int age = Integer.parseInt(parsedLine[2]);
 			 int numChips = Integer.parseInt(parsedLine[3]);
-			 int numWins = Integer.parseInt(parsedLine[4]);
-			 int numLosses = Integer.parseInt(parsedLine[5]);
-			 Storage storedPlayer = new Storage(inputName, password, realName,
-					 age, numChips, numWins, numLosses);
+			 int totalMoneyWon = Integer.parseInt(parsedLine[4]);
+			 int gamesWonStreak = Integer.parseInt(parsedLine[5]);
+			 int biggestGamesWonStreak = Integer.parseInt(parsedLine[6]);
+			 int chipsWonStreak = Integer.parseInt(parsedLine[7]);
+			 int biggestChipsWonStreak = Integer.parseInt(parsedLine[8]);
+			 int gamesLostStreak = Integer.parseInt(parsedLine[9]);
+			 int biggestGamesLostStreak = Integer.parseInt(parsedLine[10]);
+			 int chipsLostStreak = Integer.parseInt(parsedLine[11]);
+			 int biggestChipsLostStreak = Integer.parseInt(parsedLine[12]);
 			 
+			 // Instantiate player with the loaded variables
+			 Storage storedPlayer = new Storage(inputName, password,
+					 							realName, age,
+					 							numChips, totalMoneyWon,
+					 							gamesWonStreak,	biggestGamesWonStreak,
+					 							chipsWonStreak,	biggestChipsWonStreak,
+					 							gamesLostStreak, biggestGamesLostStreak,
+					 							chipsLostStreak, biggestChipsLostStreak);
+			 
+			reader.close();
+
 			 if (storedPlayer.validatePassword(inputPassword)) {
 				 return storedPlayer;
 			 } else {
@@ -93,19 +127,20 @@ public class Storage implements StorageInterface {
 	
 	/**
 	 * Writes a Storage object's information back to the profile file
-	 * @return true if it saved succesfully, false otherwise
+	 * @return true if it saved successfully, false otherwise
 	 */
 	public boolean savePlayer() {
 		try {
-			FileWriter fstream = new FileWriter("profiles/" + this.playerName + ".csv");
+			FileWriter fstream = new FileWriter("profiles/" + playerName + ".csv");
 			BufferedWriter writer = new BufferedWriter(fstream);
 
-			writer.write(this.password + ","
-					+ this.realName + ","
-					+ this.age + ","
-					+ this.numChips + ","
-					+ this.numWins + ","
-					+ this.numLosses);
+			writer.write(password + ","	+ realName + ","+ age + ","
+					+ numChips + "," + totalMoneyWon + ","
+					+ gamesWonStreak + "," + biggestGamesWonStreak + ","
+					+ chipsWonStreak + "," + biggestChipsWonStreak + ","
+					+ gamesLostStreak + ","	+ biggestGamesLostStreak + ","
+					+ chipsLostStreak + ","	+ biggestChipsLostStreak);
+			
 			writer.close();
 			return true;
 		} catch (IOException e) {
@@ -132,38 +167,66 @@ public class Storage implements StorageInterface {
 		this.realName = realName;
 	}
 	public String getRealName() {
-		return this.realName;
+		return realName;
 	}
 	public void setAge(int age) {
 		this.age = age;
 	}
 	public int getAge() {
-		return this.age;
+		return age;
 	}
-	public void addChips(int betValue) {
-		if (this.numChips + betValue > 0) {
-			this.numChips += betValue;
-		}
-		else {
-			this.numChips = 0;
-		}
+	public void setChips(int numChips) {
+		this.numChips = numChips;
 	}
 	public int getChips() {
-		return this.numChips;
+		return numChips;
 	}
-	public void addWin() {
-		this.numWins++;
+	
+	public int getGamesWonStreak() {
+		return gamesWonStreak;
 	}
-	public int getNumWins() {
-		return this.numWins;
+	
+	public int getBiggestGamesWonStreak() {
+		return biggestGamesWonStreak;
 	}
-	public void addLoss() {
-		this.numLosses++;
+	public int getBiggestChipsWonStreak() {
+		return biggestChipsWonStreak;
 	}
-	public int getNumLosses() {
-		return this.numLosses;
+	public void addWin(int betValue) {
+		numChips += betValue;
+		totalMoneyWon++;
+		gamesWonStreak++;
+		chipsWonStreak += betValue;
+		if (gamesWonStreak > biggestGamesWonStreak){
+			biggestGamesWonStreak = gamesWonStreak;
+		}
+		if (chipsWonStreak > biggestChipsWonStreak) {
+			biggestChipsWonStreak = chipsWonStreak;
+		}
+		gamesLostStreak = 0;
+		chipsLostStreak = 0;
 	}
-	public int getNumGames() {
-		return this.numGames;
+	
+	public void addLoss(int betValue) {
+		numChips -= betValue;
+		gamesLostStreak++;
+		chipsLostStreak += betValue;
+		if (gamesLostStreak > biggestGamesLostStreak){
+			biggestGamesLostStreak = gamesLostStreak;
+		}
+		if (chipsLostStreak > biggestChipsLostStreak) {
+			biggestChipsLostStreak = chipsLostStreak;
+		}
+		gamesWonStreak = 0;
+		chipsWonStreak = 0;
+	}
+	
+	
+	public int getGamesLostStreak() {
+		return gamesLostStreak;
+	}
+	
+	public int getBiggestGamesLostStreak() {
+		return biggestGamesLostStreak;
 	}
 }

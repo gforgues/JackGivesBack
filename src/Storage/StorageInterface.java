@@ -1,4 +1,4 @@
-package Storage;
+package storage;
 
 public interface StorageInterface {
 	
