@@ -1,4 +1,4 @@
-package Storage;
+package storage;
 import junit.framework.*;
 
 public class TestStorage extends TestCase{
@@ -8,21 +8,18 @@ public class TestStorage extends TestCase{
 	public void testAddNewPlayer() {
 		Storage.addNewPlayer("Jack","Black");
 		Storage Jack = Storage.loadPlayer("Jack","Black");
-		
-		int current = Jack.getNumWins();
-		Jack.addWin();
-		Jack.addWin();
-		Jack.savePlayer();
-		
-		assertEquals(Jack.getNumWins(), current + 2);
+
+		Jack.addWin(5);
+		Jack.addWin(5);
+
+		assertEquals(Jack.savePlayer(), true);
 	}
 	
 	public void testSavePlayer() {
 		Storage.addNewPlayer("abc","123");
 		Storage abc = Storage.loadPlayer("abc","123");
 		
-		abc.addChips(-5); //reset chips to 0
-		abc.addChips(5);
+		abc.setChips(5);
 		abc.savePlayer();
 		abc = Storage.loadPlayer("abc","123");
 		actualValue = abc.getChips();
@@ -41,15 +38,29 @@ public class TestStorage extends TestCase{
 		assertEquals(invalidPassword, false);
 	}
 	
-	public void testSetWin() {
+	public void testAddWin() {
 		Storage Jack = Storage.loadPlayer("Jack", "Black");
-		expectedValue = Jack.getNumWins() + 1;
-		Jack.addWin();
-		actualValue = Jack.getNumWins();
+		expectedValue = Jack.getGamesWonStreak() + 1;
+		Jack.addWin(5);
+		actualValue = Jack.getGamesWonStreak();
 		
 		assertEquals(expectedValue, actualValue);
 	}
 	
+	public void testWinStreak() {
+		Storage.addNewPlayer("Bill","Black");
+		Storage Bill = Storage.loadPlayer("Bill", "Black");
+		
+		Bill.addLoss(5);
+		Bill.addWin(5);
+		Bill.addWin(5);
+		Bill.addWin(5);
+		expectedValue = 3;
+		actualValue = Bill.getBiggestGamesWonStreak();
+		
+		assertEquals(expectedValue, actualValue);
+		Bill.savePlayer();
+	}
 	public void testChangePassword() {
 		Storage Jack = Storage.loadPlayer("Jack", "Black");
 		
