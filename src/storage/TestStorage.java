@@ -6,17 +6,14 @@ public class TestStorage extends TestCase{
 	private int actualValue;
 	
 	public void testAddNewPlayer() {
-		Storage.addNewPlayer("Jack","Black");
+		Storage.loadPlayer("Jack","Black");
 		Storage Jack = Storage.loadPlayer("Jack","Black");
-
-		Jack.addWin(5);
-		Jack.addWin(5);
 
 		assertEquals(Jack.savePlayer(), true);
 	}
 	
 	public void testSavePlayer() {
-		Storage.addNewPlayer("abc","123");
+		Storage.loadPlayer("abc","123");
 		Storage abc = Storage.loadPlayer("abc","123");
 		
 		abc.setChips(5);
@@ -40,15 +37,16 @@ public class TestStorage extends TestCase{
 	
 	public void testAddWin() {
 		Storage Jack = Storage.loadPlayer("Jack", "Black");
-		expectedValue = Jack.getGamesWonStreak() + 1;
+		expectedValue = 1;
 		Jack.addWin(5);
-		actualValue = Jack.getGamesWonStreak();
+		actualValue = Jack.getMaxWinStreak();
 		
 		assertEquals(expectedValue, actualValue);
+		Jack.savePlayer();
 	}
 	
 	public void testWinStreak() {
-		Storage.addNewPlayer("Bill","Black");
+		Storage.loadPlayer("Bill","Black");
 		Storage Bill = Storage.loadPlayer("Bill", "Black");
 		
 		Bill.addLoss(5);
@@ -56,7 +54,7 @@ public class TestStorage extends TestCase{
 		Bill.addWin(5);
 		Bill.addWin(5);
 		expectedValue = 3;
-		actualValue = Bill.getBiggestGamesWonStreak();
+		actualValue = Bill.getMaxWinStreak();
 		
 		assertEquals(expectedValue, actualValue);
 		Bill.savePlayer();
@@ -71,5 +69,10 @@ public class TestStorage extends TestCase{
 		
 		boolean invalidPassword = Jack.validatePassword("Black");
 		assertEquals(invalidPassword, false);
+	}
+	public void testHallOfFame() {
+		for (Storage player : HallOfFame.getHallOfFame()) {
+			System.out.println(player.getUsername() + ": " + player.getTotalChipsWon());
+		}
 	}
 }
