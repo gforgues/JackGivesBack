@@ -153,6 +153,31 @@ public final class Card
 	{
 		return fRank + " of " + fSuit;
 	}
+	
+	/**
+	 * Converts saved String rank and String suit to a Card object
+	 * @param pRank The String representation of the rank
+	 * @param pSuit The String representation of the suit
+	 * @return A Card object from a given String rank and suit.
+	 */
+	public Card fromString(String pRank, String pSuit)
+	{
+		Rank lRank = null;
+		Suit lSuit = null;
+		for (Suit suits : Suit.values()) {
+			if (suits.toString().equals(pSuit)) {
+				lSuit = suits;
+				for (Rank ranks : Rank.values()) {
+					if (ranks.toString().equals(pRank)) {
+						lRank = ranks;
+						break;
+					}
+				}
+				break;
+			}
+		}
+		return new Card(lRank,lSuit);
+	}
 
 	/** 
 	 * The hashcode for a card is the suit*13 + that of the rank (perfect hash).
