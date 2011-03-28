@@ -5,6 +5,10 @@ import java.util.HashMap;
 
 import cards.*;
 import cards.Card.Rank;
+import participant.Player;
+import cards.Hand;
+import Storage.Storage;
+
 
 	/**
 	 *
@@ -82,7 +86,7 @@ import cards.Card.Rank;
 	    	 * Check if player's hand state is done or not
 	    	 */
 	    	if ( player.done == false )
-	    		player.getHand.add(gameDeck.draw());
+	    		hand.addCard(gameDeck.draw());
 	    }
 	    
 		/**
@@ -90,11 +94,12 @@ import cards.Card.Rank;
 		 * @param
 		 * @return
 		 */
-	    public void stand(Player player) {
+	    public ArrayList<Card>  stand(Player player) {
 	    	/*
 	    	 * Set player's hand state to be done
 	    	 */
-	    	player.done = true;
+	    	
+	    	return player.getHand();
 	    }
 
 		/**
@@ -103,7 +108,7 @@ import cards.Card.Rank;
 		 * @return
 		 */
 	    public boolean sufficientChips(Player player, int amount) {
-	    	if ( player.chips < amount ) {
+	    	if ( player.getChip() < amount ) {
 	    		return false;
 	    	}
 	    	return true;
@@ -139,15 +144,14 @@ import cards.Card.Rank;
 	    	 * Check deck status
 	    	 */
 	    	checkDeck();
-	    }
-
-		/**
-		 *
-		 * @param
-		 * @return
-		 */
-	    public void dealerDoes() {
-
+	    	
+	    	Card firstCard = hand.removeCard(0);
+	    	Card secondCard = hand.removeCard(1);
+	    	Hand newHand;
+	    	hand.clearHand();
+	    	hand.addCard(firstCard);
+	    	newHand.addCard(secondCard);
+	    	
 	    }
 
 		/**
@@ -158,7 +162,7 @@ import cards.Card.Rank;
 	    public void bet(Player player, int amount) {
 	    	if ( sufficientChips(player,amount) ) {
 	    		chipCount += amount;
-	    		player.chips -= amount;
+	    		player.getChips() -= amount;
 	    	}
 	    }
 	    
@@ -221,10 +225,7 @@ import cards.Card.Rank;
 		 * @param
 		 * @return
 		 */
-	    public void checkWin(CardList hand) {
 
-	    }
-	    
 	    
 	    /**
 	     * Deal exactly 2 cards for the first initial deal to a player
@@ -250,5 +251,9 @@ import cards.Card.Rank;
 		 * Field to store winner
 		 */
 		private Player winner;
+		/**
+		 * Field to store the hand
+		 */
+		private Hand hand;
 		
 	}
