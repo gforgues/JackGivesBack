@@ -4,12 +4,14 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * Reads and writes to a player's profile to store game statistics
- * 
- *  realName is an optional attribute and has default value "noName"
- *  age is an optional attribute and has default value -1
+ * Reads and writes to a player's profile to store game statistics <br>
+ * File format: <br>
+ * file name: username.csv <br>
+ * password, realName, age, numChips, totalChipsWon, maxWinStreak, maxChipsWinStreak, maxLossStreak, maxChipsLossStreak <br>
+ * <br>
+ *  realName is an optional attribute and has default value "noName" <br>
+ *  age is an optional attribute and has default value -1 <br>
  *  
- * @author Gabriel
  */
 
 public class Storage {
@@ -59,20 +61,25 @@ public class Storage {
 	 * @param username
 	 * @param password
 	 */
-	private static void addNewPlayer(String username, String password) {
+	private static boolean addNewPlayer(String username, String password) {
 		File fileName = new File("profiles/" + username + ".csv");
 		if (fileName.isFile()) {
 			System.out.println("Player already exists.");
+			return false;
+		} else if (username.contains(",")) {
+			System.out.println("Invalid username: contains a comma.");
+			return false;
 		} else {
 			Storage newPlayer = new Storage(username,password);
 			newPlayer.savePlayer();
+			return true;
 		}
 	}
 	
 	/**
 	 * Loads a player's profile if its name and password are valid
-	 * @param inputName
-	 * @param inputPassword
+	 * @param inputName - String of the user's name
+	 * @param inputPassword - String of the user's password
 	 * @return a Storage object containing a player's statistics
 	 */
 	public static Storage loadPlayer(String inputName, String inputPassword) {
@@ -111,8 +118,13 @@ public class Storage {
 				 return null;
 			 }
 		} catch (FileNotFoundException e){
-			addNewPlayer(inputName, inputPassword);
-			return loadPlayer(inputName, inputPassword);
+			boolean playerAddSuccess = addNewPlayer(inputName, inputPassword);
+			if (playerAddSuccess) {
+				return loadPlayer(inputName, inputPassword);
+			} else {
+				System.out.println("Could not add player.");
+				return null;
+			}
 		}
 	}
 	
@@ -139,7 +151,7 @@ public class Storage {
 	
 	/**
 	 * Checks if the input password matches the player's profile password
-	 * @param inputPassword
+	 * @param inputPassword - String of the user's password
 	 * @return true if the password is valid, false otherwise
 	 */
 	public boolean validatePassword(String inputPassword){
@@ -147,36 +159,72 @@ public class Storage {
 			return true;
 		}
 		return false;
-	}	
+	}
+	/**
+	 * Sets a new password to replace a stored player's old password
+	 * @param password - String of the password entered by user
+	 */
 	public void changePassword(String password) {
 		this.password = password;
 	}
+	/**
+	 * Retrieves a stored player's username
+	 * @return String of the player's username
+	 */
 	public String getUsername() {
 		return username;
 	}
+	/**
+	 * Sets a stored player's real name
+	 * @return
+	 */
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
+	/**
+	 * Retrieves a stored player's real name
+	 * @return String of the user's real name
+	 */
 	public String getRealName() {
 		return realName;
 	}
+	/**
+	 * Sets a stored player's age
+	 * @param age - Integer of the player's age
+	 */
 	public void setAge(int age) {
 		this.age = age;
 	}
+	/**
+	 * Retrieves a stored player's age
+	 * @return An integer of the player's age
+	 */
 	public int getAge() {
 		return age;
 	}
+	/**
+	 * Sets a stored player's current chip count
+	 * @param numChips - Integer of the new value to set as current chip count
+	 */
 	public void setChips(int numChips) {
 		this.numChips = numChips;
 	}
+	/**
+	 * Retrieves a stored player's current chip count
+	 * @return An integer of the player's current chip count
+	 */
 	public int getChips() {
 		return numChips;
 	}
+	/**
+	 * Retrieves a stored player's total cumulative chips won
+	 * @return An integer of a player's cumulative chip wins
+	 */
 	public int getTotalChipsWon() {
 		return totalChipsWon;
 	}
 	/**
-	 * Adds a win to a player's statistics
+	 * Adds a win to a player's statistics. Increments win streaks and breaks a loss streak.
 	 * @param betValue - Value of the player's bet that gets added to a player's chips
 	 */
 	public void addWin(int betValue) {
@@ -197,7 +245,7 @@ public class Storage {
 	}
 	
 	/**
-	 * Adds a loss to a player's statistics
+	 * Adds a loss to a player's statistics. Increments a loss streak and breaks a win streak.
 	 * @param betValue - Value of the player's bet that gets removed from a player's chips
 	 */
 	public void addLoss(int betValue) {
@@ -215,17 +263,31 @@ public class Storage {
 		winStreak = 0;
 		chipsWinStreak = 0;
 	}
-	
+	/**
+	 * Retrieves a player's max win streak
+	 * @return An integer of a player's max win streak
+	 */
 	public int getMaxWinStreak() {
 		return maxWinStreak;
 	}
+	/**
+	 * Retrieves a player's max chip win streak
+	 * @return An integer of a player's max chip win streak
+	 */
 	public int getMaxChipsWinStreak() {
 		return maxChipsWinStreak;
 	}
-
+	/**
+	 * Retrieves a player's max loss streak
+	 * @return An integer of a player's max loss streak
+	 */
 	public int getMaxLossStreak() {
 		return maxLossStreak;
 	}
+	/**
+	 * Retrieves a player's max chip loss streak
+	 * @return An integer of a player's max chip loss streak
+	 */
 	public int getMaxChipsLossStreak() {
 		return maxChipsLossStreak;
 	}

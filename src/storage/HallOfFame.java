@@ -8,7 +8,7 @@ public class HallOfFame {
 	/**
 	 * Finds the lowest scoring player among the top five
 	 * @param topFive - An ArrayList<Storage> which contains the top five players
-	 * @return
+	 * @return A Storage object of the lowest player currently in the top five
 	 */
 	private static Storage findLowestPlayer(ArrayList<Storage> topFive) {
 		Storage lowestPlayer = topFive.get(0);
@@ -27,7 +27,7 @@ public class HallOfFame {
 	 * a better score than the lowest player in the top five, replaces this lowest player.
 	 * @param playerToAdd - A Storage object to compare with the top five
 	 * @param topFive - An ArrayList<Storage> which contains the top five players
-	 * @return
+	 * @return An ArrayList<Storage> of the updated list of top five players
 	 */
 	private static ArrayList<Storage> compareWithTopFive(Storage playerToAdd, ArrayList<Storage> topFive) {
 		if (topFive.size() < 5) {
