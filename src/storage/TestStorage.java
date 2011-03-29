@@ -6,14 +6,12 @@ public class TestStorage extends TestCase{
 	private int actualValue;
 	
 	public void testAddNewPlayer() {
-		Storage.loadPlayer("Jack","Black");
 		Storage Jack = Storage.loadPlayer("Jack","Black");
 
 		assertEquals(Jack.savePlayer(), true);
 	}
 	
 	public void testSavePlayer() {
-		Storage.loadPlayer("abc","123");
 		Storage abc = Storage.loadPlayer("abc","123");
 		
 		abc.setChips(5);
@@ -35,6 +33,17 @@ public class TestStorage extends TestCase{
 		assertEquals(invalidPassword, false);
 	}
 	
+	public void testChipCounts() {
+		Storage chipWinner = Storage.loadPlayer("chipWinner", "abc");
+		
+		expectedValue = chipWinner.getChips() + 1000;
+		chipWinner.addWin(500);
+		chipWinner.addWin(500);
+		actualValue = chipWinner.getChips();
+		assertEquals(expectedValue, actualValue);
+		chipWinner.savePlayer();
+		
+	}
 	public void testAddWin() {
 		Storage Jack = Storage.loadPlayer("Jack", "Black");
 		expectedValue = 1;
@@ -46,7 +55,6 @@ public class TestStorage extends TestCase{
 	}
 	
 	public void testWinStreak() {
-		Storage.loadPlayer("Bill","Black");
 		Storage Bill = Storage.loadPlayer("Bill", "Black");
 		
 		Bill.addLoss(5);
@@ -58,6 +66,20 @@ public class TestStorage extends TestCase{
 		
 		assertEquals(expectedValue, actualValue);
 		Bill.savePlayer();
+	}
+	public void testLossStreak() {
+		Storage Jack = Storage.loadPlayer("Jack","Black");
+
+		Jack.addWin(5);
+		Jack.addLoss(10);
+		Jack.addLoss(10);
+		Jack.addLoss(10);
+		expectedValue = 3;
+		actualValue = Jack.getMaxLossStreak();
+		
+		assertEquals(expectedValue, actualValue);
+		Jack.savePlayer();
+		
 	}
 	public void testChangePassword() {
 		Storage Jack = Storage.loadPlayer("Jack", "Black");
