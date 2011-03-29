@@ -2,7 +2,7 @@ package cards;
 
 import java.util.ArrayList;
 
-public class Hand {
+public class Hand implements Cloneable {
 	ArrayList<Card> hand;
 	
 	public Hand() {
@@ -32,4 +32,29 @@ public class Hand {
 	public int getNumberCards() {
 		return hand.size();
 	}
+	
+	/**
+	 * Adds all the cards in hand to this list.
+	 * @param pHand The list of cards to add.
+	 */
+	public void addAll(Hand pHand) {
+		for (Card c : pHand.hand) {
+			pHand.addCard(c);
+		}
+	}
+	
+	/**
+	 * Clone the hand into a new hand.
+	 * @return Cloned hand from the original one.
+	 */
+	@Override
+	public Hand clone() {
+		Hand fClonedHand = new Hand();
+		fClonedHand.addAll(this);
+		/*
+		 *  Instantiate a copy for now.
+		 */
+		return fClonedHand;
+	}
+	
 }
