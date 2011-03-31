@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Hand implements Cloneable {
 	ArrayList<Card> hand;
+	boolean playable = true;
 	
 	public Hand() {
 		hand = new ArrayList<Card>();
@@ -31,6 +32,21 @@ public class Hand implements Cloneable {
 	
 	public int getNumberCards() {
 		return hand.size();
+	}
+	
+	/**
+	 * Sets the Hand's playable to be false once Stand has been played
+	 */
+	public void setDone() {
+		playable = false;
+	}
+	
+	/**
+	 * Checks whether Stand has been played on Hand 
+	 * @return playable True if Stand has not been played, false if it has
+	 */
+	public boolean isPlayable() {
+		return playable;
 	}
 	
 	/**
