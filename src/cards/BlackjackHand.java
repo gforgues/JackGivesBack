@@ -6,6 +6,9 @@ import cards.Card.Suit;
 
 public class BlackjackHand extends Hand {
 	
+	/*
+	 * Field to keep track state of BlackjackHand
+	 */
 	boolean playable = true;
 	/**
 	 * Get Hand total value
@@ -166,6 +169,30 @@ public class BlackjackHand extends Hand {
 		return fRankList;
 	}
 	
+	/**
+	 * Checks to see if a given BlackjackHand contains a Blackjack
+	 * @param 
+	 * @return True if Blackjack, false otherwise
+	 */
+    public boolean checkBlackjack() {
+    	/*
+    	 * Check hand size exactly 2
+    	 */
+    	if ( getNumberCards() == 2 ) {
+    		/*
+    		 * Check if 1 ace present
+    		 */
+    		if ( getCardsOfRank(Rank.ACE).getNumberCards() == 1 ) {
+    			/*
+    			 * Check if 1 ten,jack,queen,king present
+    			 */
+    			if ( getCardsOfRank(Rank.TEN).getNumberCards() == 1 || getCardsOfRank(Rank.JACK).getNumberCards() == 1 ||
+    					getCardsOfRank(Rank.QUEEN).getNumberCards() == 1 || getCardsOfRank(Rank.KING).getNumberCards() == 1 )
+    			return true;
+    		}
+    	} 
+    	return false;
+    }
 	
 	
 }
