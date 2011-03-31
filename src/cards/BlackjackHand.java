@@ -2,6 +2,7 @@ package cards;
 
 import participant.Player;
 import cards.Card.Rank;
+import cards.Card.Suit;
 
 public class BlackjackHand extends Hand {
 	
@@ -103,4 +104,68 @@ public class BlackjackHand extends Hand {
 		return playable;
 	}
    
+	/**
+	 * Returns all the cards in the hand that match a particular suit.
+	 * @param pSuit The suit to match.
+	 * @return A copy of the hand with only the cards matching the suit.
+	 */
+	public Hand getCardsOfSuit(Suit pSuit) {
+		Hand fSuitList = new Hand();
+		for (Card c : hand) {
+			if (c.getSuit().equals(pSuit)) {
+				fSuitList.addCard(c);
+			}
+		}
+		return fSuitList;
+	}
+
+	/**
+	 * Returns all the cards in the hand that
+	 * do not match a particular suit.
+	 * @param pSuit The suit to avoid.
+	 * @return A copy of the hand with only the cards not matching the suit.
+	 */
+	public Hand getCardsNotOfSuit(Suit pSuit) {
+		Hand fSuitList = new Hand();
+		for (Card c : hand) {
+			if (!c.getSuit().equals(pSuit)) {
+				fSuitList.addCard(c);
+			}
+		}
+		return fSuitList;
+	}
+	
+	/**
+	 * Returns all the cards in the hand that match a particular rank.
+	 * @param pRank The rank to match.
+	 * @return A copy of the hand with only the cards matching the rank.
+	 */
+	public Hand getCardsOfRank(Rank pRank) {
+		Hand fRankList = new Hand();
+		for (Card c : hand) {
+			if (c.getRank() == (pRank)) {
+				fRankList.addCard(c);
+			}
+		}
+		return fRankList;
+	}
+
+	/**
+	 * Returns all the cards in the hand that
+	 * do not match a particular rank.
+	 * @param pRank The rank to avoid.
+	 * @return A copy of the hand with only the cards not matching the rank.
+	 */
+	public Hand getCardsNotOfRank(Rank pRank) {
+		Hand fRankList = new Hand();
+		for (Card c : hand) {
+			if (c.getRank() != (pRank)) {
+				fRankList.addCard(c);
+			}
+		}
+		return fRankList;
+	}
+	
+	
+	
 }
