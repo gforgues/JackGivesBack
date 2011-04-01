@@ -4,78 +4,38 @@ import java.io.*;
 import java.util.*;
 import java.lang.String;
 
+import storage.*;
+
 /**
  * A simple database interface
  * 
- * @author Surbhi + Jessica
+ * @author JackGivesBack
  *
  */
 
-//how are we connecting the player class with the hand and bet classes???
-//Inheritance?!?
-public class Player extends cards.Hand implements Participant {
-  private String userName;
-  private String password;
-  private String realName;
-  private int age;
-  private int wins = 0;
-  private int losses = 0;
+public class Player { //cards.Hand implements Participant {
+	Statistics player;
   
-  public Player(String username, String password, String realName, int age){
-	  this.userName = username;
-	  this.password = password;
-	  this.realName = realName;
-	  this.age = age;
+  public Player(String username, String password){
+	  this.player = Storage.loadPlayer(username, password);
   }
   
-  public Player(String username, String password) {
-	  new Player(username, password, "", -1);
-  }
-  
-  public void modifyProfile(String newPassword, String realName, int age){	  
-	  checkPassword();
-	  
-	  if (checkPassword()) {
-		  this.password = newPassword;
-		  
-		  if (realName != null) {
-			  this.realName = realName;
-		  }
-		  //what if user doesn't input age?
-		  if (age != -1) {
-			  this.age = age;
-		  }
-	  }
-  }
-  
-  public void modifyProfile(String newPassword) {
-	  this.modifyProfile(newPassword, "", -1);
-  }
-  
-  /*
-   * 
-   * Helper method for when a player modifies their password, that verify
-   * their current one
-   */
-  private boolean checkPassword() {
-	  Scanner keyboard = new Scanner(System.in);
-	  String checkPassword;
-	  boolean checker = false;
-	  
-	  System.out.println("Enter current password");
-	  checkPassword = keyboard.nextLine();
-	  
-	  if (checkPassword.equals(this.password)) {
-		  checker = true;
-	  } else {
-		  checker = false;
+  public void modifyProfile(String inputPassword, String newPassword, String realName, int age) {
+	  //this.player.validatePassword(newPassword);
+	  if (this.player.validatePassword(inputPassword)) {
+		  this.player.changePassword(newPassword);
 	  }
 	  
-	  return checker;
+	  this.player.setRealName(realName);
+	  this.player.setAge(age);
   }
   
-  public void requestJoin() {
-	  Table.requestJoin(this);
+  public void modifyProfile(String inputPassword, String newPassword) {
+	  this.modifyProfile(inputPassword, newPassword, "", -1);
+  }
+    
+  public void requestJoin(Table table) {
+	  table.requestJoin(this);
   }
   
   //Should we say Table.saveGame(this)- cuz it has to do with a particular
@@ -85,37 +45,33 @@ public class Player extends cards.Hand implements Participant {
   }
   
   //is the save game method in Table class a static method?
-  public void requestLeave() {
-	  Table.requestLeave(this);
-  }
-  
-  //is the save game method in Table class a static method?
-  public void closeGame() {
-	  Table.closeGame();
+  public void requestLeave(Table table) {
+	  table.requestLeave(this);
   }
   
   public String getName() {
-	  return this.userName;
+	  return this.player.getUsername();
+	  //return this.userName;
   }
   
-  public void addWins() {
-	  wins++;
+  public void addWin(int betValue) {
+	  this.player.addWin(betValue);
   }
   
-  public void addLosses() {
-	  losses++;
+  public void addLoss(int betValue) {
+	  this.player.addLoss(betValue);
   }
   
-  public int getWins() {
-	  return wins;
-  }
+//  public int getWins() {
+//	  return wins;
+//  }
+//  
+//  public int getLosses() {
+//	  return losses;
+//  }
   
-  public int getLosses() {
-	  return losses;
-  }
-  
-  public int getGamesPlayed() {
-	  return wins + losses;
-  }
+//  public int getGamesPlayed() {
+//	  return wins + losses;
+//  }
 }
 

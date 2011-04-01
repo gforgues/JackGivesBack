@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import cards.*;
 import cards.Card.Rank;
-import participant.Player;
+import participant.*;
 import cards.Hand;
 import storage.Storage;
 
@@ -21,13 +21,36 @@ import storage.Storage;
 		 * @return
 		 */
 
-	     private final int INITIAL_DEAL_VALUE = 2;
-	     private final int DECK_RESET_VALUE = 104;
-	     public int chipCount;
+	    
+	    /**
+	     * Deal exactly 2 cards for the first initial deal to a player
+	     */
+	    private final int INITIAL_DEAL_VALUE = 2;
+	    /**
+	     * Number of cards left to trigger new deck
+	     */
+	    private final int DECK_RESET_VALUE = 104;
+		/**
+		 * Field to store chip count
+		 */
+	    public int chipCount;
+	    /**
+		 * Initialize new deck
+		 */
 		private Deck gameDeck;
+		/**
+		 * Field to store current set of players
+		 */
 		private HashMap<Player,BlackjackHand> playerHand;
+		private HashMap<Player,Chips> playerChips;
 		//private HashMap<String,Player> playerList;
+		/**
+		 * Field to store winner
+		 */
 		private Player winner;
+		/**
+		 * Field to store the hand
+		 */
 		//private BlackjackHand hand;
 		
 		/**
@@ -38,6 +61,7 @@ import storage.Storage;
 			gameDeck.shuffle();
 			winner = null;
 			playerHand = new HashMap<Player,BlackjackHand>();
+			playerChips = new HashMap<Player,Chips>();
 			//playerList = new HashMap<String,Player>();
 			chipCount = 0;
 			
@@ -120,8 +144,9 @@ import storage.Storage;
 	    	/*
 	    	 * Set player's hand state to be done
 	    	 */
-	    	
-	    	return player.getHand();
+	    	BlackjackHand hand = playerHand.get(player);
+	    	return hand.getHand();
+	    	//return player.getHand();
 	    }
 
 		/**
@@ -130,7 +155,9 @@ import storage.Storage;
 		 * @return
 		 */
 	    public boolean sufficientChips(Player player, int amount) {
-	    	if ( player.getChip() < amount ) {
+	    	Chips chips = playerChips.get(player);
+	    	
+	    	if ( chips.getChips() < amount ) {
 	    		return false;
 	    	}
 	    	return true;
@@ -147,8 +174,12 @@ import storage.Storage;
 	    	 */
 	    	checkDeck();
 	    	
+	    	Chips chips = playerChips.get(player);
+	    	
 	    	if (sufficientChips(player, chipCount)) {
-	    		player.setChips(player.getChips() - chipCount);
+	    		chips.setChips(chips.getChips() - chipCount);
+	    		playerChips.put(player, chips);
+	    		//player.setChips(player.getChips() - chipCount);
 	    		chipCount += chipCount;
 	    		hit(player);
 	    		stand(player);
@@ -171,7 +202,7 @@ import storage.Storage;
 	    	
 	    	Card firstCard = hand.removeCard(0);
 	    	Card secondCard = hand.removeCard(1);
-	    	Hand newHand = new Hand();
+	    	BlackjackHand newHand = new BlackjackHand();
 	    	hand.clearHand();
 	    	hand.addCard(firstCard);
 	    	newHand.addCard(secondCard);
@@ -184,9 +215,12 @@ import storage.Storage;
 		 * @return
 		 */
 	    public void bet(Player player, int amount) {
+	    	Chips chips = playerChips.get(player);
+	    	
 	    	if ( sufficientChips(player,amount) ) {
 	    		chipCount += amount;
-	    		player.getChips() -= amount;
+	    		chips.setChips(chips.getChips() - amount);
+	    		//player.getChips() -= amount;
 	    	}
 	    }
 	    
@@ -214,8 +248,9 @@ import storage.Storage;
 		 * @return
 		 */
 	    public boolean checkBust(Player player) {
-	    	BlackjackHand hand = playerHand.get(player);
-	    	return hand.isBust();
+	    	return playerHand.get(player).isBust();
+	    	//BlackjackHand hand = playerHand.get(player);
+	    	//return hand.isBust();
 //	        if ( getPoints(player) > 21 )
 //	        	return true;
 //	        else 
@@ -247,6 +282,5 @@ import storage.Storage;
 	    		}
 	    	} 
 	    	return false;
-	    }
-		
+	    }		
 	}

@@ -18,20 +18,27 @@ public class Chips {
 		this.bet = 0;
 	}
 	
+	//Sets the new amount of chips for the Player
 	public void setChips(int amount) {
-		this.chips += amount;
+		this.chips = amount;
 	}
 	
-	//forget what this method means / does COME BACK
-	public void sellChips(int amount) {
-		if (amount >= this.chips) {
-			//HOW DO YOU THROW EXCEPTIONS?
-			//throw NotEnoughChipsException;
-		} else if (amount < 0) {
-			//throw NegativeAmountException;
+	//Adds the new amount (parameter) to the amount of chips already stored in
+	//this object
+	public void addChips(int amount) {
+		if (amount > 0) {
+			this.chips += amount;
+		}
+	}
+	
+	public boolean removeChips(int amount) {
+		//should we throw exceptions for negative amounts or not enough chips?
+		if (amount > this.chips || amount <= 0) {
+			return false;
 		} else {
 			this.chips -= amount;
 		}
+		return true;
 	}
 	
 	public int getChips() {
