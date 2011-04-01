@@ -1,5 +1,6 @@
 package storage;
 import junit.framework.*;
+import cards.*;
 
 public class TestStorage extends TestCase{
 	private int expectedValue;
@@ -92,9 +93,33 @@ public class TestStorage extends TestCase{
 		boolean invalidPassword = jack.validatePassword("Black");
 		assertEquals(invalidPassword, false);
 	}
+	
 	public void testHallOfFame() {
 		for (Statistics player : HallOfFame.getHallOfFame()) {
 			System.out.println(player.getUsername() + ": " + player.getTotalChipsWon());
 		}
+	}
+	public void testDeck(){
+		Deck deck = new Deck();
+		deck.addDeck(1);
+		deck.draw();
+		deck.draw();
+		expectedValue = deck.size();
+		
+		BlackjackStorage.saveDeck(deck, 1);
+		actualValue = BlackjackStorage.loadDeck(1).size();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	public void testHand() {
+		Hand hand = new Hand();
+		hand.addCard(AllCards.C2C);
+
+		BlackjackStorage.saveHand("bill", hand, 1);
+		String expectedString = "TWO of CLUBS";
+		Card card = BlackjackStorage.loadHand("bill", 1).removeCard(0);
+		
+		assertEquals(expectedString, card.toString());
+		
 	}
 }

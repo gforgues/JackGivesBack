@@ -160,7 +160,7 @@ public final class Card
 	 * @param pSuit The String representation of the suit
 	 * @return A Card object from a given String rank and suit.
 	 */
-	public Card fromString(String pRank, String pSuit)
+	public static Card fromString(String pRank, String pSuit)
 	{
 		Rank lRank = null;
 		Suit lSuit = null;
