@@ -10,11 +10,11 @@ public class HallOfFame {
 	 * @param topFive - An ArrayList<Storage> which contains the top five players
 	 * @return A Storage object of the lowest player currently in the top five
 	 */
-	private static Storage findLowestPlayer(ArrayList<Storage> topFive) {
-		Storage lowestPlayer = topFive.get(0);
+	private static Statistics findLowestPlayer(ArrayList<Statistics> topFive) {
+		Statistics lowestPlayer = topFive.get(0);
 		int currentMinimum = 0;
 		
-		for (Storage player : topFive) {
+		for (Statistics player : topFive) {
 			currentMinimum = player.getTotalChipsWon();
 			if (currentMinimum < lowestPlayer.getTotalChipsWon()) {
 				lowestPlayer = player;
@@ -23,17 +23,17 @@ public class HallOfFame {
 		return lowestPlayer;
 	}
 	/**
-	 * Compares a Storage object with the top five scoring players. If this new object has
+	 * Compares a Statistics object with the top five scoring players. If this new object has
 	 * a better score than the lowest player in the top five, replaces this lowest player.
-	 * @param playerToAdd - A Storage object to compare with the top five
-	 * @param topFive - An ArrayList<Storage> which contains the top five players
-	 * @return An ArrayList<Storage> of the updated list of top five players
+	 * @param playerToAdd - A Statistics object to compare with the top five
+	 * @param topFive - An ArrayList<Statistics> which contains the top five players
+	 * @return An ArrayList<Statistics> of the updated list of top five players
 	 */
-	private static ArrayList<Storage> compareWithTopFive(Storage playerToAdd, ArrayList<Storage> topFive) {
+	private static ArrayList<Statistics> compareWithTopFive(Statistics playerToAdd, ArrayList<Statistics> topFive) {
 		if (topFive.size() < 5) {
 			topFive.add(playerToAdd);
 		} else {
-			Storage lowestPlayer = findLowestPlayer(topFive);
+			Statistics lowestPlayer = findLowestPlayer(topFive);
 			if (playerToAdd.getTotalChipsWon() > lowestPlayer.getTotalChipsWon()) {
 				topFive.remove(lowestPlayer);
 				topFive.add(playerToAdd);
@@ -44,17 +44,17 @@ public class HallOfFame {
 	
 	/**
 	 * Searches through all player profiles to find the top 5 totalChipsWon
-	 * @return An ArrayList<Storage> which contains the five top scoring players
+	 * @return An ArrayList<Statistics> which contains the five top scoring players
 	 */
-	public static ArrayList<Storage> getHallOfFame() {
+	public static ArrayList<Statistics> getHallOfFame() {
 		Scanner profileReader;
 
 		File directory = new File("profiles");
 		File profiles[] = directory.listFiles();
-		ArrayList<Storage> topFive = new ArrayList<Storage>();
+		ArrayList<Statistics> topFive = new ArrayList<Statistics>();
 		
 		for (File profile : profiles) {
-			Storage player;
+			Statistics player;
 			String username = profile.getName();
 			try {
 				profileReader = new Scanner(new File("profiles/" + username));

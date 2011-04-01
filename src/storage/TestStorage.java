@@ -6,16 +6,16 @@ public class TestStorage extends TestCase{
 	private int actualValue;
 	
 	public void testAddNewPlayer() {
-		Storage Jack = Storage.loadPlayer("Jack","Black");
+		Statistics jack = Storage.loadPlayer("jack","Black");
 
-		assertEquals(Jack.savePlayer(), true);
+		assertEquals(Storage.savePlayer(jack), true);
 	}
 	
 	public void testSavePlayer() {
-		Storage abc = Storage.loadPlayer("abc","123");
+		Statistics abc = Storage.loadPlayer("abc","123");
 		
 		abc.setChips(5);
-		abc.savePlayer();
+		Storage.savePlayer(abc);
 		abc = Storage.loadPlayer("abc","123");
 		actualValue = abc.getChips();
 		expectedValue = 5;
@@ -24,76 +24,76 @@ public class TestStorage extends TestCase{
 	}
 	
 	public void testValidatePassword() {
-		Storage Jack = Storage.loadPlayer("Jack", "Black");
+		Statistics jack = Storage.loadPlayer("jack", "Black");
 		
-		boolean validPassword = Jack.validatePassword("Black");
+		boolean validPassword = jack.validatePassword("Black");
 		assertEquals(validPassword, true);
 		
-		boolean invalidPassword = Jack.validatePassword("black");
+		boolean invalidPassword = jack.validatePassword("black");
 		assertEquals(invalidPassword, false);
 	}
 	
 	public void testChipCounts() {
-		Storage chipWinner = Storage.loadPlayer("chipWinner", "abc");
+		Statistics emily = Storage.loadPlayer("emily", "abc");
 		
-		expectedValue = chipWinner.getChips() + 1000;
-		chipWinner.addWin(500);
-		chipWinner.addWin(500);
-		actualValue = chipWinner.getChips();
+		expectedValue = emily.getChips() + 1000;
+		emily.addWin(500);
+		emily.addWin(500);
+		actualValue = emily.getChips();
 		assertEquals(expectedValue, actualValue);
-		chipWinner.savePlayer();
+		Storage.savePlayer(emily);
 		
 	}
 	public void testAddWin() {
-		Storage Jack = Storage.loadPlayer("Jack", "Black");
+		Statistics jack = Storage.loadPlayer("jack", "Black");
 		expectedValue = 1;
-		Jack.addWin(5);
-		actualValue = Jack.getMaxWinStreak();
+		jack.addWin(5);
+		actualValue = jack.getMaxWinStreak();
 		
 		assertEquals(expectedValue, actualValue);
-		Jack.savePlayer();
+		Storage.savePlayer(jack);
 	}
 	
 	public void testWinStreak() {
-		Storage Bill = Storage.loadPlayer("Bill", "Black");
+		Statistics bill = Storage.loadPlayer("bill", "Black");
 		
-		Bill.addLoss(5);
-		Bill.addWin(5);
-		Bill.addWin(5);
-		Bill.addWin(5);
+		bill.addLoss(5);
+		bill.addWin(5);
+		bill.addWin(5);
+		bill.addWin(5);
 		expectedValue = 3;
-		actualValue = Bill.getMaxWinStreak();
+		actualValue = bill.getMaxWinStreak();
 		
 		assertEquals(expectedValue, actualValue);
-		Bill.savePlayer();
+		Storage.savePlayer(bill);
 	}
 	public void testLossStreak() {
-		Storage Jack = Storage.loadPlayer("Jack","Black");
+		Statistics jack = Storage.loadPlayer("jack","Black");
 
-		Jack.addWin(5);
-		Jack.addLoss(10);
-		Jack.addLoss(10);
-		Jack.addLoss(10);
+		jack.addWin(5);
+		jack.addLoss(10);
+		jack.addLoss(10);
+		jack.addLoss(10);
 		expectedValue = 3;
-		actualValue = Jack.getMaxLossStreak();
+		actualValue = jack.getMaxLossStreak();
 		
 		assertEquals(expectedValue, actualValue);
-		Jack.savePlayer();
+		Storage.savePlayer(jack);
 		
 	}
 	public void testChangePassword() {
-		Storage Jack = Storage.loadPlayer("Jack", "Black");
+		Statistics jack = Storage.loadPlayer("jack", "Black");
 		
-		Jack.changePassword("newpassword");
+		jack.changePassword("newpassword");
 		
-		boolean validPassword = Jack.validatePassword("newpassword");
+		boolean validPassword = jack.validatePassword("newpassword");
 		assertEquals(validPassword, true);
 		
-		boolean invalidPassword = Jack.validatePassword("Black");
+		boolean invalidPassword = jack.validatePassword("Black");
 		assertEquals(invalidPassword, false);
 	}
 	public void testHallOfFame() {
-		for (Storage player : HallOfFame.getHallOfFame()) {
+		for (Statistics player : HallOfFame.getHallOfFame()) {
 			System.out.println(player.getUsername() + ": " + player.getTotalChipsWon());
 		}
 	}
