@@ -58,7 +58,6 @@ public class BlackjackHelp
 		frame.add(scrollPane2);
 
 
-
 		frame.setSize(600, 480);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);

@@ -24,7 +24,6 @@ public class GUI extends MainApplication implements Observer
 	}
 
 	
-	
 	public GUI() {
 		table.setOpaque(false);
 		table.setLayout(null);
