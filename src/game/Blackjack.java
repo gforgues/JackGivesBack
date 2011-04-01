@@ -21,35 +21,13 @@ import storage.Storage;
 		 * @return
 		 */
 
-	    
-	    /**
-	     * Deal exactly 2 cards for the first initial deal to a player
-	     */
-	    private final int INITIAL_DEAL_VALUE = 2;
-	    /**
-	     * Number of cards left to trigger new deck
-	     */
-	    private final int DECK_RESET_VALUE = 104;
-		/**
-		 * Field to store chip count
-		 */
-	    public int chipCount;
-	    /**
-		 * Initialize new deck
-		 */
+	     private final int INITIAL_DEAL_VALUE = 2;
+	     private final int DECK_RESET_VALUE = 104;
+	     public int chipCount;
 		private Deck gameDeck;
-		/**
-		 * Field to store current set of players
-		 */
 		private HashMap<Player,BlackjackHand> playerHand;
 		//private HashMap<String,Player> playerList;
-		/**
-		 * Field to store winner
-		 */
 		private Player winner;
-		/**
-		 * Field to store the hand
-		 */
 		//private BlackjackHand hand;
 		
 		/**
