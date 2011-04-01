@@ -9,10 +9,16 @@ import java.util.Collections;
  */
 public class Deck  {
 	/**
-	 * Creates a new deck of 52 cards, not shuffled.
+	 * Creates a new empty deck.
 	 */
 	public Deck() {
 		cDeck = new ArrayList<Card>();
+	}
+	
+	/**
+	 * Adds all Cards. No shuffling.
+	 */
+	public void addAll() {
 		/*
 		 * Add Cards from Clubs Suite
 		 */
