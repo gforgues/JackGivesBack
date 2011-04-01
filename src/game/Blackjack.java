@@ -9,137 +9,23 @@ import participant.Player;
 import cards.Hand;
 import storage.Storage;
 
+
 	/**
 	 *
 	 * @author JackGivesBack
 	 */
 	public class Blackjack implements Game {
-
 		/**
-		 * Blackjack game initialization
-		 */
-		public Blackjack() {
-			gameDeck = new Deck();
-			
-			for ( int i = 0 ; i < NUM_DECKS ; i++ ) {
-				gameDeck.addAll();
-				gameDeck.shuffle();
-			}
-
-		}
-
-		/**
-		 * Reset player's hand state
-		 * @param pHand A given BlackjackHand of a player
-		 */
-		public void resetHandState(BlackjackHand pHand) {
-			pHand = new BlackjackHand();
-		}
-		
-		/**
-		 * Check if Deck is low on cards
+		 *
 		 * @param
-		 * @return True if Deck is low on cards, false otherwise
-		 */
-		public void checkDeck() {
-			if ( gameDeck.size() < DECK_RESET_VALUE ) {
-				gameDeck = new Deck();
-				gameDeck.shuffle();
-			}
-		}
-		
-		/**
-		 * Deals the initial amount of cards to a BlackjackHand
-		 * @param pHand BlackjackHand to deal
-		 */
-	    public void deal(BlackjackHand pHand) {
-	    	/*
-	    	 * Clear player's hand first
-	    	 */
-	    	resetHandState(pHand);
-	    	/*
-	    	 * Check deck status
-	    	 */
-	    	checkDeck();
-	    	/*
-	    	 * Deal exactly two cards for the first initial deal
-	    	 */
-	        for ( int i = 0 ; i < INITIAL_DEAL_VALUE ; i++ ){
-	        	pHand.addCard(gameDeck.draw());
-	        }
-	    }
-	    
-		/**
-		 * Adds a card to a Hand
-		 * @param pHand BlackjackHand to add card to
 		 * @return
 		 */
-	    public void hit(BlackjackHand pHand) {
-	    	/*
-	    	 * Check deck status
-	    	 */
-	    	checkDeck();
-	    	/*
-	    	 * Check if player's hand state is done or not
-	    	 */
-	    	if ( pHand.isPlayable() )
-	    		/*
-	    		 * Draws a card from the Deck and adds it to the Hand
-	    		 */
-	    		pHand.addCard(gameDeck.draw());
-	    }
-	    
-		/**
-		 * Set player's Hand state to be done
-		 * @param pHand BlackjackHand to set state
-		 * @return
-		 */
-	    public void stand(BlackjackHand pHand) {
-	    	pHand.setDone();
-	    }
-	    
-		/**
-		 * 
-		 * @param pHand BlackjackHand to apply doubledown to
-		 * @return
-		 */
-	    public void doubleDown(BlackjackHand pHand) {
-	    	/*
-	    	 * Check deck status
-	    	 */
-	    	checkDeck();
 
-	    	hit(pHand);
-	    	stand(pHand);
-	    }
-
-		/**
-		 * Splits a pair into two separate BlackjackHands
-		 * @param pHand BlackjackHand to apply split to
-		 * @return Returns a BlackjackHand that has one of the pairs in pHand
-		 */
-	    public BlackjackHand split(BlackjackHand pHand) {
-			/*
-			 * Clones the BlackjackHand
-			 */
-	    	BlackjackHand newHand = (BlackjackHand) pHand.clone();
-	    	/*
-	    	 * Remove first card in given hand and second card in cloned hand
-	    	 */
-	    	pHand.removeCard(0);
-	    	newHand.removeCard(1);
-
-	    	return newHand;
-	    }
 	    
 	    /**
 	     * Deal exactly 2 cards for the first initial deal to a player
 	     */
 	    private final int INITIAL_DEAL_VALUE = 2;
-	    /**
-	     * Number of decks to use
-	     */
-	    private final int NUM_DECKS = 6;
 	    /**
 	     * Number of cards left to trigger new deck
 	     */
@@ -152,5 +38,237 @@ import storage.Storage;
 		 * Initialize new deck
 		 */
 		private Deck gameDeck;
+		/**
+		 * Field to store current set of players
+		 */
+		private HashMap<Player,BlackjackHand> playerHand;
+		//private HashMap<String,Player> playerList;
+		/**
+		 * Field to store winner
+		 */
+		private Player winner;
+		/**
+		 * Field to store the hand
+		 */
+		//private BlackjackHand hand;
+		
+		/**
+		 * Blackjack game initialization
+		 */
+		public Blackjack() {
+			gameDeck = new Deck();
+			gameDeck.shuffle();
+			winner = null;
+			playerHand = new HashMap<Player,BlackjackHand>();
+			//playerList = new HashMap<String,Player>();
+			chipCount = 0;
+			
+		}
+
+		/**
+		 * Reset player's hand state
+		 * @param
+		 */
+		public void resetHandState(Player player) {
+			//if player doesn't exist will this drop an exception?
+			playerHand.remove(player);
+			//player.getHand = new ArrayList<Card>();
+			//player.done = false;
+		}
+		
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+		public void checkDeck() {
+			if ( gameDeck.size() < DECK_RESET_VALUE ) {
+				gameDeck = new Deck();
+				gameDeck.shuffle();
+			}
+		}
+		
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public void deal(Player player) {
+	    	/*
+	    	 * Clear player's hand first
+	    	 */
+	    	resetHandState(player);
+	    	/*
+	    	 * Check deck status
+	    	 */
+	    	checkDeck();
+	    	/*
+	    	 * Deal exactly two cards for the first initial deal
+	    	 */
+	        BlackjackHand hand = playerHand.get(player);
+	    	for ( int i = 0 ; i < INITIAL_DEAL_VALUE ; i++ ){
+	    		//player.getHand.add(gameDeck.draw());
+	    		hand.addCard(gameDeck.draw());
+	    		playerHand.put(player,hand);
+	        }
+
+	    }
+	    
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public void hit(Player player) {
+	    	/*
+	    	 * Check deck status
+	    	 */
+	    	checkDeck();
+	    	/*
+	    	 * Check if player's hand state is done or not
+	    	 */
+	    	BlackjackHand hand = playerHand.get(player);
+	    	//if ( player.done == false )
+	    		hand.addCard(gameDeck.draw());
+	    		playerHand.put(player, hand);
+	    }
+	    
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public ArrayList<Card>  stand(Player player) {
+	    	/*
+	    	 * Set player's hand state to be done
+	    	 */
+	    	
+	    	return player.getHand();
+	    }
+
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public boolean sufficientChips(Player player, int amount) {
+	    	if ( player.getChip() < amount ) {
+	    		return false;
+	    	}
+	    	return true;
+	    }
+	    
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public void doubleDown(Player player) {
+	    	/*
+	    	 * Check deck status
+	    	 */
+	    	checkDeck();
+	    	
+	    	if (sufficientChips(player, chipCount)) {
+	    		player.setChips(player.getChips() - chipCount);
+	    		chipCount += chipCount;
+	    		hit(player);
+	    		stand(player);
+	    	}
+
+	    }
+
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public void split(Player player) {
+	    	/*
+	    	 * Check deck status
+	    	 */
+	    	checkDeck();
+	    	
+	    	BlackjackHand hand = playerHand.get(player);
+	    	
+	    	Card firstCard = hand.removeCard(0);
+	    	Card secondCard = hand.removeCard(1);
+	    	Hand newHand = new Hand();
+	    	hand.clearHand();
+	    	hand.addCard(firstCard);
+	    	newHand.addCard(secondCard);
+	    	
+	    }
+
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public void bet(Player player, int amount) {
+	    	if ( sufficientChips(player,amount) ) {
+	    		chipCount += amount;
+	    		player.getChips() -= amount;
+	    	}
+	    }
+	    
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public int getPoints(Player player) {
+	    	BlackjackHand hand = playerHand.get(player);
+	    	return hand.getBlackjackValue();
+//	    	int points = 0;
+//	    	/*
+//	    	 * Gather all points from each card in player's hand
+//	    	 */
+//	    		for ( Card c : player.hand )
+//	    			points += c.getPoints();
+//	    		
+//	    	return points;
+	    }
+
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public boolean checkBust(Player player) {
+	    	BlackjackHand hand = playerHand.get(player);
+	    	return hand.isBust();
+//	        if ( getPoints(player) > 21 )
+//	        	return true;
+//	        else 
+//	        	return false;
+	        
+	    }
+
+		/**
+		 *
+		 * @param
+		 * @return
+		 */
+	    public boolean checkBlackjack(Player player) {
+	    	BlackjackHand hand = playerHand.get(player);
+	    	/*
+	    	 * Check handsize exactly 2
+	    	 */
+	    	if ( hand.getNumberCards() == 2 ) {
+	    		/*
+	    		 * Check if 1 ace present
+	    		 */
+	    		if ( hand.getNumberCardsOfRank(Rank.ACE) == 1 ) {
+	    			/*
+	    			 * Check if 1 ten,jack,queen,king present
+	    			 */
+	    			if ( hand.getNumberCardsOfRank(Rank.TEN) == 1 || hand.getNumberCardsOfRank(Rank.JACK) == 1 ||
+	    					hand.getNumberCardsOfRank(Rank.QUEEN) == 1 || hand.getNumberCardsOfRank(Rank.KING) == 1 )
+	    			return true;
+	    		}
+	    	} 
+	    	return false;
+	    }
 		
 	}

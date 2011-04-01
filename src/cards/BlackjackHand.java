@@ -4,6 +4,8 @@ import participant.Player;
 import cards.Card.Rank;
 import cards.Card.Suit;
 
+import java.util.*;
+
 public class BlackjackHand extends Hand {
 	
 	/*
@@ -152,6 +154,18 @@ public class BlackjackHand extends Hand {
 		}
 		return fRankList;
 	}
+	
+	public int getNumberCardsOfRank(Rank pRank) {
+		int counter = 0;
+		
+		for (int i=0; i<hand.size(); i++) {
+			if (hand.get(i).getRank().equals(pRank)) {
+				counter+=1;
+			}
+		}
+		
+		return counter;
+	}
 
 	/**
 	 * Returns all the cards in the hand that
@@ -192,6 +206,16 @@ public class BlackjackHand extends Hand {
     		}
     	} 
     	return false;
+    }
+    
+    public String toString() {
+    	StringBuilder string = new StringBuilder();
+    	
+    	for (int i=0; i<hand.size(); i++) {
+    		string.append(hand.get(i).toString() + "\n");
+    	}
+    	
+    	return string.toString();
     }
 	
 	
