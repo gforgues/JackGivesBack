@@ -5,6 +5,7 @@ import cards.*;
 public class TestStorage extends TestCase{
 	private int expectedValue;
 	private int actualValue;
+	boolean failed;
 	
 	public void testAddNewPlayer() {
 		Statistics jack = Storage.loadPlayer("jack","Black");
@@ -24,75 +25,26 @@ public class TestStorage extends TestCase{
 		assertEquals(actualValue, expectedValue);
 	}
 	
-	public void testValidatePassword() {
-		Statistics jack = Storage.loadPlayer("jack", "Black");
-		
-		boolean validPassword = jack.validatePassword("Black");
-		assertEquals(validPassword, true);
-		
-		boolean invalidPassword = jack.validatePassword("black");
-		assertEquals(invalidPassword, false);
-	}
-	
-	public void testChipCounts() {
-		Statistics emily = Storage.loadPlayer("emily", "abc");
-		
-		expectedValue = emily.getChips() + 1000;
-		emily.addWin(500);
-		emily.addWin(500);
-		actualValue = emily.getChips();
-		assertEquals(expectedValue, actualValue);
-		Storage.savePlayer(emily);
+	public void testLoadPlayerPeriod() {
+		failed = false;
+		try {
+			Storage.loadPlayer("John.Test", "password");
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, true);
 		
 	}
-	public void testAddWin() {
-		Statistics jack = Storage.loadPlayer("jack", "Black");
-		expectedValue = 1;
-		jack.addWin(5);
-		actualValue = jack.getMaxWinStreak();
-		
-		assertEquals(expectedValue, actualValue);
-		Storage.savePlayer(jack);
+	public void testLoadPlayerComma() {
+		failed = false;
+		try {
+			Storage.loadPlayer("john,test", "password");
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, true);
 	}
-	
-	public void testWinStreak() {
-		Statistics bill = Storage.loadPlayer("bill", "Black");
-		
-		bill.addLoss(5);
-		bill.addWin(5);
-		bill.addWin(5);
-		bill.addWin(5);
-		expectedValue = 3;
-		actualValue = bill.getMaxWinStreak();
-		
-		assertEquals(expectedValue, actualValue);
-		Storage.savePlayer(bill);
-	}
-	public void testLossStreak() {
-		Statistics jack = Storage.loadPlayer("jack","Black");
 
-		jack.addWin(5);
-		jack.addLoss(10);
-		jack.addLoss(10);
-		jack.addLoss(10);
-		expectedValue = 3;
-		actualValue = jack.getMaxLossStreak();
-		
-		assertEquals(expectedValue, actualValue);
-		Storage.savePlayer(jack);
-		
-	}
-	public void testChangePassword() {
-		Statistics jack = Storage.loadPlayer("jack", "Black");
-		
-		jack.changePassword("newpassword");
-		
-		boolean validPassword = jack.validatePassword("newpassword");
-		assertEquals(validPassword, true);
-		
-		boolean invalidPassword = jack.validatePassword("Black");
-		assertEquals(invalidPassword, false);
-	}
 	
 	public void testHallOfFame() {
 		for (Statistics player : HallOfFame.getHallOfFame()) {
@@ -114,12 +66,18 @@ public class TestStorage extends TestCase{
 	public void testHand() {
 		Hand hand = new Hand();
 		hand.addCard(AllCards.C2C);
-
 		BlackjackStorage.saveHand("bill", hand, 1);
+		
+		Hand handEmily = new Hand();
+		handEmily.addCard(AllCards.C4S);
+		BlackjackStorage.saveHand("emily", handEmily, 1);
+		
 		String expectedString = "TWO of CLUBS";
 		Card card = BlackjackStorage.loadHand("bill", 1).removeCard(0);
-		
 		assertEquals(expectedString, card.toString());
 		
+		expectedString = "FOUR of SPADES";
+		card = BlackjackStorage.loadHand("emily", 1).removeCard(0);
+		assertEquals(expectedString, card.toString());
 	}
 }

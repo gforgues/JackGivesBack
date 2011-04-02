@@ -2,6 +2,7 @@ package storage;
 
 import java.io.*;
 import java.util.Scanner;
+import java.lang.Character;
 
 /**
  * Reads and writes to a player's profile to store game statistics <br>
@@ -24,7 +25,7 @@ public class Storage {
 	 */
 	
 	//TODO Don't use std output, instead throw exception or other
-	private static boolean addNewPlayer(String username, String password) {
+	private static boolean addNewPlayer(String username, String password) throws IllegalArgumentException{
 		File fileName = new File("profiles/" + username + ".csv");
 		if (fileName.isFile()) {
 			System.out.println("Player already exists.");

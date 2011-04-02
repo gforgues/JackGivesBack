@@ -29,10 +29,19 @@ public class Statistics {
 	Statistics(String username, String password, String realName, int age) {
 		this(username, password, realName, age, 0, 0, 0, 0, 0, 0);
 	}
-	// TODO constructor could check if data is correct (if real name has a comma, etc.)
 	Statistics(String username, String password,	String realName, int age,
 			int numChips, int totalMoneyWon, int maxWinStreak,
 			int maxChipsWinStreak, int maxLossStreak, int maxChipsLossStreak){
+		// Check if the username contains invalid characters
+		for (char c : username.toCharArray()) {
+			if (!Character.isLetter(c)) {
+				throw new IllegalArgumentException("Username may only contain letters");
+			}
+		}
+		// Check if the password contains commas
+		if (password.contains(",")) {
+				throw new IllegalArgumentException("Password contains a comma");
+		}
 		this.username = username;
 		this.password = password;
 		this.realName = realName;
@@ -78,14 +87,22 @@ public class Statistics {
 	 * @param password - String of the password entered by user
 	 */
 	public void changePassword(String password) {
-		this.password = password;
+		if (!password.contains(",")) {
+			this.password = password;
+		} else {
+			throw new IllegalArgumentException("Real name contains a comma");
+		}
 	}
 	/**
 	 * Sets a stored player's real name
 	 * @return
 	 */
-	public void setRealName(String realName) {
-		this.realName = realName;
+	public void setRealName(String realName) throws IllegalArgumentException{
+		if (!realName.contains(",")) {
+			this.realName = realName;
+		} else {
+			throw new IllegalArgumentException("Real name contains a comma");
+		}
 	}
 	/**
 	 * Retrieves a stored player's real name
@@ -98,8 +115,12 @@ public class Statistics {
 	 * Sets a stored player's age
 	 * @param age - Integer of the player's age
 	 */
-	public void setAge(int age) {
-		this.age = age;
+	public void setAge(int age) throws IllegalArgumentException{
+		if (age >= -1 && age <= 130) {
+			this.age = age;
+		} else {
+			throw new IllegalArgumentException("Invalid Age");
+		}
 	}
 	/**
 	 * Retrieves a stored player's age
@@ -112,8 +133,15 @@ public class Statistics {
 	 * Sets a stored player's current chip count
 	 * @param numChips - Integer of the new value to set as current chip count
 	 */
-	public void setChips(int numChips) {
-		this.numChips = numChips;
+	public void setChips(int numChips) throws IllegalArgumentException{
+		if (numChips >= 0) {
+			this.numChips = numChips;
+		} else {
+			throw new IllegalArgumentException("Number of chips is negative");
+		}
+	}
+	public void addChips(int numChips) {
+		this.numChips += numChips;
 	}
 	/**
 	 * Retrieves a stored player's current chip count
