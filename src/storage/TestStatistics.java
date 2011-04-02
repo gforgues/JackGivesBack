@@ -1,6 +1,5 @@
 package storage;
 import junit.framework.*;
-import cards.*;
 
 public class TestStatistics extends TestCase {
 	private int expectedValue;

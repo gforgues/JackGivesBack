@@ -2,7 +2,6 @@ package storage;
 
 import java.io.*;
 import java.util.Scanner;
-import java.lang.Character;
 
 /**
  * Reads and writes to a player's profile to store game statistics <br>
@@ -24,12 +23,10 @@ public class Storage {
 	 * @param password
 	 */
 	
-	//TODO Don't use std output, instead throw exception or other
 	private static boolean addNewPlayer(String username, String password) throws IllegalArgumentException{
 		File fileName = new File("profiles/" + username + ".csv");
 		if (fileName.isFile()) {
-			System.out.println("Player already exists.");
-			return false;
+			throw new IllegalArgumentException("Player already exists.");
 		} else {
 			Statistics newPlayer = new Statistics(username,password);
 			savePlayer(newPlayer);
@@ -43,7 +40,7 @@ public class Storage {
 	 * @param inputPassword - String of the user's password
 	 * @return a Storage object containing a player's statistics
 	 */
-	// TODO Add csv parser to do it automatically instead?
+
 	public static Statistics loadPlayer(String inputName, String inputPassword) {
 		inputName = inputName.toLowerCase();
 		String[] parsedLine;
@@ -77,17 +74,11 @@ public class Storage {
 			 if (loadedPlayer.validatePassword(inputPassword)) {
 				 return loadedPlayer;
 			 } else {
-				 System.out.println("Invalid Password");
-				 return null;
+				 throw new IllegalArgumentException("Invalid password");
 			 }
 		} catch (FileNotFoundException e){
-			boolean playerAddSuccess = addNewPlayer(inputName, inputPassword);
-			if (playerAddSuccess) {
-				return loadPlayer(inputName, inputPassword);
-			} else {
-				System.out.println("Could not add player.");
-				return null;
-			}
+			addNewPlayer(inputName, inputPassword);
+			return loadPlayer(inputName, inputPassword);
 		}
 	}
 	/**
@@ -110,9 +101,8 @@ public class Storage {
 					+ player.getMaxChipsLossStreak());
 			writer.close();
 			return true;
-		} catch (IOException e) {
-			System.out.println("Could not save player");
-			return false;
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Could not save this player.");
 		}
 	}
 	

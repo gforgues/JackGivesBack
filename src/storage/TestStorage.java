@@ -51,33 +51,4 @@ public class TestStorage extends TestCase{
 			System.out.println(player.getUsername() + ": " + player.getTotalChipsWon());
 		}
 	}
-	public void testDeck(){
-		Deck deck = new Deck();
-		deck.addDeck(1);
-		deck.draw();
-		deck.draw();
-		expectedValue = deck.size();
-		
-		BlackjackStorage.saveDeck(deck, 1);
-		actualValue = BlackjackStorage.loadDeck(1).size();
-		
-		assertEquals(expectedValue, actualValue);
-	}
-	public void testHand() {
-		Hand hand = new Hand();
-		hand.addCard(AllCards.C2C);
-		BlackjackStorage.saveHand("bill", hand, 1);
-		
-		Hand handEmily = new Hand();
-		handEmily.addCard(AllCards.C4S);
-		BlackjackStorage.saveHand("emily", handEmily, 1);
-		
-		String expectedString = "TWO of CLUBS";
-		Card card = BlackjackStorage.loadHand("bill", 1).removeCard(0);
-		assertEquals(expectedString, card.toString());
-		
-		expectedString = "FOUR of SPADES";
-		card = BlackjackStorage.loadHand("emily", 1).removeCard(0);
-		assertEquals(expectedString, card.toString());
-	}
 }
