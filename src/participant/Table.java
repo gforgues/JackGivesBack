@@ -3,11 +3,15 @@ package participant;
 import java.util.ArrayList;
 
 public class Table {
-	String tableOwner;
+	Player tableOwner;
 	ArrayList<Player> players = new ArrayList<Player>();
 
-	public Table(String owner) {
+	public Table(Player owner) {
 		this.tableOwner = owner;
+	}
+	
+	public Player getTableOwner() {
+		return tableOwner;
 	}
 	
 	public ArrayList<Player> getAllPlayers() {
