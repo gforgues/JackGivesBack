@@ -10,6 +10,7 @@ public class Table implements Observer {
 
 	public Table(Player owner) {
 		this.tableOwner = owner;
+		players.add(owner);
 	}
 	
 	public Player getTableOwner() {
