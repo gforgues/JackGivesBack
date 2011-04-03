@@ -1,18 +1,19 @@
 package gameEngine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 import participant.Chips;
 import participant.Player;
 import participant.Table;
 import game.*;
+import game.Observable;
+import game.Observer;
 import cards.*;
 
 	public class GameEngine	implements Observable {
 		
 		public GameEngine() {
-			reset();
+			gameStart();
 		}
 		
 		public void reset() {
@@ -21,7 +22,19 @@ import cards.*;
 			playersChips = new HashMap<Player, Chips>();
 			roundDone = false;
 			this.notifyObservers();
-		}	
+		}
+		
+		public void gameStart() {
+			
+			reset();
+
+			for ( int i = 0 ; i < playersHands.size() ; i++ ) {
+				Scanner keyboard = new Scanner(System.in);
+				int a= keyboard.nextInt();
+				System.out.print(a);
+			}
+		}
+
 		
 		@Override
 		public void notifyObservers()
@@ -43,12 +56,12 @@ import cards.*;
 		@Override
 		public void removeObservers(Observer obsToRemove)
 		{
-			// TODO Auto-generated method stub
+			observerList.remove(obsToRemove);
 			
 		}
 		
 		public void resetObservers() {
-			
+			observerList = new ArrayList<Observer>();
 		}
 		
 		public void loadTable(Table table) {
@@ -88,15 +101,26 @@ import cards.*;
 			
 		}
 		
-		public void getPlayerHand(Player player) {
-			
+		public ArrayList<Hand> getPlayerHand(Player player) {
+			 return playersHands.get(player);
 		}
 
-		public Player getWinner(Player player1, Player player2) {
-			Player tmpWinner = null;
+		/**
+		 * Returns winner between two BlackjackHands
+		 * @param hand1 First BlackjackHand to compare
+		 * @param hand2 Second BlackjackHand to compare
+		 * @return BlackjackHand winner, null if no winner
+		 */
+		public BlackjackHand getWinner(BlackjackHand hand1, BlackjackHand hand2) {
+
+			if (hand1.getBlackjackValue() > hand2.getBlackjackValue())
+				return hand1;
 			
+			if (hand1.getBlackjackValue() < hand2.getBlackjackValue())
+				return hand2;
 			
-			return tmpWinner;
+				return null;
+			
 		}
 		
 		
