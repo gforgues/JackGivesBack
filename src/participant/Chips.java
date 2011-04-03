@@ -33,7 +33,7 @@ public class Chips {
 	
 	public boolean removeChips(int amount) {
 		//should we throw exceptions for negative amounts or not enough chips?
-		if (amount > this.chips || amount <= 0) {
+		if (amount > this.chips || amount < 0) {
 			return false;
 		} else {
 			this.chips -= amount;
