@@ -1,8 +1,10 @@
 package participant;
 
+import game.Observer;
+
 import java.util.ArrayList;
 
-public class Table {
+public class Table implements Observer {
 	Player tableOwner;
 	ArrayList<Player> players = new ArrayList<Player>();
 
@@ -53,6 +55,13 @@ public class Table {
 	
 	public static void saveGame(Spectator spectator) {
 		System.out.println("Game has been saved by this spectator");
+	}
+
+	@Override
+	public void handleEvent()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
