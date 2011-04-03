@@ -32,17 +32,27 @@ public class Table {
 
 
  public void requestJoin(Player player){
-   boolean join=false ; 
-   
-   if(join==true){
-    System.out.println("Request join accepted");
-    //Add player to array list of players
-    players.add(player);
-   }
-    else
-       {
-       System.out.println("Request join rejected");
-       }
+	 /*
+	  * temporary logic
+	  */
+	 players.add(player);
+	 
+	 /*
+	  * FIX LOGIC HERE AND THE REST OF THE METHODS THEY DONT WORK
+	  * ie  " boolean join=false; if (join==true) " <<---this will never work
+	  */
+	 
+//   boolean join=false ; 
+//   
+//   if(join==true){
+//    System.out.println("Request join accepted");
+//    //Add player to array list of players
+//    players.add(player);
+//   }
+//    else
+//       {
+//       System.out.println("Request join rejected");
+//       }
  } 
 
  public void requestLeave(Player player) {
