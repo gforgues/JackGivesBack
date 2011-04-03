@@ -1,8 +1,11 @@
 package gameEngine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import participant.Chips;
 import participant.Player;
+import participant.Table;
 import game.*;
 import cards.*;
 
@@ -12,17 +15,28 @@ import cards.*;
 			reset();
 		}
 		
+		public void reset() {
+			myGame = new Blackjack();
+			playersHands = new HashMap<Player, ArrayList<Hand>>();
+			playersChips = new HashMap<Player, Chips>();
+			roundDone = false;
+			this.notifyObservers();
+		}	
+		
 		@Override
 		public void notifyObservers()
 		{
-			// TODO Auto-generated method stub
-			
+			if (!observerList.isEmpty()){
+				for (Observer ob : observerList) {
+					ob.handleEvent();
+				}
+			}			
 		}
 
 		@Override
 		public void addObservers(Observer obsToAdd)
 		{
-			// TODO Auto-generated method stub
+			observerList.add(obsToAdd);
 			
 		}
 
@@ -33,14 +47,75 @@ import cards.*;
 			
 		}
 		
-		public void reset() {
-			myGame = new Blackjack();
-			winner = null;
-			this.notifyObservers();
+		public void resetObservers() {
+			
 		}
+		
+		public void loadTable(Table table) {
+			gameTable = table;
+		}
+		
+		public void loadPlayers() {
+			for ( int i = 0 ; i < gameTable.getAllPlayers().size() ; i++ ) {
+				Player tmpPlayer = gameTable.getAllPlayers().get(i);
+				if (!playersHands.containsKey(tmpPlayer)) {
+					playersHands.put(tmpPlayer, new ArrayList<Hand>());
+				} 
+			}
+		}
+		
+		public void loadHands() {
+			
+		}
+		
+		public void loadChips() {
+			
+		}
+		
+		public void loadBets() {
+			
+		}
+		
+		public boolean isRoundComplete() {
+			return roundDone;
+		}
+		
+		public void setDealer(Player player) {
+			
+		}
+		
+		public void addPlayer(Player player) {
+			
+		}
+		
+		public void getPlayerHand(Player player) {
+			
+		}
+
+		public Player getWinner(Player player1, Player player2) {
+			Player tmpWinner = null;
+			
+			
+			return tmpWinner;
+		}
+		
+		
+		
+//		public void resetKeepPlayers() {
+//			myGame = new Blackjack();
+//			winner = null;
+//			
+//			HashMap<Player, Hand> tmpPlayers = new HashMap<Player, Hand>();
+//			for (int i = 0 ; i < gameTable.getAllPlayers().size() ; i++) {
+//				Player tmpPlayer = gameTable.getPlayer(i);
+//				tmpPlayers.put(tmpPlayer, new Hand());
+//			}
+//			playersHands = tmpPlayers;
+//
+//		}
 	
 		public int getNumberOfPlayers() {
-			return playerList.size();
+			return playersHands.size();
 		}
 //		
 //		public void playDoubleDown() {
@@ -74,22 +149,18 @@ import cards.*;
 //	    	}
 //	    }	  
 
-		/**
-		 * Game to play
-		 */
+
 		private Game myGame;
-		/**
-		 * 
-		 */
-		private boolean gameDone;
-		/**
-		 * Field to store current set of players
-		 */
-		private HashMap<String,Player> playerList;
-		/**
-		 * Field to store winner
-		 */
-		private Player winner;
+
+		private Table gameTable;
+
+		private ArrayList<Observer> observerList = new ArrayList<Observer>();
+		
+		private boolean roundDone;
+
+		private HashMap<Player, ArrayList<Hand>> playersHands;
+
+		private HashMap<Player, Chips> playersChips;
 
 		
 	}
