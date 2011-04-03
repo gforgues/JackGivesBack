@@ -11,6 +11,7 @@ public class Table {
 
  public Table(Player owner) {
   this.tableOwner = owner;
+	players.add(owner);
  }
  
  public ArrayList<Player> getAllPlayers() {
