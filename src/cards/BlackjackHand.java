@@ -81,6 +81,15 @@ public class BlackjackHand extends Hand {
 			return false;		}
 	}
 	
+	public boolean checkPair(BlackjackHand hand) {
+		boolean paired = false;
+		if (hand.getNumberCards() == 2) {
+			if (hand.getHand().get(0).getPoints() == hand.getHand().get(1).getPoints())
+				paired = true;
+		} 
+		return paired;
+	}
+	
 	/**
 	 * Checks whether a Hand has gone over the 21 value limit
 	 * @param
