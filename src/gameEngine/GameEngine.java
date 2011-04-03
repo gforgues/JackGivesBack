@@ -129,11 +129,16 @@ import cards.*;
 					System.out.println(gameTable.getPlayer(i).getName()+": ");
 					Scanner keyboard = new Scanner (System.in);
 					String s = "";
+				
 					
 					for (int j=0; j < b.size(); j++) {
 						
-						while (b.get(j).isPlayable() && !b.get(j).isBust()){
-											
+						
+						while (b.get(j).isPlayable() && !(b.get(j).isBust())){
+							
+							System.out.println(b.get(j).isPlayable() +"isplayable");
+							System.out.println(!(b.get(j).isBust()) +"isbust");
+
 							System.out.println("now for your first hand, do you want to hit, stand, double down, split?");
 							s = keyboard.nextLine();
 						
@@ -189,9 +194,10 @@ import cards.*;
 				if (b.size() == 1) {
 					if (processWinner(b.get(0)) == 1) 
 						System.out.println("Dealer wins!");
-					if (processWinner(b.get(0)) == -1) 
+					if (processWinner(b.get(0)) == -1) {
 						playersAndChips.get(gameTable.getPlayer(i)).addChips(playersAndChips.get(gameTable.getPlayer(i)).getBet());
 						System.out.println(gameTable.getPlayer(i).getName()+ " wins!");
+					}
 					if (processWinner(b.get(0)) == 0) 
 						System.out.println("Draw!");
 
@@ -199,17 +205,19 @@ import cards.*;
 					
 					if (processWinner(b.get(0)) == 1) 
 						System.out.println("Dealer wins!");
-					if (processWinner(b.get(0)) == -1) 
+					if (processWinner(b.get(0)) == -1) {
 						playersAndChips.get(gameTable.getPlayer(i)).addChips(playersAndChips.get(gameTable.getPlayer(i)).getBet());
 						System.out.println(gameTable.getPlayer(i).getName()+ "'s first hand wins!");
+					}
 					if (processWinner(b.get(0)) == 0) 
 						System.out.println("Draw!");
 					
 					if (processWinner(b.get(1)) == 1) 
 						System.out.println("Dealer wins!");
-					if (processWinner(b.get(1)) == -1) 
+					if (processWinner(b.get(1)) == -1) {
 						playersAndChips.get(gameTable.getPlayer(i)).addChips(playersAndChips.get(gameTable.getPlayer(i)).getBet());
 						System.out.println(gameTable.getPlayer(i).getName()+ "'s second hand wins!");
+					}
 					if (processWinner(b.get(1)) == 0) 
 						System.out.println("Draw!");
 					
@@ -340,11 +348,19 @@ import cards.*;
 		 */
 		public int processWinner(BlackjackHand hand) {
 
-			if (dealerHand.getBlackjackValue() > hand.getBlackjackValue())
+			if ((hand.isBust()) && !(dealerHand.isBust()))
 
 				return DEALER_WON;
 			
-			if (dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
+			if (!(hand.isBust()) && !(dealerHand.isBust()) && (dealerHand.getBlackjackValue() > hand.getBlackjackValue()))
+
+				return DEALER_WON;
+			
+			if (!(hand.isBust()) && (dealerHand.isBust()))
+
+				return PLAYER_WON;
+			
+			if (!(hand.isBust()) && !(dealerHand.isBust()) && dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
 //				playersAndChips.get(player).addChips(playersAndChips.get(player).getBet());
 				return PLAYER_WON;
 			}
