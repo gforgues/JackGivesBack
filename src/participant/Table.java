@@ -34,8 +34,9 @@ public class Table implements Observer {
 	}
 	
 	//returns false for now...
-	public static void requestJoin(Player player) {
-		System.out.println("Table must accept or reject this player from the game");
+	public void requestJoin(Player player) {
+//		System.out.println("Table must accept or reject this player from the game");
+		players.add(player);
 	}
 	
 	public static void requestLeave(Player player) {
