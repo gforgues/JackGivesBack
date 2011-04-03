@@ -34,6 +34,7 @@ public class MainApplication
 //			mainEngine.reset();
 //		} else {
 			mainEngine.reset();
+			mainEngine.gameStart();
 //		}
 			
 	}
