@@ -42,6 +42,7 @@ import storage.Storage;
 		public void checkDeck() {
 			if ( gameDeck.size() < DECK_RESET_VALUE ) {
 				gameDeck = new Deck();
+				gameDeck.addDeck(NUM_DECKS);
 				gameDeck.shuffle();
 			}
 		}
