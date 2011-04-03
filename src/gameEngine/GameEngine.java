@@ -361,7 +361,7 @@ import cards.*;
 				return PLAYER_WON;
 			
 			if (!(hand.isBust()) && !(dealerHand.isBust()) && dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
-//				playersAndChips.get(player).addChips(playersAndChips.get(player).getBet());
+
 				return PLAYER_WON;
 			}
 			
