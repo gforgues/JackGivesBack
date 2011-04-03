@@ -10,6 +10,7 @@ import cards.Card;
 import cards.CardImages;
 
 import game.Observer;
+import gameEngine.GameEngine;
 
 
 
@@ -20,11 +21,14 @@ public class GUI extends MainApplication implements Observer
 	public void handleEvent()
 	{
 		// TODO Auto-generated method stub
+		this.updateCards();
+		this.renewPanel();
 		
 	}
 
 	
-	public GUI() {
+	public GUI(final GameEngine ge) {
+		currentGameEngine = ge;
 		table.setOpaque(false);
 		table.setLayout(null);
 	}
@@ -80,7 +84,7 @@ public class GUI extends MainApplication implements Observer
 		
 	}
 	
-	
+	private static GameEngine currentGameEngine;
 	
 	private final static JPanel table = new JPanel(); 
 	

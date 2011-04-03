@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,6 +18,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.text.html.Option;
+
+import participant.Player;
+import cards.BlackjackHand;
 
 public class MainApplication
 {
@@ -38,6 +42,8 @@ public class MainApplication
 //		}
 			
 	}
+
+
 	
 	/**
 	 * @param args
@@ -71,6 +77,14 @@ public class MainApplication
 		{
 			public void actionPerformed(ActionEvent e) {
 				HallOfFameDisplay.displayScore(mainEngine);
+			}
+		});
+		
+		final JMenuItem miAddPlayer = new JMenuItem("Add Player");
+		miAddPlayer.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+				AddPlayer.display(mainEngine);
 			}
 		});
 
@@ -131,6 +145,7 @@ public class MainApplication
 		
 		menuGame.add(miNewGame);
 		menuGame.add(miHallOfFame);
+		menuGame.add(miAddPlayer);
 		menuGame.add(miExit);
 		menuLang.add(miEnglish);
 		menuLang.add(miFrench);
@@ -149,8 +164,35 @@ public class MainApplication
 		 */
 		playArea.setOpaque(false);
 		
-
+//mainEngine.addDealer();
 		
+//		for (int i=0;i<mainEngine.getNumberOfPlayers();i++) {
+		
+/*			playerView = new HandGUI(mainEngine,mainEngine.getPlayers().get(0));
+		mainEngine.addObservers(playerView);
+	//	}
+		
+		mainEngine.addObservers(gui);
+		
+*/		
+		GridBagConstraints c = new GridBagConstraints();
+/*		c.fill = GridBagConstraints.BOTH;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.weightx = 0.8;
+		c.weighty = 0.25;
+		c.gridx = 0;
+		c.gridy = 2;
+		playArea.add(playerView.getJPanel(), c);
+*/		
+		c.fill = GridBagConstraints.BOTH;
+		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.weightx = 0.6;
+		c.weighty = 0.5;
+		c.gridx = 1;
+		c.gridy = 1;
+		playArea.add(gui.getJPanel(), c);
 		
 		frame.getContentPane().add(menuBar, BorderLayout.NORTH);
 		frame.getContentPane().add(playArea, BorderLayout.CENTER);
@@ -165,6 +207,9 @@ public class MainApplication
 		frame.setVisible(true);
 		//Frame setup end//
 		
+		
+		mainEngine.gameStart();
+		
 	}
 		
 		protected void renewTable(JPanel a, JPanel b) {
@@ -172,11 +217,35 @@ public class MainApplication
 			playArea.invalidate();
 			playArea.validate();
 			playArea.repaint();
-
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.BOTH;
+			c.gridwidth = 1;
+			c.gridheight = 1;
+			c.weightx = 0.6;
+			c.weighty = 0.5;
+			c.gridx = 1;
+			c.gridy = 1;
+			playArea.add(b, c);
+			playArea.invalidate();
+			playArea.validate();
+			playArea.repaint();
 		}
 		
 		protected void renewHand(JPanel a, JPanel b) {
 			playArea.remove(a);
+			playArea.invalidate();
+			playArea.validate();
+			playArea.repaint();
+			
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.BOTH;
+			c.gridwidth = 2;
+			c.gridheight = 1;
+			c.weightx = 0.8;
+			c.weighty = 0.25;
+			c.gridx = 0;
+			c.gridy = 2;
+			playArea.add(b, c);
 			playArea.invalidate();
 			playArea.validate();
 			playArea.repaint();
@@ -185,6 +254,10 @@ public class MainApplication
 		
 		
 		private final static GameEngine mainEngine = new GameEngine();
+		
+		private static HandGUI playerView = null;
+		
+		private final static GUI gui = new GUI(mainEngine);
 
 		private static JFrame frame;
 		
