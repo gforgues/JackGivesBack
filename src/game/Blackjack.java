@@ -6,8 +6,8 @@ import java.util.HashMap;
 import cards.*;
 import cards.Card.Rank;
 import participant.*;
-import cards.Hand;
-import storage.Storage;
+//import cards.Hand;
+//import storage.Storage;
 
 
 	/**
@@ -274,15 +274,23 @@ import storage.Storage;
 	    		/*
 	    		 * Check if 1 ace present
 	    		 */
-	    		if ( hand.getNumberCardsOfRank(Rank.ACE) == 1 ) {
+	    		if ( hand.getCardsOfRank(Rank.ACE).getNumberCards() == 1 ) {
 	    			/*
 	    			 * Check if 1 ten,jack,queen,king present
 	    			 */
-	    			if ( hand.getNumberCardsOfRank(Rank.TEN) == 1 || hand.getNumberCardsOfRank(Rank.JACK) == 1 ||
-	    					hand.getNumberCardsOfRank(Rank.QUEEN) == 1 || hand.getNumberCardsOfRank(Rank.KING) == 1 )
+	    			if ( hand.getCardsOfRank(Rank.TEN).getNumberCards() == 1 || hand.getCardsOfRank(Rank.JACK).getNumberCards() == 1 ||
+	    					hand.getCardsOfRank(Rank.QUEEN).getNumberCards() == 1 || hand.getCardsOfRank(Rank.KING).getNumberCards() == 1 )
 	    			return true;
 	    		}
 	    	} 
 	    	return false;
-	    }		
+	    }
+	    
+	    public HashMap<Player,BlackjackHand> getPlayerAndHands() {
+	    	return this.playerHand;
+	    }
+	    
+	    public HashMap<Player,Chips> getPlayerAndChips() {
+	    	return this.playerChips;
+	    }
 	}

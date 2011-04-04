@@ -1,10 +1,13 @@
 package table;
 
 import storage.*;
+import cards.*;
+import participant.*;
+import game.Blackjack;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import participant.*;
+import java.util.HashMap;
 
 public class Table {
 	Player tableOwner;
@@ -37,7 +40,7 @@ public class Table {
 		boolean join;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println(this.tableOwner + " can player " + player.getUsername() +
+		System.out.println(this.tableOwner.getUsername() + " can player " + player.getUsername() +
 			" join the game? Enter true or false");
 		join = keyboard.nextBoolean();
    
@@ -54,7 +57,7 @@ public class Table {
 		boolean leave;
 		Scanner keyboard = new Scanner(System.in);
    
-		System.out.println(this.tableOwner + " can player " + player.getUsername() +
+		System.out.println(this.tableOwner.getUsername() + " can player " + player.getUsername() +
 				" leave the game? Enter true or false");
 		leave = keyboard.nextBoolean();
 		
@@ -84,7 +87,7 @@ public class Table {
 		boolean view;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println(this.tableOwner + " can spectator " + spectator.getName() +
+		System.out.println(this.tableOwner.getUsername() + " can spectator " + spectator.getName() +
 			" join the game? Enter true or false");
 		view = keyboard.nextBoolean();
 		
@@ -101,7 +104,7 @@ public class Table {
 		boolean leave;
 	    Scanner keyboard = new Scanner(System.in); 
 		
-	    System.out.println(this.tableOwner + " can spectator " + spectator.getName() +
+	    System.out.println(this.tableOwner.getUsername() + " can spectator " + spectator.getName() +
 			" leave the game? Enter true or false");
 	    leave = keyboard.nextBoolean();
 		
@@ -129,11 +132,50 @@ public class Table {
 	}
  
 	//need save and close methods for both player and spectator 
-	public boolean savePlayer(Statistics player) {
-		return Storage.savePlayer(player);
+	public boolean savePlayers() {
+		boolean allSuccessful = true;
+		
+		for (int i=0; i<players.size(); i++) {
+			if (!Storage.savePlayer(players.get(i).toStatistics())) {
+				allSuccessful = false;
+			}
+		}
+		
+		return allSuccessful;
+		//return Storage.savePlayer(player);
+	}
+	
+	public boolean saveSpectators() {
+		boolean allSuccessful = true;
+		
+		for (int i=0; i<players.size(); i++) {
+//			if (!Storage.savePlayer(spectators.get(i).toStatistics())) {
+//				allSuccessful = false;
+//			}
+		}
+		
+		return allSuccessful;
+	}
+	
+	//How do cycle through each key of a HashMap??? so that we can get each players
+	//hand and save it using BlackjackStorage.saveHand(..);
+	public boolean saveHands(HashMap<Player,BlackjackHand> playerHand) {
+		
+		return false;
 	}
  
-	public boolean saveGame(Statistics spectator){
-		return Storage.savePlayer(spectator);
+	//how are we saving the hands if they're stored in the blackjacks
+	public boolean saveGame(Deck deck, int gameID, Blackjack game){
+		boolean isSuccessful = false;
+		HashMap<Player,BlackjackHand> playerHand = game.getPlayerAndHands();
+		
+		if (this.savePlayers() && this.saveSpectators() && 
+				BlackjackStorage.saveDeck(deck, gameID) && this.saveHands(playerHand)) {
+			isSuccessful = true;
+		}
+		//this.saveSpectators();
+		
+		return isSuccessful;
+		//return Storage.savePlayer(spectator);
 	}
 }

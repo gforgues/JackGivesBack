@@ -1,6 +1,8 @@
 package participant;
 
-public class Spectator implements Participant {
+import table.Table;
+
+public class Spectator { //implements Participant {
 	
 	private String userName;
 	private String password;
@@ -18,23 +20,19 @@ public class Spectator implements Participant {
 		new Spectator(userName, password, "", -1);
 	}
 	
-	public void saveGame() {
-		Table.saveGame(this);
+//	public void saveGame() {
+//		Table.saveGame(this);
+//	}
+	
+	public void requestLeave(Table table) {
+		table.requestLeave(this);
 	}
 	
-	public void closeGame() {
-		Table.closeGame();
-	}
-	
-	public void requestLeave() {
-		Table.requestLeave(this);
-	}
-	
-	public String getName() {
+	public String getUsername() {
 		return this.userName;
 	}
 	
-	public void requestView() {
-		Table.requestView(this);
+	public void requestView(Table table) {
+		table.requestView(this);
 	}
 }

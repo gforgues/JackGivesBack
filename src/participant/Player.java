@@ -5,6 +5,7 @@ import java.util.*;
 import java.lang.String;
 
 import storage.*;
+import table.Table;
 
 /**
  * A simple database interface
@@ -14,7 +15,7 @@ import storage.*;
  */
 
 public class Player { //cards.Hand implements Participant {
-	Statistics player;
+  Statistics player;
   
   public Player(String username, String password){
 	  this.player = Storage.loadPlayer(username, password);
@@ -38,11 +39,13 @@ public class Player { //cards.Hand implements Participant {
 	  table.requestJoin(this);
   }
   
-  //Should we say Table.saveGame(this)- cuz it has to do with a particular
-  //player..?
-  public void saveGame() {
-	  Table.saveGame(this);
-  }
+//DO NOT NEED A SAVE GAME METHOD IN PLAYER SINCE IT'S TABLEOWNER THAT IS THE ONLY
+//ONE THAT SAVES THE GAME
+//  //Should we say Table.saveGame(this)- cuz it has to do with a particular
+//  //player..?
+//  public void saveGame(Table table) {
+//	  table.saveGame(this);
+//  }
   
   //is the save game method in Table class a static method?
   public void requestLeave(Table table) {
@@ -88,6 +91,10 @@ public class Player { //cards.Hand implements Participant {
   
   public String getStats() {
 	  return this.player.getStats();
+  }
+  
+  public Statistics toStatistics() {
+	  return this.player;
   }
 }
 

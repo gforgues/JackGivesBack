@@ -23,6 +23,7 @@ public class BlackjackHand extends Hand {
 		 * int cardPoints;
 		 */
 		Card currentCard;
+		int cardValue;
 		boolean ace = false;
     	/*
     	 * Gather all points from each card in player's hand
@@ -34,26 +35,16 @@ public class BlackjackHand extends Hand {
 				value += 10;
 			} else if (checkAce(currentCard)) {
 				ace = true;
-				value += 11;
+				value += 1;
 			} else {
 				value += currentCard.getPoints();
 			}
-			
-			if (value > 21 && ace) {
-				value -= 10;
-			}
+		}
+		if (ace && value+10 <= 21) {
+			value+=10;
 		}
 		
 		return value;
-		//public int count() {
-//		int total = 0;
-//		
-//		for (int i=0; i<hand.size(); i++) {
-//			total += hand.get(i).getPoints();
-//		}
-//		
-//		return total;
-		//}
 	}
 	
 	/*
@@ -162,18 +153,6 @@ public class BlackjackHand extends Hand {
 			}
 		}
 		return fRankList;
-	}
-	
-	public int getNumberCardsOfRank(Rank pRank) {
-		int counter = 0;
-		
-		for (int i=0; i<hand.size(); i++) {
-			if (hand.get(i).getRank().equals(pRank)) {
-				counter+=1;
-			}
-		}
-		
-		return counter;
 	}
 
 	/**
