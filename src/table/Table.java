@@ -87,7 +87,7 @@ public class Table {
 		boolean view;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println(this.tableOwner.getUsername() + " can spectator " + spectator.getName() +
+		System.out.println(this.tableOwner.getUsername() + " can spectator " + spectator.getUsername() +
 			" join the game? Enter true or false");
 		view = keyboard.nextBoolean();
 		
