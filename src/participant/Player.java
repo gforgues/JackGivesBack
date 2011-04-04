@@ -49,9 +49,29 @@ public class Player { //cards.Hand implements Participant {
 	  table.requestLeave(this);
   }
   
-  public String getName() {
+  public String getUsername() {
 	  return this.player.getUsername();
 	  //return this.userName;
+  }
+  
+  public String getRealName() {
+	  return this.player.getRealName();
+  }
+  
+  public int getAge() {
+	  return this.player.getAge();
+  }
+  
+  public int getChips() {
+	  return this.player.getChips();
+  }
+  
+  public void setChips(int numChips) {
+	  this.player.setChips(numChips);
+  }
+  
+  public void addChips(int numChips) {
+	  this.player.addChips(numChips);
   }
   
   public void addWin(int betValue) {
@@ -62,16 +82,12 @@ public class Player { //cards.Hand implements Participant {
 	  this.player.addLoss(betValue);
   }
   
-//  public int getWins() {
-//	  return wins;
-//  }
-//  
-//  public int getLosses() {
-//	  return losses;
-//  }
+  public String toString() {
+	  return this.player.toString();
+  }
   
-//  public int getGamesPlayed() {
-//	  return wins + losses;
-//  }
+  public String getStats() {
+	  return this.player.getStats();
+  }
 }
 

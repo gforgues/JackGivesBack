@@ -1,5 +1,7 @@
 package storage;
 
+import java.util.ArrayList;
+
 /**
  * Creates Statistics objects representing a stored player's stats with getters
  * and setters for all variables.
@@ -224,6 +226,31 @@ public class Statistics {
 	 */
 	public int getMaxChipsLossStreak() {
 		return maxChipsLossStreak;
+	}
+	
+	public String toString() {
+		String string = "Username: " + this.username + "\n";
+		string += "Total money won: " + this.totalChipsWon + "\n";
+		string += "Money won in the last 2 days: " + "\n";
+		string += "Biggest Winning Streak: \n";
+		string += "\tNumber of games: " + this.maxWinStreak + "\n";
+		string += "\tChips won: " + maxChipsWinStreak + "\n";
+		string += "Biggest Losing Streak: \n";
+		string += "\tNumber of games: " + this.maxLossStreak + "\n";
+		string += "\tChips lost: " + this.maxChipsLossStreak;
+		
+		return string;
+	}
+	
+	public String getStats() {
+		String string = this.toString() + "\n \n ";
+		ArrayList<Statistics> topFive = HallOfFame.getHallOfFame();
+		
+		for (int i=0; i<topFive.size(); i++) {
+			string += topFive.get(i).toString() + "\n";
+		}
+		
+		return string;
 	}
 	
 }
