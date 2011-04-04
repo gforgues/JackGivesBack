@@ -36,12 +36,12 @@ public class Table {
 		return spectators.get(index);
 	}
 
-	public void requestJoin(Player player){
+	public boolean requestJoin(Player player){
 		boolean join;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println(this.tableOwner.getUsername() + " can player " + player.getUsername() +
-			" join the game? Enter true or false");
+		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
+				+ player.getUsername() + ", join the game? Enter true or false:");
 		join = keyboard.nextBoolean();
    
 		if(join==true){
@@ -51,14 +51,16 @@ public class Table {
 		} else {
 			System.out.println("Request join rejected");
 		}
+		
+		return join;
 	} 
 
-	public void requestLeave(Player player) {
+	public boolean requestLeave(Player player) {
 		boolean leave;
 		Scanner keyboard = new Scanner(System.in);
    
-		System.out.println(this.tableOwner.getUsername() + " can player " + player.getUsername() +
-				" leave the game? Enter true or false");
+		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
+				+ player.getUsername() + ", leave the game? Enter true or false:");
 		leave = keyboard.nextBoolean();
 		
 		if(leave){
@@ -67,6 +69,8 @@ public class Table {
 		} else {
 			System.out.println("Request leave rejected");
         }
+		
+		return leave;
 	}
 	
 	//Helper method to find the index of the player in the ArrayList of players
@@ -82,13 +86,17 @@ public class Table {
 		
 		return index;
 	}
+	
+	public boolean isAccepted(boolean accepted) {
+		return accepted;
+	}
  
-	public void requestView(Spectator spectator) {
+	public boolean requestView(Spectator spectator) {
 		boolean view;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println(this.tableOwner.getUsername() + " can spectator " + spectator.getUsername() +
-			" join the game? Enter true or false");
+		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can spectator ," 
+				+ spectator.getUsername() + ", view the game? Enter true or false:");
 		view = keyboard.nextBoolean();
 		
 		if(view==true){
@@ -98,14 +106,16 @@ public class Table {
 		} else {
 			System.out.println("TableOwner rejects spectator");
 		}
+		
+		return view;
 	}
  
 	public void requestLeave(Spectator spectator) {
 		boolean leave;
 	    Scanner keyboard = new Scanner(System.in); 
 		
-	    System.out.println(this.tableOwner.getUsername() + " can spectator " + spectator.getName() +
-			" leave the game? Enter true or false");
+	    System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can spectator ," 
+				+ spectator.getUsername() + ", leave the game? Enter true or false:");
 	    leave = keyboard.nextBoolean();
 		
 		if(leave==true){
@@ -132,7 +142,7 @@ public class Table {
 	}
  
 	//need save and close methods for both player and spectator 
-	public boolean savePlayers() {
+	private boolean savePlayers() {
 		boolean allSuccessful = true;
 		
 		for (int i=0; i<players.size(); i++) {
@@ -145,7 +155,7 @@ public class Table {
 		//return Storage.savePlayer(player);
 	}
 	
-	public boolean saveSpectators() {
+	private boolean saveSpectators() {
 		boolean allSuccessful = true;
 		
 		for (int i=0; i<players.size(); i++) {
@@ -159,7 +169,7 @@ public class Table {
 	
 	//How do cycle through each key of a HashMap??? so that we can get each players
 	//hand and save it using BlackjackStorage.saveHand(..);
-	public boolean saveHands(HashMap<Player,BlackjackHand> playerHand) {
+	private boolean saveHands(HashMap<Player,BlackjackHand> playerHand) {
 		
 		return false;
 	}
@@ -177,5 +187,28 @@ public class Table {
 		
 		return isSuccessful;
 		//return Storage.savePlayer(spectator);
+	}
+	
+	public String toString() {
+		String string = "Table owner for this table is " + tableOwner.getUsername();
+		
+		if (!players.isEmpty()) {
+			string += " and the players for this table are: \n";
+				
+			for (int i=0; i<players.size(); i++) {
+				string += players.get(i).getUsername() + "\n";
+			}
+		
+		}
+		
+		if (!spectators.isEmpty()) {
+			string += "The spectators for this table are: \n";
+			
+			for (int i=0; i<spectators.size(); i++) {
+				string += spectators.get(i).getUsername() + "\n";
+			}
+		}
+		
+		return string;
 	}
 }
