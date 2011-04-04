@@ -1,5 +1,7 @@
 package participant;
 
+import java.io.FileNotFoundException;
+
 import storage.Statistics;
 import storage.Storage;
 import junit.framework.*;
@@ -10,6 +12,11 @@ public class TestPlayer extends TestCase {
 	private String expectedStringValue;
 	private String actualStringValue;
 	boolean failed;
+	
+	public void testCreateNewPlayer() {
+		Player player = new Player("newPlayer","test");
+		Storage.savePlayer(player.toStatistics());
+	}
 	
 	public void testModifyProfileCorrectPassword() {
 		Player jack = new Player("jack", "Black");
@@ -58,5 +65,118 @@ public class TestPlayer extends TestCase {
 		assertEquals(failed, true);
 	}
 	
+	public void testGetUsername() {
+		Player player = new Player("emily", "abc");
+		
+		expectedStringValue = "emily";
+		actualStringValue = player.getUsername();
+		
+		assertEquals(expectedStringValue, actualStringValue);
+	}
+	
+//	public void testSetChips() {
+//		Player player = new Player("jessica", "password");
+//		
+//		player.setChips(5000);
+//		expectedValue = 35000;
+//		actualValue = player.getChips();
+//		
+//		assertEquals(expectedValue, actualValue);
+//	}
+	
+	public void testAddChipsPositiveAmount() {
+		failed = false;
+		Player player = new Player("abcde", "1234");
+		try {
+			expectedValue = player.getChips() + 100;
+			player.addChips(100);
+			actualValue = player.getChips();
+			
+			assertEquals(expectedValue, actualValue);
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, false);
+	}
+	
+	public void testAddChipsNegativeAmount() {
+		failed = true;
+		Player player = new Player("abc", "123");
+		try {
+			expectedValue = player.getChips() - 3;
+			player.addChips(-3);
+			actualValue = player.getChips();
+			
+			assertEquals(expectedValue, actualValue);
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, true);
+	}
+	
+	public void testAddChipsPositiveAmountGreaterThanActualChips() {
+		failed = false;
+		Player player = new Player("jessica", "password");
+		try {
+			player.addChips(10000000);
+			expectedValue = 35000;
+			actualValue = player.getChips();
+			
+			assertEquals(expectedValue, actualValue);
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, true);
+	}
+	
+	public void testAddChipsNegativeAmountGreaterThanActualChips() {
+		failed = false;
+		Player player = new Player("jessica", "password");
+		try {
+			player.addChips(-10000000);
+			expectedValue = 35000;
+			actualValue = player.getChips();
+			
+			assertEquals(expectedValue, actualValue);
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, true);
+	}
+	
+	public void testAddChipsNegativeAmountEqualToChipAmount() {
+		failed = false;
+		Player player = new Player("bill", "Black");
+		try {
+			expectedValue = player.getChips() - 400;
+			player.addChips(-400);
+			actualValue = player.getChips();
+			
+			assertEquals(expectedValue, actualValue);
+		} catch (IllegalArgumentException e) {
+			failed = true;
+		}
+		assertEquals(failed, false);
+	}
+	
+	public void testAddWinBetAmountEqualToChips() {
+		Player player = new Player("jack", "Black");
+		
+		expectedValue = player.getChips() + 34;
+		player.addWin(34);
+		actualValue = player.getChips();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testAddLossBetAmountEqualToChips() {
+		Player player = new Player("jack", "Black");
+		
+		expectedValue = player.getChips() - 34;
+		player.addLoss(34);
+		actualValue = player.getChips();
+		
+		assertEquals(expectedValue, actualValue);
+	}
 	
 }

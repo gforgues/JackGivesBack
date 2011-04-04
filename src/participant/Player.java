@@ -32,7 +32,7 @@ public class Player { //cards.Hand implements Participant {
   }
   
   public void modifyProfile(String inputPassword, String newPassword) {
-	  this.modifyProfile(inputPassword, newPassword, "", -1);
+	  this.modifyProfile(inputPassword, newPassword, "noName", -1);
   }
     
   public void requestJoin(Table table) {

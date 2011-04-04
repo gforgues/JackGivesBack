@@ -138,13 +138,36 @@ public class Statistics {
 	public void setChips(int numChips) throws IllegalArgumentException{
 		if (numChips >= 0) {
 			this.numChips = numChips;
+			Storage.savePlayer(this);
 		} else {
 			throw new IllegalArgumentException("Number of chips is negative");
 		}
 	}
-	public void addChips(int numChips) {
-		this.numChips += numChips;
+	
+	public void addChips(int numChips) throws IllegalArgumentException {
+//		if (numChips < 0 && -numChips > this.numChips) {
+//			throw new IllegalArgumentException("Insufficient chips");
+//		} else {
+//			this.numChips += numChips;
+//			Storage.savePlayer(this);
+//		}
+		
+		if (Math.abs(numChips) <= this.numChips) {
+			this.numChips += numChips;
+		} else {//if (numChips < 0 && -numChips > this.numChips) {
+				throw new IllegalArgumentException("Insufficient chips");
+		}
+		
+//		this.chips = chips;
+//		if (bet <= this.chips && bet >= 0) {
+//			this.bet = bet;
+//		} else if (Math.abs(bet) > this.chips) {
+//				throw new IllegalArgumentException("Bet is greater than the amount of chips");
+//			} else if (bet < 0) {
+//				throw new IllegalArgumentException("The bet is negative");
+//			}
 	}
+	
 	/**
 	 * Retrieves a stored player's current chip count
 	 * @return An integer of the player's current chip count
@@ -178,6 +201,8 @@ public class Statistics {
 		}
 		lossStreak = 0;
 		chipsLossStreak = 0;
+		
+		Storage.savePlayer(this);
 	}
 	
 	/**
@@ -198,6 +223,8 @@ public class Statistics {
 		}
 		winStreak = 0;
 		chipsWinStreak = 0;
+		
+		Storage.savePlayer(this);
 	}
 	/**
 	 * Retrieves a player's max win streak
