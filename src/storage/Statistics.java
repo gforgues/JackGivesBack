@@ -144,28 +144,19 @@ public class Statistics {
 		}
 	}
 	
-	public void addChips(int numChips) throws IllegalArgumentException {
-//		if (numChips < 0 && -numChips > this.numChips) {
-//			throw new IllegalArgumentException("Insufficient chips");
-//		} else {
-//			this.numChips += numChips;
-//			Storage.savePlayer(this);
-//		}
+	public boolean addChips(int numChips) throws IllegalArgumentException {
+		boolean successful;
 		
-		if (Math.abs(numChips) <= this.numChips) {
+		if (numChips < 0 && -numChips > this.numChips) {
+			successful = false;
+			throw new IllegalArgumentException("Insufficient chips");
+		} else {
 			this.numChips += numChips;
-		} else {//if (numChips < 0 && -numChips > this.numChips) {
-				throw new IllegalArgumentException("Insufficient chips");
+			Storage.savePlayer(this);
+			successful = true;
 		}
 		
-//		this.chips = chips;
-//		if (bet <= this.chips && bet >= 0) {
-//			this.bet = bet;
-//		} else if (Math.abs(bet) > this.chips) {
-//				throw new IllegalArgumentException("Bet is greater than the amount of chips");
-//			} else if (bet < 0) {
-//				throw new IllegalArgumentException("The bet is negative");
-//			}
+		return successful;
 	}
 	
 	/**

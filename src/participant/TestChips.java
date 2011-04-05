@@ -8,17 +8,17 @@ public class TestChips extends TestCase {
 	private boolean failed;
 	
 	public void testGetChipsWithPlayer() {
-		Player player = new Player("test", "abc");
-		Chips chips = new Chips(player.getChips(), 3);
+		Player player = new Player("abc", "123");
+		Chips chips = new Chips(player.getChips(), 1);
 		
-		expectedValue = 350;
+		expectedValue = player.getChips();
 		actualValue = chips.getChips();
 		
 		assertEquals(expectedValue, actualValue);
 	}
 	
 	public void testGetBetWithPlayer() {
-		Player player = new Player("jack", "Black");
+		Player player = new Player("emily", "abc");
 		Chips chips = new Chips(player.getChips(), 4);
 		
 		expectedValue = 4;
@@ -123,9 +123,9 @@ public class TestChips extends TestCase {
 		try {
 			Chips chips = new Chips(500, 100);
 			Player player = new Player("jack", "Black");
-			chips.addChips(player, 100);
 			
-			expectedValue = 600;
+			expectedValue = player.getChips() + 100;
+			chips.addChips(player, 100);
 			actualValue = player.getChips();
 			
 			assertEquals(expectedValue, actualValue);
@@ -154,14 +154,14 @@ public class TestChips extends TestCase {
 		assertEquals(failed, false);
 	}
 	
-	public void testAddChipsAmountGreaterThanChips() {
+	public void testAddChipsPositiveAmountGreaterThanChips() {
 		failed = false;
 		try {
 			Chips chips = new Chips(500, 100);
 			Player player = new Player("jack", "Black");
 			
-			expectedValue = player.getChips();
-			chips.addChips(player, 100500);
+			expectedValue = player.getChips() + 500;
+			chips.addChips(player, 500);
 			actualValue = player.getChips();
 			
 			assertEquals(expectedValue, actualValue);
@@ -169,7 +169,7 @@ public class TestChips extends TestCase {
 			failed = true;
 		}
 		
-		assertEquals(failed, true);
+		assertEquals(failed, false);
 	}
 	
 	public void testAddChipsNegativeAmountGreaterThanChips() {

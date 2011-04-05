@@ -16,9 +16,13 @@ public class Chips {
 			}		
 	}
 	
-//	public Chips(int chips) {
-//		this.chips = chips;
-//	}
+	public Chips(int chips) throws IllegalArgumentException {
+		if (chips >= 0) {
+			this.chips = chips;
+		} else {
+			throw new IllegalArgumentException("Starting chip amount is negative");
+		}
+	}
 	
 	public Chips() {
 		this.chips = 0;
@@ -28,35 +32,13 @@ public class Chips {
 	//Sets the new amount of chips for the Player
 	public void setChips(Player player, int amount) {//throws IllegalArgumentException {
 		player.setChips(amount);
-//		if (amount >= 0)
-//			this.chips = amount;
-//		else {
-//			throw new IllegalArgumentException("Number of chips is negative");
-//		}
 	}
 	
 	//Adds the new amount (parameter) to the amount of chips already stored in
 	//this object
-	public void addChips(Player player, int amount) {
-		player.addChips(amount);
+	public boolean addChips(Player player, int amount) {
+		return player.addChips(amount);
 	}
-//	public void addChips(int amount) throws IllegalArgumentException {
-//		if (amount < 0) {
-//			throw new IllegalArgumentException("Number of chips is negative");
-//		} else {
-//			this.chips += amount;
-//		}
-//	}
-//	
-//	public boolean removeChips(int amount)  {
-//		//should we throw exceptions for negative amounts or not enough chips?
-//		if (amount > this.chips || amount <= 0) {
-//			return false;
-//		} else {
-//			this.chips -= amount;
-//		}
-//		return true;
-//	}
 	
 	public int getChips() {
 		return this.chips;

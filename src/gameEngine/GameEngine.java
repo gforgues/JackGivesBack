@@ -11,6 +11,28 @@ import game.Observer;
 import cards.*;
 
 	public class GameEngine	implements Observable {
+		private Blackjack myGame;
+
+		private Table gameTable;
+		
+		private ArrayList<Observer> observerList = new ArrayList<Observer>();
+		
+		private BlackjackHand dealerHand = new BlackjackHand();
+
+		private HashMap<Player, ArrayList<BlackjackHand>> playersAndHands;
+
+		private HashMap<Player, Chips> playersAndChips;
+
+		private final int MUST_HIT = 16;
+		
+		private final int STARTING_CHIPS = 500;
+		
+		private final int DEALER_WON = 1;
+		
+		private final int PLAYER_WON = -1;
+		
+		private final int DRAW = 0;
+		
 		
 		public GameEngine() {
 		}
@@ -66,14 +88,18 @@ import cards.*;
 			loadBets();
 			
 			
-			for (int i=0;i<getNumberOfPlayers();i++){
-				System.out.println(gameTable.getPlayer(i).getName() + " how much do you want to bet?");
-				Scanner keyboard = new Scanner(System.in);
+			ArrayList<Player> players = gameTable.getAllPlayers();
+			Scanner keyboard = new Scanner(System.in);
+			
+			for (int i=0; i<players.size(); i++) {
+			//for (int i=0;i<getNumberOfPlayers();i++){
+				System.out.println(players.get(i).getUsername() + " how much do you want to bet?");
 				int a= keyboard.nextInt();
 				System.out.println(" you want to bet " +a);
 				
-				while (playersAndChips.get(gameTable.getPlayer(i)).removeChips(a)==false) {
-					System.out.println("sorry not enough chips, please enter " + playersAndChips.get(gameTable.getAllPlayers().get(i)).getChips()  + " or less" );
+				while (playersAndChips.get(players.get(i)).addChips(players.get(i), a) == false) {
+					System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i).getChips()  + " or less" ));
+					//System.out.println("sorry not enough chips, please enter " + playersAndChips.get(gameTable.getAllPlayers().get(i)).getChips()  + " or less" );
 					a= keyboard.nextInt();
 					System.out.println(" you want to bet " +a);
 				}
@@ -96,8 +122,8 @@ import cards.*;
 			 * Deal everyone
 			 */
 			System.out.println("Dealing everyone...");
-			for (int i=0;i<getNumberOfPlayers();i++){
-			System.out.println(gameTable.getPlayer(i).getName());
+			for (int i=0; i<players.size(); i++){
+				System.out.println(players.get(i).getUsername());
 			}
 			
 			for (ArrayList<BlackjackHand> b : playersAndHands.values()) {
@@ -108,7 +134,7 @@ import cards.*;
 			
 			for (int i=0;i<getNumberOfPlayers();i++){
 				ArrayList<BlackjackHand> b = playersAndHands.get(gameTable.getPlayer(i));
-				System.out.println(gameTable.getPlayer(i).getName() + ", your first hand is currently: " + b.get(0).toString());
+				System.out.println(gameTable.getPlayer(i).getUsername() + ", your first hand is currently: " + b.get(0).toString());
 				if (b.size() == 2) {
 					System.out.println(gameTable.getPlayer(i) + ", your second hand is currently: " + b.get(1).toString());
 				}
@@ -122,12 +148,12 @@ import cards.*;
 				 * Ask for input moves
 				 */
 
-				for (int i=0;i<getNumberOfPlayers();i++){
+				for (int i=0; i<players.size(); i++){
 					
-					ArrayList<BlackjackHand> b = playersAndHands.get(gameTable.getPlayer(i));
+					ArrayList<BlackjackHand> b = playersAndHands.get(players.get(i));
 					
-					System.out.println(gameTable.getPlayer(i).getName()+": ");
-					Scanner keyboard = new Scanner (System.in);
+					System.out.println(gameTable.getPlayer(i).getUsername()+": ");
+					//Scanner keyboard = new Scanner (System.in);
 					String s = "";
 				
 					
@@ -151,7 +177,7 @@ import cards.*;
 								System.out.println("final hand: "+b.get(j).toString());
 							}
 							else if (s.equals("double down")){
-								if (playersAndChips.get(gameTable.getPlayer(i)).removeChips(playersAndChips.get(i).getBet())==false) {
+								if (playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(i).getBet())==false) {
 									System.out.print("sorry not enough chips, please enter a different move" );
 									s = "";
 								}
@@ -195,8 +221,8 @@ import cards.*;
 					if (processWinner(b.get(0)) == 1) 
 						System.out.println("Dealer wins!");
 					if (processWinner(b.get(0)) == -1) {
-						playersAndChips.get(gameTable.getPlayer(i)).addChips(playersAndChips.get(gameTable.getPlayer(i)).getBet());
-						System.out.println(gameTable.getPlayer(i).getName()+ " wins!");
+						playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(gameTable.getPlayer(i)).getBet());
+						System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
 					}
 					if (processWinner(b.get(0)) == 0) 
 						System.out.println("Draw!");
@@ -206,8 +232,8 @@ import cards.*;
 					if (processWinner(b.get(0)) == 1) 
 						System.out.println("Dealer wins!");
 					if (processWinner(b.get(0)) == -1) {
-						playersAndChips.get(gameTable.getPlayer(i)).addChips(playersAndChips.get(gameTable.getPlayer(i)).getBet());
-						System.out.println(gameTable.getPlayer(i).getName()+ "'s first hand wins!");
+						playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(gameTable.getPlayer(i)).getBet());
+						System.out.println(gameTable.getPlayer(i).getUsername()+ "'s first hand wins!");
 					}
 					if (processWinner(b.get(0)) == 0) 
 						System.out.println("Draw!");
@@ -215,8 +241,8 @@ import cards.*;
 					if (processWinner(b.get(1)) == 1) 
 						System.out.println("Dealer wins!");
 					if (processWinner(b.get(1)) == -1) {
-						playersAndChips.get(gameTable.getPlayer(i)).addChips(playersAndChips.get(gameTable.getPlayer(i)).getBet());
-						System.out.println(gameTable.getPlayer(i).getName()+ "'s second hand wins!");
+						playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(gameTable.getPlayer(i)).getBet());
+						System.out.println(gameTable.getPlayer(i).getUsername()+ "'s second hand wins!");
 					}
 					if (processWinner(b.get(1)) == 0) 
 						System.out.println("Draw!");
@@ -418,28 +444,5 @@ import cards.*;
 //	    		player.getChips() -= amount;
 //	    	}
 //	    }	  
-
-
-		private Blackjack myGame;
-
-		private Table gameTable;
-		
-		private ArrayList<Observer> observerList = new ArrayList<Observer>();
-		
-		private BlackjackHand dealerHand = new BlackjackHand();
-
-		private HashMap<Player, ArrayList<BlackjackHand>> playersAndHands;
-
-		private HashMap<Player, Chips> playersAndChips;
-
-		private final int MUST_HIT = 16;
-		
-		private final int STARTING_CHIPS = 500;
-		
-		private final int DEALER_WON = 1;
-		
-		private final int PLAYER_WON = -1;
-		
-		private final int DRAW = 0;
 		
 	}
