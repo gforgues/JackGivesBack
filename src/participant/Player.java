@@ -35,8 +35,8 @@ public class Player { //cards.Hand implements Participant {
 	  this.modifyProfile(inputPassword, newPassword, "noName", -1);
   }
     
-  public void requestJoin(Table table) {
-	  table.requestJoin(this);
+  public void requestJoin(Table table, boolean canJoin) {
+	  table.requestJoin(this, canJoin);
   }
   
 //DO NOT NEED A SAVE GAME METHOD IN PLAYER SINCE IT'S TABLEOWNER THAT IS THE ONLY
@@ -48,8 +48,8 @@ public class Player { //cards.Hand implements Participant {
 //  }
   
   //is the save game method in Table class a static method?
-  public void requestLeave(Table table) {
-	  table.requestLeave(this);
+  public void requestLeave(Table table, boolean canLeave) {
+	  table.requestLeave(this, canLeave);
   }
   
   public String getUsername() {

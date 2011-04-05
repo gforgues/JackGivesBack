@@ -8,6 +8,8 @@ import game.Blackjack;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Table {
 	Player tableOwner;
@@ -17,6 +19,7 @@ public class Table {
 	public Table(Player owner) {
 		this.tableOwner = owner;
 		players = new ArrayList<Player>();
+		players.add(this.tableOwner);
 		spectators = new ArrayList<Spectator>();
 	}
  
@@ -36,15 +39,16 @@ public class Table {
 		return spectators.get(index);
 	}
 
-	public boolean requestJoin(Player player){
+	public boolean requestJoin(Player player, boolean canJoin){
 		boolean join;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
-				+ player.getUsername() + ", join the game? Enter true or false:");
-		join = keyboard.nextBoolean();
+//		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
+//				+ player.getUsername() + ", join the game? Enter true or false:");
+//		join = keyboard.nextBoolean();
    
-		if(join==true){
+		if (canJoin) {
+		//if(join==true){
 			System.out.println("Request join accepted");
 			//Add player to array list of players
 			players.add(player);
@@ -52,25 +56,28 @@ public class Table {
 			System.out.println("Request join rejected");
 		}
 		
-		return join;
+		return canJoin;
+		//return join;
 	} 
 
-	public boolean requestLeave(Player player) {
+	public boolean requestLeave(Player player, boolean canLeave) {
 		boolean leave;
 		Scanner keyboard = new Scanner(System.in);
    
-		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
-				+ player.getUsername() + ", leave the game? Enter true or false:");
-		leave = keyboard.nextBoolean();
+//		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
+//				+ player.getUsername() + ", leave the game? Enter true or false:");
+//		leave = keyboard.nextBoolean();
 		
-		if(leave){
+		if (canLeave) {
+//		if(leave){
 			System.out.println("Request leave accepted");
 			players.remove(this.findIndex(player));
 		} else {
 			System.out.println("Request leave rejected");
         }
 		
-		return leave;
+		return canLeave;
+//		return leave;
 	}
 	
 	//Helper method to find the index of the player in the ArrayList of players
@@ -86,20 +93,17 @@ public class Table {
 		
 		return index;
 	}
-	
-	public boolean isAccepted(boolean accepted) {
-		return accepted;
-	}
  
-	public boolean requestView(Spectator spectator) {
+	public boolean requestView(Spectator spectator, boolean canView) {
 		boolean view;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can spectator ," 
-				+ spectator.getUsername() + ", view the game? Enter true or false:");
-		view = keyboard.nextBoolean();
+//		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can spectator ," 
+//				+ spectator.getUsername() + ", view the game? Enter true or false:");
+//		view = keyboard.nextBoolean();
 		
-		if(view==true){
+		if (canView) {
+//		if(view==true){
 			System.out.println("TableOwner accepts spectator");
 			//Add spectator to arraylist of spectators
 			spectators.add(spectator);
@@ -107,24 +111,28 @@ public class Table {
 			System.out.println("TableOwner rejects spectator");
 		}
 		
-		return view;
+		return canView;
+//		return view;
 	}
  
-	public void requestLeave(Spectator spectator) {
+	public boolean requestLeave(Spectator spectator, boolean canLeave) {
 		boolean leave;
 	    Scanner keyboard = new Scanner(System.in); 
 		
-	    System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can spectator ," 
-				+ spectator.getUsername() + ", leave the game? Enter true or false:");
-	    leave = keyboard.nextBoolean();
+//	    System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can spectator ," 
+//				+ spectator.getUsername() + ", leave the game? Enter true or false:");
+//	    leave = keyboard.nextBoolean();
 		
-		if(leave==true){
+	    if (canLeave) {
+//		if(leave==true){
 			System.out.println("TableOwner accepts spectator from leaving the table");
 			//remove spectator from list of spectators
 			spectators.remove(this.findIndex(spectator));
 		} else {
 			System.out.println("TableOwner rejects spectator from leaving the table");
 		}
+	    
+	    return canLeave;
 	}
 	
 	//Helper method to find the index of the spectator in the ArrayList of spectators
@@ -142,7 +150,7 @@ public class Table {
 	}
  
 	//need save and close methods for both player and spectator 
-	private boolean savePlayers() {
+	public boolean savePlayers() {
 		boolean allSuccessful = true;
 		
 		for (int i=0; i<players.size(); i++) {
@@ -155,7 +163,7 @@ public class Table {
 		//return Storage.savePlayer(player);
 	}
 	
-	private boolean saveSpectators() {
+	public boolean saveSpectators() {
 		boolean allSuccessful = true;
 		
 		for (int i=0; i<players.size(); i++) {
@@ -169,19 +177,31 @@ public class Table {
 	
 	//How do cycle through each key of a HashMap??? so that we can get each players
 	//hand and save it using BlackjackStorage.saveHand(..);
-	private boolean saveHands(HashMap<Player,BlackjackHand> playerHand) {
+	public boolean saveHands(HashMap<Player,BlackjackHand> playerHand, int gameID) {
+		Set set = playerHand.keySet();
+		Iterator itr = set.iterator();
+		Player player;
+		boolean allSuccessful = true;
 		
-		return false;
+		while (itr.hasNext()) {
+			player = ((Player)itr.next());
+			if (!BlackjackStorage.saveHand(player.getUsername(), playerHand.get(player), gameID)) {
+				allSuccessful = false;
+			}
+			//System.out.println(itr.next());
+		}
+		
+		return allSuccessful;
 	}
  
 	//how are we saving the hands if they're stored in the blackjacks
 	public boolean saveGame(Deck deck, int gameID, Blackjack game){
-		boolean isSuccessful = false;
+		boolean isSuccessful = true;
 		HashMap<Player,BlackjackHand> playerHand = game.getPlayerAndHands();
 		
-		if (this.savePlayers() && this.saveSpectators() && 
-				BlackjackStorage.saveDeck(deck, gameID) && this.saveHands(playerHand)) {
-			isSuccessful = true;
+		if (!this.savePlayers() || !this.saveSpectators() ||
+				!BlackjackStorage.saveDeck(deck, gameID) || !this.saveHands(playerHand, gameID)) {
+			isSuccessful = false;
 		}
 		//this.saveSpectators();
 		

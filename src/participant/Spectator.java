@@ -24,15 +24,15 @@ public class Spectator { //implements Participant {
 //		Table.saveGame(this);
 //	}
 	
-	public void requestLeave(Table table) {
-		table.requestLeave(this);
+	public void requestLeave(Table table, boolean canLeave) {
+		table.requestLeave(this, canLeave);
 	}
 	
 	public String getUsername() {
 		return this.userName;
 	}
 	
-	public void requestView(Table table) {
-		table.requestView(this);
+	public void requestView(Table table, boolean canView) {
+		table.requestView(this, canView);
 	}
 }
