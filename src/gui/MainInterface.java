@@ -94,6 +94,7 @@ public class MainInterface
 			if (menuChoice == CHANGEAGE) {
 				System.out.println("Enter your age: ");
 				int age = keyboard.nextInt();
+				keyboard.nextLine();
 				player.toStatistics().setAge(age);
 				Storage.savePlayer(player.toStatistics());
 			}
