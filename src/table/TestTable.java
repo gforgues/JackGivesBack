@@ -8,6 +8,8 @@ import cards.*;
 import cards.Card.Rank;
 import cards.Card.Suit;
 import participant.*;
+import storage.Statistics;
+import storage.Storage;
 
 public class TestTable extends TestCase {
 	private Player p1; 
@@ -171,15 +173,21 @@ public class TestTable extends TestCase {
 		assertEquals(table.getAllSpectators().size(), 1);
 	}
 	
-	public void testSaveThreePlayers() {
+	public void testSaveOnePlayer() {
 		p1.requestJoin(table, true);
-		p2.requestJoin(table, true);
-		p3.requestJoin(table, true);
 		
-//		Method method = targetClass.getDeclaredMethod(methodName, argClasses);
-//		method.setAccessible(true);
-//		return method.invoke(targetObject, argObjects);
 	}
+//	public void testSavePlayer() {
+//		Statistics abc = Storage.loadPlayer("abc","123");
+//		
+//		abc.setChips(5);
+//		Storage.savePlayer(abc);
+//		abc = Storage.loadPlayer("abc","123");
+//		actualValue = abc.getChips();
+//		expectedValue = 5;
+//		
+//		assertEquals(actualValue, expectedValue);
+//	}
 	
 	public void testSavePlayers() {
 		p1.requestJoin(table, true);
@@ -189,16 +197,16 @@ public class TestTable extends TestCase {
 		//Deck deck, int gameID, Blackjack game
 	}
 	
-	public void testSaveHands() {
-		p1.requestJoin(table, true);
-		p2.requestJoin(table, true);
-		HashMap<Player,BlackjackHand> playerHand = new HashMap<Player,BlackjackHand>();
-		Hand hand = new Hand();
-//		hand.addCard(new Card(Rank.ACE, Suit.DIAMONDS));
-//		hand.addCard(new Card(Rank.TEN, Suit.HEARTS));
-		
-		//playerHand.put(p1,);
-		
-		//assertEquals(table.saveHands(hand, 2), true);
-	}
+//	public void testSaveHands() {
+//		p1.requestJoin(table, true);
+//		p2.requestJoin(table, true);
+//		HashMap<Player,BlackjackHand> playerHand = new HashMap<Player,BlackjackHand>();
+//		Hand hand = new Hand();
+////		hand.addCard(new Card(Rank.ACE, Suit.DIAMONDS));
+////		hand.addCard(new Card(Rank.TEN, Suit.HEARTS));
+//		
+//		//playerHand.put(p1,);
+//		
+//		//assertEquals(table.saveHands(hand, 2), true);
+//	}
 }

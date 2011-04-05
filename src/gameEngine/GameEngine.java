@@ -44,6 +44,10 @@ import cards.*;
 			this.notifyObservers();
 		}
 		
+		public HashMap<Player, ArrayList<BlackjackHand>> getPlayersAndHands() {
+			return this.playersAndHands;
+		}
+		
 		public void gameStart() {
 			
 			reset();

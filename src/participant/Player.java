@@ -73,8 +73,8 @@ public class Player { //cards.Hand implements Participant {
 	  this.player.setChips(numChips);
   }
   
-  public void addChips(int numChips) {
-	  this.player.addChips(numChips);
+  public boolean addChips(int numChips) {
+	  return this.player.addChips(numChips);
   }
   
   public void addWin(int betValue) {
