@@ -64,6 +64,7 @@ import cards.*;
 			myGame = new Blackjack();
 			playersAndHands = new HashMap<Player, ArrayList<BlackjackHand>>();
 			playersAndChips = new HashMap<Player, Chips>();
+			dealerHand = new BlackjackHand();
 			this.notifyObservers();
 		}
 		
