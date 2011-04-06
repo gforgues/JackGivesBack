@@ -259,15 +259,17 @@ public class Statistics {
 		return string;
 	}
 	
-	public String getStats() {
-		String string = this.toString() + "\n \n ";
-		ArrayList<Statistics> topFive = HallOfFame.getHallOfFame();
-		
-		for (int i=0; i<topFive.size(); i++) {
-			string += topFive.get(i).toString() + "\n";
-		}
-		
-		return string;
+	public void displayStatistics() {
+		System.out.println(this.toString() + "\n\n");
+		HallOfFame.display();
+//		String string = this.toString() + "\n \n ";
+//		ArrayList<Statistics> topFive = HallOfFame.getHallOfFame();
+//		
+//		for (int i=0; i<topFive.size(); i++) {
+//			string += topFive.get(i).toString() + "\n";
+//		}
+//		
+//		return string;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package storage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import cards.*;
@@ -23,6 +24,22 @@ public class BlackjackStorage {
 			
 		} catch (IOException e) {
 			return false;
+		}
+	}
+	
+	public static ArrayList<String> loadPlayerNames(int gameId) {
+		ArrayList<String> string = new ArrayList<String>();
+		try {
+			Scanner reader = new Scanner(new File("saves/" + gameId + ".csv"));
+			while (reader.hasNextLine()) {
+				String[] parsedLine = reader.nextLine().split(",");
+				string.add(parsedLine[0]);
+			}
+			reader.close();
+			return string;
+		} catch (IOException e) {
+			System.out.println("Could not load player's name");
+			return string;
 		}
 	}
 	
