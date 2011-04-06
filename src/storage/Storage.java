@@ -29,6 +29,7 @@ public class Storage {
 			throw new IllegalArgumentException("Player already exists.");
 		} else {
 			Statistics newPlayer = new Statistics(username,password);
+			newPlayer.addChips(500);
 			savePlayer(newPlayer);
 			return true;
 		}
