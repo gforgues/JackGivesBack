@@ -197,7 +197,7 @@ import cards.*;
 					
 					System.out.println(gameTable.getPlayer(i).getUsername()+": ");
 					//Scanner keyboard = new Scanner (System.in);
-					String s = "";
+//					String s = "";
 				
 					
 					for (int j=0; j < b.size(); j++) {
@@ -209,7 +209,7 @@ import cards.*;
 //							System.out.println(!(b.get(j).isBust()) +"isbust");
 
 							System.out.println("now for your first hand, do you want to hit, stand, double down, split?");
-							s = keyboard.nextLine();
+							String s = keyboard.next();
 						
 							if (s.equals("hit")){
 								myGame.hit(b.get(j));
