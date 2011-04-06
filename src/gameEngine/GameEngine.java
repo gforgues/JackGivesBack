@@ -231,7 +231,7 @@ import cards.*;
 //							System.out.println(b.get(j).isPlayable() +"isplayable");
 //							System.out.println(!(b.get(j).isBust()) +"isbust");
 
-							System.out.println("now for your first hand, do you want to hit, stand, double down, split?");
+							System.out.println("Hit, stand, doubledown or split?");
 							String s = keyboard.next();
 						
 							if (s.equals("hit")){
