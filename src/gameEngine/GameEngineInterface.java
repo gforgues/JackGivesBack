@@ -1,8 +1,10 @@
 package gameEngine;
 
 import java.util.Scanner;
+
 import table.*;
 import participant.Player;
+import participant.Spectator;
 import gui.MainInterface;
 
 public class GameEngineInterface {
@@ -40,7 +42,7 @@ public class GameEngineInterface {
 				addPlayer();
 			}
 			if (menuChoice == ADDSPECTATOR) {
-				// spectators still not implemented?
+				addSpectator();
 			}
 			if (menuChoice == SAVEGAME) {
 				System.out.println("Choose a save slot number (1-9) :");
@@ -62,6 +64,7 @@ public class GameEngineInterface {
 					menuChoice = EXIT;
 					new GameEngineInterface(gameEngine);
 				} catch (Exception e) {
+					System.out.println(e);
 					System.out.println("Could not load game");
 				}
 			}
@@ -72,5 +75,10 @@ public class GameEngineInterface {
 	public void addPlayer() {
 		Player newPlayer = MainInterface.login();
 		gameEngine.addPlayer(newPlayer);
+	}
+	
+	public void addSpectator() {
+		Player newPlayer = MainInterface.login();
+		System.out.println(newPlayer.getUsername() + " is now a Spectator");
 	}
 }
