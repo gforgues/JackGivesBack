@@ -34,6 +34,8 @@ import cards.*;
 		private final int DRAW = 0;
 		
 		
+		
+		
 		public GameEngine() {
 		}
 		
@@ -448,5 +450,75 @@ import cards.*;
 //	    		player.getChips() -= amount;
 //	    	}
 //	    }	  
+		public void doHit(){
+			ArrayList<Player >allplayers=gameTable.getAllPlayers();
+			for(int i=0;i<allplayers.size();i++){
+				ArrayList<BlackjackHand> handList = playersAndHands.get(allplayers.get(i));
+				for(int j=0; j<handList.size();j++){
+					BlackjackHand hand=handList.get(j);
+					while(hand.isPlayable()){
+						if(hand.isBust()==true){
+							System.out.println("cannot hit, the hand is bust");
+						}else if(hand.checkBlackjack()==true){
+							System.out.println("cannot hit, the hand is blackjack");
+						}else{
+							myGame.hit(hand);
+						}
+					}	
+				}
+			}	
+		}	
+		
+		public void doStand(){
+			ArrayList<Player >allplayers=gameTable.getAllPlayers();
+			for(int i=0;i<allplayers.size();i++){
+				ArrayList<BlackjackHand> handList = playersAndHands.get(allplayers.get(i));
+				for(int j=0; j<handList.size();j++){
+					BlackjackHand hand=handList.get(j);
+			if(hand.isBust()==true){
+				System.out.println("cannot stand, the hand is bust");
+			}else if(hand.checkBlackjack()==true){
+				System.out.println("cannot stand, the hand is blackjack");
+			}else{
+				myGame.stand(hand);
+				hand.setDone();
+			}
+				}
+			}
+		
+		}
+		public void doSplit(){
+			ArrayList<Player >allplayers=gameTable.getAllPlayers();
+			for(int i=0;i<allplayers.size();i++){
+				ArrayList<BlackjackHand> handList = playersAndHands.get(allplayers.get(i));
+				for(int j=0; j<handList.size();j++){
+					BlackjackHand hand=handList.get(j);
+				while(hand.isPlayable()){
+					if(hand.checkBlackjack()==true){
+						System.out.println("cannot split, the hand is blackjack");
+					}else{
+						myGame.split(hand);
+					}
+				}
+			}
+			}
+		}
+		public void doDoubleDown(){
+			ArrayList<Player> allplayers=gameTable.getAllPlayers();
+			for(int i=0;i<allplayers.size();i++){
+				ArrayList<BlackjackHand> handList = playersAndHands.get(allplayers.get(i));
+				for(int j=0; j<handList.size();j++){
+					BlackjackHand hand=handList.get(j);
+				while(hand.isPlayable()){
+					if(hand.checkBlackjack()==true){
+						System.out.println("cannot double down, the hand is blackjack");
+					}else{
+						myGame.doubleDown(hand);
+					}
+				}
+			}
+			}
+		}
+		
 		
 	}

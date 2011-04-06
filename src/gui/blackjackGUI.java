@@ -1,4 +1,8 @@
 package gui;
+import cards.Hand;
+import game.Blackjack;
+import gameEngine.*;
+import participant.*;
 
 /*
  * To change this template, choose Tools | Templates
@@ -10,6 +14,14 @@ package gui;
  * @author Client
  */
 public class blackjackGUI extends javax.swing.JFrame {
+	
+	private static Player player1;
+	private static Player player2;
+	private static Player player3;
+	private static Player player4;
+	private static Player dealer;
+	private final static GameEngine mainEngine = new GameEngine();
+	
 
     /** Creates new form guiMain */
     public blackjackGUI() {
@@ -207,38 +219,58 @@ public class blackjackGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    	mainEngine.doHit();
+    }  
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    	mainEngine.doStand();
+    }  
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    	mainEngine.doDoubleDown();
+    }  
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+    	mainEngine.doSplit();
+    }  
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    	System.exit(0);
     }                                        
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+    	mainEngine.gameStart();
     }                                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        // TODO add your handling code here:
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        
+    	mainEngine.getPlayerHand(dealer).toString();
+    
+    }                                           
 
-    }                                        
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        
+    	mainEngine.getPlayerHand(player1).toString();
+    }     
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+       
+    	mainEngine.getPlayerHand(player2).toString();
     }                                           
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+        
+    	mainEngine.getPlayerHand(player3).toString();
     }                                           
 
     private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+        
+    	mainEngine.getPlayerHand(player4).toString();
     }                                           
+
+                                        
 
     /**
     * @param args the command line arguments
