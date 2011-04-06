@@ -249,8 +249,14 @@ import cards.*;
 									s = "";
 								}
 								else { 
+									playersAndChips.get(players.get(j)).addChips(players.get(j), -(playersAndChips.get(players.get(j)).getBet()));
+								    int doubleBet;
+								    doubleBet=((playersAndChips.get(players.get(j))).getBet())*2;
+								    (playersAndChips.get(players.get(j))).setBet(doubleBet);
 									myGame.doubleDown(b.get(j));
+									System.out.println("bet update: "+ doubleBet);
 									System.out.println("hand update: "+b.get(j).toString());
+									
 								}
 
 							}
