@@ -53,6 +53,14 @@ public class Blackjack implements Game {
 	}
 
 	/**
+	 * Gets the game's deck
+	 * @return Game deck
+	 */
+	public Deck getDeck() {
+		return this.gameDeck;
+	}	
+	
+	/**
 	 * Check if Deck is low on cards
 	 * @param
 	 * @return True if Deck is low on cards, false otherwise
