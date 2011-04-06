@@ -130,7 +130,7 @@ import cards.*;
 						//add back chips after evaluating while loop condition
 						//playersAndChips.get(players.get(i)).addChips(players.get(i), a);
 
-						System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i).getChips()  + " or less" ));
+						System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i).getChips())  + " or less" );
 						//System.out.println("sorry not enough chips, please enter " + playersAndChips.get(gameTable.getAllPlayers().get(i)).getChips()  + " or less" );
 						a = keyboard.nextInt();
 					
@@ -184,8 +184,6 @@ import cards.*;
 					System.out.println(gameTable.getPlayer(i) + ", your second hand is currently: " + b.get(1).toString());
 				}
 			}
-			
-			
 			
 		
 	
