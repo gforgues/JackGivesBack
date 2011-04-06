@@ -248,8 +248,7 @@ public class Statistics {
 	
 	public String toString() {
 		String string = "Username: " + this.username + "\n";
-		string += "Total money won: " + this.totalChipsWon + "\n";
-		string += "Money won in the last 2 days: " + "\n";
+		string += "Total chips won: " + this.totalChipsWon + "\n";
 		string += "Biggest Winning Streak: \n";
 		string += "\tNumber of games: " + this.maxWinStreak + "\n";
 		string += "\tChips won: " + maxChipsWinStreak + "\n";

@@ -10,16 +10,50 @@ public class MainInterface
 		new MainInterface();
 	}
 	MainInterface() {
+		
 		int menuChoice=-1;
 		final int PLAYGAME = 1;
 		final int MODIFYPROFILE = 2;
 		final int VIEWSTATISTICS = 3;
-		final int EXIT = 4;
+		final int SWITCHUSER = 4;
+		final int EXIT = 5;
 		
+		Scanner keyboard = new Scanner(System.in);
+		Player player = login();
+		while (menuChoice != EXIT) {
+			System.out.println("------Main Menu------");
+			System.out.println("Logged in as : " + player.getUsername());
+			System.out.println("1. Play Blackjack");
+			System.out.println("2. Modify Profile");
+			System.out.println("3. View Statistics");
+			System.out.println("4. Switch user");
+			System.out.println("5. Exit");
+			menuChoice = keyboard.nextInt();
+			keyboard.nextLine();
+			
+			if (menuChoice == PLAYGAME) {
+				GameEngine gameEngine = new GameEngine(player);
+				new GameEngineInterface(gameEngine);
+			}
+			if (menuChoice == MODIFYPROFILE) {
+				modifyProfile(player);
+			}
+			if (menuChoice == VIEWSTATISTICS) {
+				viewStats(player);
+			}
+			if (menuChoice == SWITCHUSER) {
+				player = login();
+			}
+		}
+		
+	}
+	
+	public static Player login() {
 		Scanner keyboard = new Scanner(System.in);
 		String username = "";
 		String password = "";
 		boolean loggedIn = false;
+		System.out.println("-----Login-----");
 		while (!loggedIn) {
 			System.out.println("Enter username: ");
 			username = keyboard.nextLine();
@@ -33,31 +67,10 @@ public class MainInterface
 				System.out.println(e);
 			}
 		}
-		Player player = new Player(username, password);
-		while (menuChoice != EXIT) {
-			System.out.println("------Main Menu------");
-			System.out.println("1. Play Game");
-			System.out.println("2. Modify Profile");
-			System.out.println("3. View Statistics");
-			System.out.println("4. Exit");
-			menuChoice = keyboard.nextInt();
-			keyboard.nextLine();
-			
-			if (menuChoice == PLAYGAME) {
-				GameEngine gameEngine = new GameEngine();
-				gameEngine.gameStart();
-			}
-			if (menuChoice == MODIFYPROFILE) {
-				modifyProfile(player);
-			}
-			if (menuChoice == VIEWSTATISTICS) {
-				viewStats(player);
-			}
-		}
-		
+		return new Player(username, password);
 	}
 	
-	public void modifyProfile(Player player) {
+	public static void modifyProfile(Player player) {
 		int menuChoice=-1;
 		final int EXIT = 4;
 		final int CHANGEPASS = 1;
@@ -100,7 +113,7 @@ public class MainInterface
 			}
 		}
 	}
-	public void viewStats(Player player) {
+	public static void viewStats(Player player) {
 		System.out.print(player);
 	}
 }

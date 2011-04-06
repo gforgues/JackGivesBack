@@ -1,6 +1,7 @@
 package gameEngine;
 
 import java.util.*;
+import gui.MainInterface;
 
 import participant.Chips;
 import participant.Player;
@@ -74,7 +75,7 @@ import cards.*;
 		public HashMap<Player, ArrayList<BlackjackHand>> getPlayersAndHands() {
 			return this.playersAndHands;
 		}
-		
+
 		public void gameStart() {
 			
 			reset();
@@ -84,6 +85,8 @@ import cards.*;
 			 * temporarily adding players here for testing purposes, 
 			 * later needs to be modified to create/accept players/spectators
 			 */
+			
+			/*
 			Player bob = new Player("bob","bob");
 			BlackjackHand hb = new BlackjackHand();
 			ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
@@ -104,7 +107,7 @@ import cards.*;
 			
 			gameTable.requestJoin(bob);
 			gameTable.requestJoin(bab);
-			
+			*/
 			//deal dealer's hand now
 			myGame.deal(dealerHand);
 			
@@ -371,7 +374,12 @@ import cards.*;
 //			}
 			
 		}
-
+		public void addPlayer(Player player) {
+			BlackjackHand hb = new BlackjackHand();
+			ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
+			hbb.add(hb);
+			gameTable.requestJoin(player);
+		}
 		
 		@Override
 		public void notifyObservers()
