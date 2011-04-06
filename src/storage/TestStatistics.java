@@ -60,6 +60,51 @@ public class TestStatistics extends TestCase {
 		Storage.savePlayer(emily);
 	}
 	
+	public void testPositiveChips() {
+		Statistics emily = Storage.loadPlayer("emily", "abc");
+		
+		expectedValue = emily.getChips() + 100;
+		emily.addChips(100);
+		actualValue = emily.getChips();
+		assertEquals(expectedValue, actualValue);
+	}
+	public void testNegativeChips() {
+		failed = false;
+		Statistics emily = Storage.loadPlayer("emily", "abc");
+		
+		try {
+			emily.setChips(-1);
+		} catch (IllegalArgumentException e){
+			failed = true;
+		} finally {
+			assertEquals(failed, true);
+		}
+	}
+	
+	public void testAddNegativeChips() {
+		failed = false;
+		Statistics emily = Storage.loadPlayer("emily", "abc");
+		emily.setChips(1);
+		emily.addChips(-1);
+		assertEquals(emily.getChips(), 0);
+	}
+	
+	public void testInsufficientChips() {
+		failed = false;
+		
+		Statistics emily = Storage.loadPlayer("emily", "abc");
+		
+		emily.setChips(1);
+		try {
+			emily.setChips(-2);
+		} catch (IllegalArgumentException e){
+			failed = true;
+		} finally {
+			assertEquals(failed, true);
+		}
+	}
+	
+	
 	public void testAddWin() {
 		Statistics jack = Storage.loadPlayer("jack", "Black");
 		expectedValue = 1;
