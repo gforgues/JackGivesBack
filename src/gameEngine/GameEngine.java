@@ -402,11 +402,6 @@ import cards.*;
 		public Table getTable() {
 			return gameTable;
 		}
-
-
-
-		
-		
 		
 		
 		
