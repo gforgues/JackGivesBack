@@ -251,9 +251,10 @@ public class MainApplication
 			playArea.repaint();
 		}
 		
+		//temporary
+		static Player wat= new Player("wat","omg");
 		
-		
-		private final static GameEngine mainEngine = new GameEngine();
+		private final static GameEngine mainEngine = new GameEngine(wat);
 		
 		private static HandGUI playerView = null;
 		
