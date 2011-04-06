@@ -242,8 +242,8 @@ import cards.*;
 								myGame.stand(b.get(j));
 								System.out.println("final hand: "+b.get(j).toString());
 							}
-							else if (s.equals("double down")){
-								if (playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(i).getBet())==false) {
+							else if (s.equals("doubledown")){
+								if (playersAndChips.get(players.get(i)).getChips() < 2*playersAndChips.get(players.get(i)).getBet()) {
 									System.out.print("sorry not enough chips, please enter a different move" );
 									s = "";
 								}
