@@ -38,6 +38,10 @@ import cards.*;
 		
 		private final int BLACKJACK_PAYOUT_CONSTANT = 3;
 		
+		private final int MIN_BET = 0;
+		
+		private final int MAX_BET = 500;
+		
 		
 		
 		
@@ -143,7 +147,7 @@ import cards.*;
 				
 				} catch (Exception IllegalArgumentException) {
 				
-					while (a > playersAndChips.get(players.get(i)).getChips()) {
+					while (a > playersAndChips.get(players.get(i)).getChips() || a < MIN_BET || a > MAX_BET) {
 						//add back chips after evaluating while loop condition
 						//playersAndChips.get(players.get(i)).addChips(players.get(i), a);
 
