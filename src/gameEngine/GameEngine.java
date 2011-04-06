@@ -195,10 +195,11 @@ import cards.*;
 			}
 			
 			for (int i=0;i<getNumberOfPlayers();i++){
-				ArrayList<BlackjackHand> b = playersAndHands.get(gameTable.getPlayer(i));
-				System.out.println(gameTable.getPlayer(i).getUsername() + ", your first hand is currently: " + b.get(0).toString());
+//				ArrayList<BlackjackHand> b = playersAndHands.get(gameTable.getPlayer(i));
+				ArrayList<BlackjackHand> b = playersAndHands.get(players.get(i));
+				System.out.println(players.get(i).getUsername() + ", your first hand is currently: " + b.get(0).toString());
 				if (b.size() == 2) {
-					System.out.println(gameTable.getPlayer(i) + ", your second hand is currently: " + b.get(1).toString());
+					System.out.println(players.get(i).getUsername() + ", your second hand is currently: " + b.get(1).toString());
 				}
 			}
 			
@@ -212,7 +213,8 @@ import cards.*;
 					
 					ArrayList<BlackjackHand> b = playersAndHands.get(players.get(i));
 					
-					System.out.println(gameTable.getPlayer(i).getUsername()+": ");
+//					System.out.println(gameTable.getPlayer(i).getUsername()+": ");
+					System.out.println(players.get(i).getUsername()+": ");
 					//Scanner keyboard = new Scanner (System.in);
 //					String s = "";
 				
@@ -275,17 +277,19 @@ import cards.*;
 			 */
 			for (int i=0;i<getNumberOfPlayers();i++){
 				
-				ArrayList<BlackjackHand> b = playersAndHands.get(gameTable.getPlayer(i));
+				ArrayList<BlackjackHand> b = playersAndHands.get(players.get(i));
 				
 				if (b.size() == 1) {
 					if (processWinner(b.get(0)) == 1) 
 						System.out.println("Dealer wins!");
 					if (processWinner(b.get(0)) == -1) {
 						if (b.get(0).checkBlackjack()) {
-							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+							players.get(i).addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(players.get(i)).getBet());
 							System.out.println("BLACKJACK! X2 PAYOUT! " + gameTable.getPlayer(i).getUsername()+ " wins!");
 						} else {
-							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+							players.get(i).addWin(WIN_CONSTANT * playersAndChips.get(players.get(i)).getBet());
+//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
 							System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
 						}
 					}
@@ -300,10 +304,12 @@ import cards.*;
 						System.out.println("Dealer wins!");
 					if (processWinner(b.get(0)) == -1) {
 						if (b.get(0).checkBlackjack()) {
-							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+							players.get(i).addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(players.get(i)).getBet());
+//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
 							System.out.println("BLACKJACK! X2 PAYOUT! " + gameTable.getPlayer(i).getUsername()+ " wins!");
 						} else {
-							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+							players.get(i).addWin(WIN_CONSTANT * playersAndChips.get(players.get(i)).getBet());
+//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
 							System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
 						}
 					}
@@ -316,10 +322,12 @@ import cards.*;
 						System.out.println("Dealer wins!");
 					if (processWinner(b.get(1)) == -1) {
 						if (b.get(0).checkBlackjack()) {
-							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+							players.get(i).addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(players.get(i)).getBet());
+//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
 							System.out.println("BLACKJACK! X2 PAYOUT! " + gameTable.getPlayer(i).getUsername()+ " wins!");
 						} else {
-							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
+							players.get(i).addWin(WIN_CONSTANT * playersAndChips.get(players.get(i)).getBet());
+//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
 							System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
 						}
 					}
@@ -374,7 +382,34 @@ import cards.*;
 //				System.out.print(a);
 //			}
 			
+			
+			
+			
 		}
+		
+		/**
+		 * Returns the current game's Deck object
+		 * @return Deck object
+		 */
+		public Deck getDeck() {
+			return myGame.getDeck();
+		}
+		
+		/**
+		 * Returns the current game's Table object
+		 * @return Table object
+		 */
+		public Table getTable() {
+			return gameTable;
+		}
+
+
+
+		
+		
+		
+		
+		
 		public void addPlayer(Player player) {
 			BlackjackHand hb = new BlackjackHand();
 			ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
