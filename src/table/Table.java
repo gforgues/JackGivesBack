@@ -4,15 +4,18 @@ import storage.*;
 import cards.*;
 import participant.*;
 import game.Blackjack;
+import game.Observer;
 import gameEngine.GameEngine;
+import game.Observer;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Table {
+public class Table implements Observer {
 	Player tableOwner;
 	ArrayList<Player> players;
 	ArrayList<Spectator> spectators;
@@ -184,52 +187,55 @@ public class Table {
 	
 		return index;
 	}
+	
+//	public boolean saveSpectators() {
+//	boolean allSuccessful = true;
+//	
+//	for (int i=0; i<players.size(); i++) {
+////		if (!Storage.savePlayer(spectators.get(i).toStatistics())) {
+////			allSuccessful = false;
+////		}
+//	}
+//	
+//	return allSuccessful;
+//}
  
 	//need save and close methods for both player and spectator 
-	public boolean savePlayers() {
-		boolean allSuccessful = true;
-		
-		for (int i=0; i<players.size(); i++) {
-			if (!Storage.savePlayer(players.get(i).toStatistics())) {
-				allSuccessful = false;
-			}
-		}
-		
-		return allSuccessful;
-		//return Storage.savePlayer(player);
-	}
-	
-	//How do we load the players if we just know the gameId? And not their username/password
-	
-//	public ArrayList<Player> loadPlayers(int gameId) {		
-//		return Storage.loadPlayer("temp", "temp");
-//	}
-	
-	//Ho do we load the hand if we don't know the players username?
-	
-//	public Hand loadHand(int gameId) {
+//	public boolean savePlayers() {
+//		boolean allSuccessful = true;
 //		
-//		return hand;
-//	}
-	
-	public Deck loadDeck(int gameId) {
-		return BlackjackStorage.loadDeck(gameId);
-	}
-	
-	public boolean saveSpectators() {
-		boolean allSuccessful = true;
-		
-		for (int i=0; i<players.size(); i++) {
-//			if (!Storage.savePlayer(spectators.get(i).toStatistics())) {
+//		for (int i=0; i<players.size(); i++) {
+//			if (!Storage.savePlayer(players.get(i).toStatistics())) {
 //				allSuccessful = false;
 //			}
-		}
-		
-		return allSuccessful;
-	}
+//		}
+//		
+//		return allSuccessful;
+//	}
 	
-	//How do cycle through each key of a HashMap??? so that we can get each players
-	//hand and save it using BlackjackStorage.saveHand(..);
+	public ArrayList<Player> loadPlayers(int gameId) {		
+		ArrayList<String> playerNames = BlackjackStorage.loadPlayerNames(gameId);
+		ArrayList<Player> players = new ArrayList<Player>();
+		String password;
+		Scanner keyboard = new Scanner(System.in);
+		boolean loggedIn = false;
+		
+		for (int i=0; i<playerNames.size(); i++) {
+			while (!loggedIn) {
+				System.out.println(playerNames.get(i) + ", Please enter your password");
+				password = keyboard.nextLine();
+				try {
+					players.add(new Player(playerNames.get(i), password));
+					loggedIn = true;
+				} catch (IllegalArgumentException e) {
+					System.out.println(e);
+				}
+			}
+		}
+			
+		return players;
+	}
+
 	public boolean saveHands(HashMap<Player,ArrayList<BlackjackHand>> playerHand, int gameID) {
 		Set set = playerHand.keySet();
 		Iterator itr = set.iterator();
@@ -243,19 +249,32 @@ public class Table {
 					allSuccessful = false;
 				}
 			}
-			//System.out.println(itr.next());
 		}
 		
 		return allSuccessful;
 	}
+	
+	public ArrayList<Hand> loadHand(int gameId) {
+		ArrayList<String> playerNames = BlackjackStorage.loadPlayerNames(gameId);
+		ArrayList<Hand> hands = new ArrayList<Hand>();
+		
+		for (int i=0; i<playerNames.size(); i++) {
+			hands.add(BlackjackStorage.loadHand(playerNames.get(i), gameId));
+		}
+		
+		return hands;
+	}
+	
+	public Deck loadDeck(int gameId) {
+		return BlackjackStorage.loadDeck(gameId);
+	}
  
 	//how are we saving the hands if they're stored in the blackjacks
-	public boolean saveGame(Deck deck, int gameID, GameEngine game){
+	public boolean saveGame(Deck deck, int gameID, HashMap<Player, ArrayList<BlackjackHand>> playersAndHands){
 		boolean isSuccessful = true;
-		HashMap<Player, ArrayList<BlackjackHand>> playersAndHands = game.getPlayersAndHands();
+		//HashMap<Player, ArrayList<BlackjackHand>> playersAndHands = game.getPlayersAndHands();
 		
-		if (!this.savePlayers() || !this.saveSpectators() ||
-				!BlackjackStorage.saveDeck(deck, gameID) || !this.saveHands(playersAndHands, gameID)) {
+		if (!BlackjackStorage.saveDeck(deck, gameID) || !this.saveHands(playersAndHands, gameID)) {
 			isSuccessful = false;
 		}
 		//this.saveSpectators();
@@ -264,13 +283,16 @@ public class Table {
 		//return Storage.savePlayer(spectator);
 	}
 	
-	//When we load the game, how are we passing the deck, players, and hands back to
-	//the game??
-	public void loadGame(int gameId) {
-		//this.loadPlayers(gameId);
-		//this.loadSpectators(gameId);
-		//this.loadHand(gameId);
-		//this.loadDeck(gameId);
+	/*
+	 * Loads the game and returns a new GameEngine with all of the loaded
+	 * info (including players, their hands, and the game's deck)
+	 */
+	public GameEngine loadGame(int gameId) {		
+		ArrayList<Player> players = this.loadPlayers(gameId);
+		ArrayList<Hand> hand = this.loadHand(gameId);
+		Deck deck = this.loadDeck(gameId);
+		
+		return new GameEngine(players, hand, deck);
 	}
 	
 	public String toString() {
@@ -294,5 +316,12 @@ public class Table {
 		}
 		
 		return string;
+	}
+	
+	@Override
+	public void handleEvent()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }
