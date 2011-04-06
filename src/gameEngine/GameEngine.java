@@ -119,7 +119,6 @@ import cards.*;
 			
 			
 			loadChips();
-			loadBets();
 			
 			
 			//gathering bet amounts from all players
@@ -480,10 +479,7 @@ import cards.*;
 				} 
 			}
 		}
-		
-		public void loadBets() {
-			
-		}
+
 		
 		public ArrayList<BlackjackHand> getPlayerHand(Player player) {
 			 return playersAndHands.get(player);
