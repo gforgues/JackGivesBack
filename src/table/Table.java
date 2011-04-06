@@ -27,6 +27,10 @@ public class Table implements Observer {
 		spectators = new ArrayList<Spectator>();
 	}
  
+	public Player getTableOwner() {
+		return tableOwner;
+	}
+	
 	public ArrayList<Player> getAllPlayers() {
 		return players;
 	}

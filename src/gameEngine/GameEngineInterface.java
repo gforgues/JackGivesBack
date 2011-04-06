@@ -6,6 +6,7 @@ import table.*;
 import participant.Player;
 import participant.Spectator;
 import gui.MainInterface;
+import storage.BlackjackStorage;
 
 public class GameEngineInterface {
 	GameEngine gameEngine;
@@ -60,9 +61,12 @@ public class GameEngineInterface {
 				int saveNumber = keyboard.nextInt();
 				keyboard.nextLine();
 				try {
-					gameEngine = gameEngine.getTable().loadGame(saveNumber);
-					menuChoice = EXIT;
-					new GameEngineInterface(gameEngine);
+					for (String username : BlackjackStorage.loadPlayerNames(saveNumber)) {
+						if (!username.equals(gameEngine.getTable().getTableOwner().getUsername())) {
+							addPlayer(username);
+						}
+					}
+					System.out.println("Load successful");
 				} catch (Exception e) {
 					System.out.println(e);
 					System.out.println("Could not load game");
@@ -75,6 +79,18 @@ public class GameEngineInterface {
 	public void addPlayer() {
 		Player newPlayer = MainInterface.login();
 		gameEngine.addPlayer(newPlayer);
+	}
+	
+	public void addPlayer(String username) {
+		Scanner keyboard = new Scanner(System.in);
+		System.out.println("Please enter " + username + "'s password: ");
+		String password = keyboard.nextLine();
+		try {
+			Player playerToAdd = new Player(username, password);
+			gameEngine.addPlayer(playerToAdd);
+		} catch (Exception e) {
+			System.out.println("Could not add " + username);
+		}
 	}
 	
 	public void addSpectator() {
