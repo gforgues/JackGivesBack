@@ -129,7 +129,8 @@ import cards.*;
 			
 			for (int i=0; i<players.size(); i++) {
 			//for (int i=0;i<getNumberOfPlayers();i++){
-				System.out.println(players.get(i).getUsername() + " how much do you want to bet?");
+				System.out.println(players.get(i).getUsername() + ", you have " + players.get(i).getChips() + " chips.");
+				System.out.println("how much do you want to bet?");
 				int a = keyboard.nextInt();
 				
 				
