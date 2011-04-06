@@ -15,8 +15,9 @@ public class MainInterface
 		final int PLAYGAME = 1;
 		final int MODIFYPROFILE = 2;
 		final int VIEWSTATISTICS = 3;
-		final int SWITCHUSER = 4;
-		final int EXIT = 5;
+		final int HALLOFFAME = 4;
+		final int SWITCHUSER = 5;
+		final int EXIT = 6;
 		
 		Scanner keyboard = new Scanner(System.in);
 		Player player = login();
@@ -26,8 +27,9 @@ public class MainInterface
 			System.out.println("1. Play Blackjack");
 			System.out.println("2. Modify Profile");
 			System.out.println("3. View Statistics");
-			System.out.println("4. Switch user");
-			System.out.println("5. Exit");
+			System.out.println("4. Show Hall of Fame");
+			System.out.println("5. Switch user");
+			System.out.println("6. Exit");
 			menuChoice = keyboard.nextInt();
 			keyboard.nextLine();
 			
@@ -40,6 +42,9 @@ public class MainInterface
 			}
 			if (menuChoice == VIEWSTATISTICS) {
 				viewStats(player);
+			}
+			if (menuChoice == HALLOFFAME) {
+				HallOfFame.display();
 			}
 			if (menuChoice == SWITCHUSER) {
 				player = login();

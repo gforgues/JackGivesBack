@@ -254,7 +254,7 @@ public class Statistics {
 		string += "\tChips won: " + maxChipsWinStreak + "\n";
 		string += "Biggest Losing Streak: \n";
 		string += "\tNumber of games: " + this.maxLossStreak + "\n";
-		string += "\tChips lost: " + this.maxChipsLossStreak;
+		string += "\tChips lost: " + this.maxChipsLossStreak + "\n";
 		
 		return string;
 	}
