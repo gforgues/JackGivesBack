@@ -1,6 +1,6 @@
 package storage;
+import java.util.ArrayList;
 import junit.framework.*;
-import cards.*;
 
 public class TestStorage extends TestCase{
 	private int expectedValue;
@@ -31,8 +31,9 @@ public class TestStorage extends TestCase{
 			Storage.loadPlayer("John.Test", "password");
 		} catch (IllegalArgumentException e) {
 			failed = true;
+		} finally {
+			assertEquals(failed, true);
 		}
-		assertEquals(failed, true);
 		
 	}
 	public void testLoadPlayerComma() {
@@ -41,14 +42,37 @@ public class TestStorage extends TestCase{
 			Storage.loadPlayer("john,test", "password");
 		} catch (IllegalArgumentException e) {
 			failed = true;
+		} finally{
+			assertEquals(failed, true);
 		}
-		assertEquals(failed, true);
 	}
-
 	
-	public void testHallOfFame() {
-		for (Statistics player : HallOfFame.getHallOfFame()) {
-			System.out.println(player.getUsername() + ": " + player.getTotalChipsWon());
-		}
+	public void testAddToHallOfFame() {
+		Statistics billyjoe = Storage.loadPlayer("billyjoe","abc");
+		billyjoe.addWin(100000);
+		Storage.savePlayer(billyjoe);
+		
+		ArrayList<Statistics> hallOfFame = new ArrayList<Statistics>();
+		hallOfFame = HallOfFame.getHallOfFame();
+		
+		assertEquals(hallOfFame.get(0).getUsername(), "billyjoe");
+	}
+	
+	public void testAddEqualScore() {
+		Statistics equalScoreOne = Storage.loadPlayer("one", "one");
+		Statistics equalScoreTwo = Storage.loadPlayer("two", "two");
+		
+		equalScoreOne.addWin(10000);
+		equalScoreTwo.addWin(10000);
+		
+		ArrayList<Statistics> hallOfFame = new ArrayList<Statistics>();
+		hallOfFame = HallOfFame.getHallOfFame();
+		
+		assertEquals(hallOfFame.get(1).getUsername(), "two");
+		assertEquals(hallOfFame.get(2).getUsername(), "one");
+	}
+	
+	public void testDisplayHallOfFame() {
+		HallOfFame.display();
 	}
 }

@@ -6,8 +6,22 @@ import java.util.*;
 public class HallOfFame {
 	
 	/**
+	 * Sorts the players from highest to lowest in terms of total chips won
+	 * @param topFive An ArrayList<Statistics> which contains the top five players
+	 * @return A sorted ArrayList<Statistics> with the top five players
+	 */
+	private static ArrayList<Statistics> sort(ArrayList<Statistics> topFive) {
+		ArrayList<Statistics> sortedTopFive = new ArrayList<Statistics>();
+		while (!topFive.isEmpty()) {
+			Statistics lowestPlayer = findLowestPlayer(topFive);
+			sortedTopFive.add(0,lowestPlayer);
+			topFive.remove(lowestPlayer);
+		}
+		return sortedTopFive;
+	}
+	/**
 	 * Finds the lowest scoring player among the top five
-	 * @param topFive - An ArrayList<Storage> which contains the top five players
+	 * @param topFive - An ArrayList<Statistics> which contains the top five players
 	 * @return A Storage object of the lowest player currently in the top five
 	 */
 	private static Statistics findLowestPlayer(ArrayList<Statistics> topFive) {
@@ -23,7 +37,7 @@ public class HallOfFame {
 		return lowestPlayer;
 	}
 	/**
-	 * Compares a Statistics object with the top five scoring players. If this new object has
+	 * Compares a Statistics object with the top five scoring players in terms of total chips won. If this new object has
 	 * a better score than the lowest player in the top five, replaces this lowest player.
 	 * @param playerToAdd - A Statistics object to compare with the top five
 	 * @param topFive - An ArrayList<Statistics> which contains the top five players
@@ -67,7 +81,17 @@ public class HallOfFame {
 			}
 			topFive = compareWithTopFive(player, topFive);
 		}
-		
+		topFive = sort(topFive);
 		return topFive;
+	}
+	
+	/**
+	 * Prints the Hall of fame's contents to the command line.
+	 */
+	public static void display() {
+		System.out.println("Hall of Fame (Total Chips Won):");
+		for (Statistics player : HallOfFame.getHallOfFame()) {
+			System.out.println(player.getUsername() + ": " + player.getTotalChipsWon());
+		}
 	}
 }
