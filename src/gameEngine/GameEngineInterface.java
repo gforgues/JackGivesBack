@@ -1,6 +1,7 @@
 package gameEngine;
 
 import java.util.Scanner;
+import table.*;
 import participant.Player;
 import gui.MainInterface;
 
@@ -42,10 +43,27 @@ public class GameEngineInterface {
 				// spectators still not implemented?
 			}
 			if (menuChoice == SAVEGAME) {
-				// still not implemented?
+				System.out.println("Choose a save slot number (1-9) :");
+				int saveNumber = keyboard.nextInt();
+				keyboard.nextLine();
+				try {
+					gameEngine.getTable().saveGame(gameEngine.getDeck(), saveNumber,gameEngine.getPlayersAndHands());
+					System.out.println("Save successful.");
+				} catch (Exception e) {
+					System.out.println("Save unsuccessful.");
+				} 
 			}
 			if (menuChoice == LOADGAME) {
-				// still not implemented?
+				System.out.println("Choose a save slot number to load(1-9) :");
+				int saveNumber = keyboard.nextInt();
+				keyboard.nextLine();
+				try {
+					gameEngine = gameEngine.getTable().loadGame(saveNumber);
+					menuChoice = EXIT;
+					new GameEngineInterface(gameEngine);
+				} catch (Exception e) {
+					System.out.println("Could not load game");
+				}
 			}
 			
 		}

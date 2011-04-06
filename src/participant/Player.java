@@ -89,8 +89,12 @@ public class Player { //cards.Hand implements Participant {
 	  return this.player.toString();
   }
   
-  public String getStats() {
-	  return this.player.getStats();
+//  public String getStats() {
+//	  return this.player.getStats();
+//  }
+  
+  public void displaySatitistics() {
+	  this.player.displayStatistics();
   }
   
   public Statistics toStatistics() {

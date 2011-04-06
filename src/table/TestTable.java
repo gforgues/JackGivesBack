@@ -9,6 +9,7 @@ import cards.*;
 import cards.Card.Rank;
 import cards.Card.Suit;
 import participant.*;
+import storage.BlackjackStorage;
 import storage.Statistics;
 import storage.Storage;
 
@@ -177,27 +178,34 @@ public class TestTable extends TestCase {
 		assertEquals(table.getAllSpectators().size(), 1);
 	}
 	
-	public void testSaveAndLoadGameOnePlayer() {
-		//saveGame(Deck deck, int gameID, GameEngine game)
+	public void testSaveAndLoadDeck() {
 		Deck deck = new Deck();
-		HashMap<Player, ArrayList<BlackjackHand>> playersAndHands = new HashMap<Player, ArrayList<BlackjackHand>>();
-		ArrayList<BlackjackHand> hand = new ArrayList<BlackjackHand>();
-		BlackjackHand h = new BlackjackHand();
-		
-		p1.requestJoin(table, true);
 		deck.addDeck(1);
-		h.addCard(deck.draw());
-		hand.add(h);
-		playersAndHands.put(p1, hand);
-		table.saveGame(deck, 2, playersAndHands);
+		deck.draw();
+		deck.draw();
+		deck.draw();
+		expectedValue = 49;
 		
-		String expectedStringValue = p1.getUsername();
-		expectedValue = playersAndHands.size();
-		table.loadPlayers(2);
-		String actualStringValue = table.getAllPlayers().get(1).getUsername();
+		BlackjackStorage.saveDeck(deck, 1);
+		actualValue = BlackjackStorage.loadDeck(1).size();
 		
-		assertEquals(expectedStringValue, actualStringValue);
+		assertEquals(expectedValue, actualValue);
 	}
+	
+	public void testSaveAndLoadThreeDecks() {
+		Deck deck = new Deck();
+		deck.addDeck(3);
+		expectedValue = 52*3;
+		
+		BlackjackStorage.saveDeck(deck, 3);
+		actualValue = BlackjackStorage.loadDeck(3).size();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
+//	public void testSaveAndLoadGameOnePlayer() {
+//		
+//	}
 	
 //	public void testSaveAndLoadOnePlayerWithThreeCards() {
 //		Deck deck = new Deck();

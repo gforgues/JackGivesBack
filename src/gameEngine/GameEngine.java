@@ -475,10 +475,6 @@ import cards.*;
 			
 		}
 		
-		public void setDealer(Player player) {
-			
-		}
-		
 		public ArrayList<BlackjackHand> getPlayerHand(Player player) {
 			 return playersAndHands.get(player);
 		}
