@@ -59,11 +59,12 @@ public class Blackjack implements Game {
   */
  public Deck getDeck() {
   return this.gameDeck;
- }
+ } 
  
- public void setDeck(Deck deck) {
-	 this.gameDeck = deck;
+ public void setDeck(Deck deck){
+	 this.gameDeck=deck;
  }
+
  
  /**
   * Check if Deck is low on cards
@@ -150,16 +151,18 @@ public class Blackjack implements Game {
   * @param pHand BlackjackHand to apply split to
   * @return Returns a BlackjackHand that has one of the pairs in pHand
   */
- public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
-  ArrayList<BlackjackHand> bothHands = null;
+ 
+public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
+  ArrayList<BlackjackHand> bothHands = new ArrayList<BlackjackHand>();
   if (pHand.checkPair() == false) {
-   System.out.println("you dont have a pair! select a different move");
+   System.out.println("You dont have a pair! select a different move");
  
   } else {
    /*
     * Clones the BlackjackHand
     */
    BlackjackHand newHand = (BlackjackHand) pHand.clone();
+   System.out.println(newHand);
    /*
     * Remove first card in given hand and second card in cloned hand
     */
