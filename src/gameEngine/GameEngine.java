@@ -105,20 +105,23 @@ import cards.*;
 
 				//set the bet and remove the chips
 				try { 
-					Chips chips = playersAndChips.get(players.get(i));
+//					Chips chips = playersAndChips.get(players.get(i));
 					playersAndChips.get(players.get(i)).setBet(a);
-					chips.addChips(players.get(i), -a);
-					//playersAndChips.get(players.get(i)).addChips(players.get(i), -a);
+//					chips.addChips(players.get(i), -a);
+					playersAndChips.get(players.get(i)).addChips(players.get(i), -a);
 
 					System.out.println(" you want to bet " + a);
 
 				} catch (Exception IllegalArgumentException) {
 
-					while (a > playersAndChips.get(players.get(i)).getChips() || a < MIN_BET || a > MAX_BET) {
+//					while (a > playersAndChips.get(players.get(i)).getChips() || a < MIN_BET || a > MAX_BET) {
+//					while (a > players.get(i).getChips() || a < MIN_BET || a > MAX_BET) {
+//					while (a > players.get(i).getChips()) {
 						//add back chips after evaluating while loop condition
 						//playersAndChips.get(players.get(i)).addChips(players.get(i), a);
 
-						System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i)).getChips()  + " or less" );
+//						System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i)).getChips()  + " or less" );
+						System.out.println(IllegalArgumentException.getMessage() + " Sorry, please enter " + players.get(i).getChips()  + " or less" );
 						//System.out.println("sorry not enough chips, please enter " + playersAndChips.get(gameTable.getAllPlayers().get(i)).getChips()  + " or less" );
 						a = keyboard.nextInt();
 
@@ -127,7 +130,7 @@ import cards.*;
 
 						System.out.println(" you want to bet " + a);
 
-					}
+//					}
 
 				}
 
@@ -221,15 +224,16 @@ import cards.*;
 
 							}
 							else if (s.equals("split")){
-								ArrayList<BlackjackHand>bothHands = myGame.split(b.get(j));
-						        if(bothHands!=null){
+								ArrayList<BlackjackHand> bothHands = myGame.split(b.get(j));
+
+						        if(bothHands.size() != 0){
 						         myGame.playsSplitHands(bothHands);
-						         System.out.println("split to be implemented: "+b.get(j).toString());
+						         //System.out.println("split to be implemented: "+b.get(j).toString());
 						        } else {
 						        System.out.println("please enter something valid");
 						        s = "";
 						       }
-						      }else {
+						      } else {
 								System.out.println("please enter something valid");
 								s = "";
 							}
