@@ -212,6 +212,9 @@ import cards.*;
 									s = "";
 								}
 								else { 
+									if(b.get(j).getNumberCards()>2){
+										System.out.println("Cannot double down, you have already hit, please hit again or stand");
+									}else{
 									playersAndChips.get(players.get(j)).addChips(players.get(j), -(playersAndChips.get(players.get(j)).getBet()));
 								    int doubleBet;
 								    doubleBet=((playersAndChips.get(players.get(j))).getBet())*2;
@@ -219,7 +222,7 @@ import cards.*;
 									myGame.doubleDown(b.get(j));
 									System.out.println("bet update: "+ doubleBet);
 									System.out.println("hand update: "+b.get(j).toString());
-									
+									}
 								}
 
 							}

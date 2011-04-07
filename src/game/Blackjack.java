@@ -143,7 +143,6 @@ public class Blackjack implements Game {
   
   
   checkDeck();
-
   hit(pHand);
   stand(pHand);
  }
