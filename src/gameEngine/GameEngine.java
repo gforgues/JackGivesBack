@@ -244,8 +244,8 @@ import cards.*;
 								System.out.println("final hand: "+b.get(j).toString());
 							}
 							else if (s.equals("doubledown")){
-								if (playersAndChips.get(players.get(i)).getChips() < 2*playersAndChips.get(players.get(i)).getBet()) {
-									System.out.print("sorry not enough chips, please enter a different move" );
+								if (players.get(j).getChips() < 2*playersAndChips.get(players.get(j)).getBet()) {
+									System.out.print("Sorry not enough chips, please enter a different move" );
 									s = "";
 								}
 								else { 
