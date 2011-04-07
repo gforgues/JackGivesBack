@@ -435,6 +435,10 @@ import cards.*;
 			if (!(hand.isBust()) && !(dealerHand.isBust()) && (dealerHand.getBlackjackValue() > hand.getBlackjackValue()))
 
 				return DEALER_WON;
+			
+			if ((hand.isBust()) && (dealerHand.isBust()))
+
+				return DEALER_WON;
 
 			if (!(hand.isBust()) && (dealerHand.isBust()))
 
@@ -443,6 +447,7 @@ import cards.*;
 			if (!(hand.isBust()) && !(dealerHand.isBust()) && dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
 
 				return PLAYER_WON;
+				
 			}
 
 				return DRAW;
