@@ -1,10 +1,7 @@
-package storage;
+package testStorage;
 import junit.framework.*;
-
-import cards.AllCards;
-import cards.Card;
-import cards.Deck;
-import cards.Hand;
+import cards.*;
+import storage.*;
 
 public class TestBlackjackStorage extends TestCase {
 	int expectedValue;

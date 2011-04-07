@@ -1,5 +1,6 @@
-package storage;
+package testStorage;
 import junit.framework.*;
+import storage.*;
 
 public class TestStatistics extends TestCase {
 	private int expectedValue;

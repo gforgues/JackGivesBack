@@ -4,11 +4,23 @@ import gameEngine.*;
 import participant.*;
 import storage.*;
 
+/**
+ * MainInterface displays the command line interface for the main menu
+ * @author Gabriel
+ *
+ */
 public class MainInterface
 {
+	/**
+	 * Creates a new MainInterface object to display
+	 * @param args Standard command line arguments (not used)
+	 */
 	public static void main(String[] args) {
 		new MainInterface();
 	}
+	/**
+	 * MainInterface prints the options to screen, which the user selects with the keyboard input
+	 */
 	MainInterface() {
 		
 		int menuChoice=-1;
@@ -53,6 +65,10 @@ public class MainInterface
 		
 	}
 	
+	/**
+	 * Login gets a username and password from keyboard and validates it with the Player class
+	 * @return The Player object that is created when a user correctly logs in
+	 */
 	public static Player login() {
 		Scanner keyboard = new Scanner(System.in);
 		String username = "";
@@ -75,6 +91,10 @@ public class MainInterface
 		return new Player(username, password);
 	}
 	
+	/**
+	 * Modify profile menu shows options such as change real name, age, and password
+	 * @param player The player whose profile will be modified
+	 */
 	public static void modifyProfile(Player player) {
 		int menuChoice=-1;
 		final int EXIT = 4;
@@ -89,8 +109,10 @@ public class MainInterface
 			System.out.println("2. Change real name");
 			System.out.println("3. Change age");
 			System.out.println("4. Back to main menu");
+			
 			menuChoice = keyboard.nextInt();
 			keyboard.nextLine();
+			
 			if (menuChoice == CHANGEPASS) {
 				System.out.println("Enter your old password: ");
 				String oldPass = keyboard.nextLine();
@@ -118,6 +140,11 @@ public class MainInterface
 			}
 		}
 	}
+	
+	/**
+	 * ViewStats uses the Statistics file's toString method to display player statistics
+	 * @param player The player whose statistics will be displayed
+	 */
 	public static void viewStats(Player player) {
 		System.out.print(player);
 	}

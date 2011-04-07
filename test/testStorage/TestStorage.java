@@ -1,6 +1,7 @@
-package storage;
+package testStorage;
 import java.util.ArrayList;
 import junit.framework.*;
+import storage.*;
 
 public class TestStorage extends TestCase{
 	private int expectedValue;
@@ -62,8 +63,8 @@ public class TestStorage extends TestCase{
 		Statistics equalScoreOne = Storage.loadPlayer("one", "one");
 		Statistics equalScoreTwo = Storage.loadPlayer("two", "two");
 		
-		equalScoreOne.addWin(10000);
-		equalScoreTwo.addWin(10000);
+		equalScoreOne.addWin(100000);
+		equalScoreTwo.addWin(100000);
 		
 		ArrayList<Statistics> hallOfFame = new ArrayList<Statistics>();
 		hallOfFame = HallOfFame.getHallOfFame();

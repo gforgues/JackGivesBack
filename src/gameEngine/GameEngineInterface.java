@@ -8,6 +8,11 @@ import participant.Spectator;
 import gui.MainInterface;
 import storage.BlackjackStorage;
 
+/**
+ * the GameEngine Interface displays the command line menu for the blackjack game
+ * @author Gabriel
+ *
+ */
 public class GameEngineInterface {
 	GameEngine gameEngine;
 	int menuChoice=-1;
@@ -18,10 +23,18 @@ public class GameEngineInterface {
 	final int LOADGAME = 5;
 	final int EXIT = 6;
 	
+	/**
+	 * Creates a new gameEngine object and calls its menu method
+	 * @param ge The GameEngine which is to be displayed
+	 */
 	public GameEngineInterface(GameEngine ge) {
 		gameEngine = ge;
 		gameMenu();
 	}
+	/**
+	 * GameMenu displays the different options that players have when playing blackjack.
+	 * These include playing, adding players or spectators, and saving or loading games 
+	 */
 	public void gameMenu() {
 		Scanner keyboard = new Scanner(System.in);
 		
@@ -76,11 +89,20 @@ public class GameEngineInterface {
 		}
 	}
 	
+	/**
+	 * AddPlayer validates a player's username and password from command line interface, and adds it
+	 *  to the gameEngine if the password is correct.
+	 */
 	public void addPlayer() {
 		Player newPlayer = MainInterface.login();
 		gameEngine.addPlayer(newPlayer);
 	}
 	
+	/**
+	 * addPlayer validate's a player's password from command line interface 
+	 * and adds the player to the gameEngine if the password is correct
+	 * @param username The username to be added to the game (typically comes from loading player names (loadPlayerNames())
+	 */
 	public void addPlayer(String username) {
 		Scanner keyboard = new Scanner(System.in);
 		System.out.println("Please enter " + username + "'s password: ");
@@ -93,6 +115,10 @@ public class GameEngineInterface {
 		}
 	}
 	
+	/**
+	 * Add spectators prompts a spectator to login with username and password,
+	 * but does nothing for a single-screen, command-line based interface
+	 */
 	public void addSpectator() {
 		Player newPlayer = MainInterface.login();
 		System.out.println(newPlayer.getUsername() + " is now a Spectator");

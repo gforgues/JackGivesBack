@@ -245,7 +245,11 @@ public class Statistics {
 	public int getMaxChipsLossStreak() {
 		return maxChipsLossStreak;
 	}
-	
+
+	/**
+	 * Converts the user's statistics into a string, to be displayed to screen
+	 * @return A String of the player's statistics, formatted to be displayed
+	 */
 	public String toString() {
 		String string = "Username: " + this.username + "\n";
 		string += "Total chips won: " + this.totalChipsWon + "\n";
@@ -258,18 +262,12 @@ public class Statistics {
 		
 		return string;
 	}
-	
+	/**
+	 * Prints the user's statistics to screen along with the Hall of Fame display
+	 */
 	public void displayStatistics() {
 		System.out.println(this.toString() + "\n\n");
 		HallOfFame.display();
-//		String string = this.toString() + "\n \n ";
-//		ArrayList<Statistics> topFive = HallOfFame.getHallOfFame();
-//		
-//		for (int i=0; i<topFive.size(); i++) {
-//			string += topFive.get(i).toString() + "\n";
-//		}
-//		
-//		return string;
 	}
 	
 }
