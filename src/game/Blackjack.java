@@ -19,6 +19,8 @@ public class Blackjack implements Game {
   * Deal exactly 2 cards for the first initial deal to a player
   */
  private final int INITIAL_DEAL_VALUE = 2;
+ 
+ private final int MAX_HAND_SIZE = 2;
  /**
   * Number of decks to use
   */
@@ -155,7 +157,7 @@ public class Blackjack implements Game {
 public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
   ArrayList<BlackjackHand> bothHands = new ArrayList<BlackjackHand>();
   if (pHand.checkPair() == false) {
-   System.out.println("You dont have a pair! select a different move");
+   System.out.println("You dont have a pair! Select a different move");
  
   } else {
    /*
@@ -180,13 +182,14 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
 
  }
  
- public void playsSplitHands(ArrayList<BlackjackHand> bothHands){
+ public void playsSplitHands(ArrayList<BlackjackHand> bothHands) {
   boolean invalidInput = false;
-  for( int i=0; i<bothHands.size();i++){
+  for( int i=0; i<MAX_HAND_SIZE;i++){
    
    Scanner keyboard=new Scanner(System.in);
    
-   while (invalidInput == false) {
+//   while (invalidInput == false) {
+   while (i==0 && bothHands.get(i).isPlayable() && !(bothHands.get(i).isBust())) {
     System.out.println("For your current hand, do you want to hit or stand");
     String s = keyboard.next();
     if (s.equals("hit")){
@@ -200,9 +203,28 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
      invalidInput = true;
    
     }  else {
-     System.out.println("Invalid input");
+     System.out.println("Invalid input, enter hit/stand: ");
     }
    }
+   
+   while (i==1 && bothHands.get(i).isPlayable() && !(bothHands.get(i).isBust())) {
+	    System.out.println("For your current hand, do you want to hit or stand");
+	    String s = keyboard.next();
+	    if (s.equals("hit")){
+	     this.hit(bothHands.get(i));
+	     System.out.println("hand update: " +bothHands.get(i).toString());
+	     invalidInput = true;
+	    }
+	    else if (s.equals("stand")){
+	     this.stand(bothHands.get(i));
+	     System.out.println("final hand: "+bothHands.get(i).toString());
+	     invalidInput = true;
+	   
+	    }  else {
+	     System.out.println("Invalid input, enter hit/stand: ");
+	    }
+	   }
+   
   }
  }
 }
