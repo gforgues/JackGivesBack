@@ -163,18 +163,21 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
    /*
     * Clones the BlackjackHand
     */
-   BlackjackHand newHand = (BlackjackHand) pHand.clone();
-   System.out.println(newHand);
+	  while(pHand.getNumberCards()<=2){
+   BlackjackHand newHand =  pHand.clone();
+   
    /*
     * Remove first card in given hand and second card in cloned hand
     */
-   pHand.removeCard(0);
-   newHand.removeCard(1);
    
+   pHand.removeCard(0);
+   pHand.addCard(gameDeck.draw());
+   newHand.removeCard(1);
+   newHand.addCard(gameDeck.draw());
    bothHands.add(pHand);
    bothHands.add(newHand);
    return bothHands;
-   
+	  }
    
   }
   return bothHands;
@@ -190,7 +193,9 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
    
 //   while (invalidInput == false) {
    while (i==0 && bothHands.get(i).isPlayable() && !(bothHands.get(i).isBust())) {
-    System.out.println("For your current hand, do you want to hit or stand");
+	System.out.println("FirstHand:");   
+	System.out.println(bothHands.get(0).toString());
+    System.out.println("For your First hand, do you want to hit or stand");
     String s = keyboard.next();
     if (s.equals("hit")){
      this.hit(bothHands.get(i));
@@ -208,7 +213,9 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
    }
    
    while (i==1 && bothHands.get(i).isPlayable() && !(bothHands.get(i).isBust())) {
-	    System.out.println("For your current hand, do you want to hit or stand");
+	   System.out.println("Second Hand: ");  
+	   System.out.println(bothHands.get(1).toString());
+	    System.out.println("For your Second hand, do you want to hit or stand");
 	    String s = keyboard.next();
 	    if (s.equals("hit")){
 	     this.hit(bothHands.get(i));

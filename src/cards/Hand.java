@@ -38,8 +38,8 @@ public class Hand implements Cloneable {
 	 * @param pHand The list of cards to add.
 	 */
 	public void addAll(Hand pHand) {
-		for (int i=0; i < pHand.getNumberCards(); i++) {
-			pHand.addCard(pHand.removeCard(i));
+		for (int i=0; i<pHand.getNumberCards(); i++) {
+			this.hand.addAll(pHand.getHand());
 		}
 	}
 	

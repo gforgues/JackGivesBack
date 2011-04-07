@@ -209,9 +209,12 @@ public class BlackjackHand extends Hand {
  public BlackjackHand clone() {
   BlackjackHand fClonedHand = new BlackjackHand();
   fClonedHand.addAll(this);
+  fClonedHand.removeCard(1);
+  fClonedHand.removeCard(0);
   /*
    *  Instantiate a copy for now.
    */
+  System.out.println(fClonedHand.toString());
   return fClonedHand;
  }
 

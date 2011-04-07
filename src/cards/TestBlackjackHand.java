@@ -7,7 +7,7 @@ public class TestBlackjackHand extends TestCase {
 	private int expectedValue;
 	private int actualValue;
 	boolean failed;
-	
+
 	public void testGetBlackjackValueIs21() {
 		BlackjackHand hand = new BlackjackHand();
 		
@@ -202,4 +202,18 @@ public class TestBlackjackHand extends TestCase {
 		boolean isBlackjack = hand.checkBlackjack();
 		assertEquals(isBlackjack, false);
 	}
+	public void testClone() {
+		BlackjackHand hand = new BlackjackHand();
+		
+		hand.addCard(new Card(Rank.KING, Suit.HEARTS));
+		hand.addCard(new Card(Rank.ACE, Suit.SPADES));
+		
+		BlackjackHand clonedHand = hand.clone();
+	
+		
+		actualValue = clonedHand.getBlackjackValue();
+		expectedValue = hand.getBlackjackValue();
+		assertEquals(actualValue, expectedValue);
+		
 }
+	}
