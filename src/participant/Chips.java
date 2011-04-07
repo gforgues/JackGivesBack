@@ -4,6 +4,8 @@ public class Chips {
 	//Player player;
 	int chips;
 	int bet;
+	private final int MIN_BET = 10;
+	private final int MAX_BET = 100;
 	
 	public Chips(int chips, int bet) throws IllegalArgumentException {
 		this.chips = chips;
@@ -45,12 +47,17 @@ public class Chips {
 	}
 	
 	public void setBet(int amount) throws IllegalArgumentException {
-		if (amount >= 0 && amount <= this.chips) {
+		if (amount >= MIN_BET && amount <= this.chips && amount <= MAX_BET && (amount % 10 == 0)) {
 			this.bet = amount;
 		} else if (amount < 0) {
 			throw new IllegalArgumentException("New bet amount is negative.");
+		} else if (amount < MIN_BET) {
+			throw new IllegalArgumentException("You must bet at least 10.");
+		}else if (amount> MAX_BET){
+			throw new IllegalArgumentException("You must bet less than 100.");
 		} else if (amount % 10 != 0) {
 			throw new IllegalArgumentException("Bet amount must be a multiple of 10.");
+			
 		} else {
 			throw new IllegalArgumentException("New bet is greater than the amount" +
 					" of chips the player has.");
