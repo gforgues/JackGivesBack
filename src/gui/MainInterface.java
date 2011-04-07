@@ -69,7 +69,7 @@ public class MainInterface
 	 * Login gets a username and password from keyboard and validates it with the Player class
 	 * @return The Player object that is created when a user correctly logs in
 	 */
-     public static Player login() {
+public static Player login() {
 		
 		int menuChoice=-1;
 		final int EXUSER = 1;
@@ -77,8 +77,6 @@ public class MainInterface
 		final int EXIT= 3;
 		String username = "";
 		String password = "";
-		String newusername="";
-		String newuserpass="";
 		boolean loggedIn = false;
 		
 		
@@ -90,7 +88,7 @@ public class MainInterface
 		System.out.println("---User Menu---");
 		System.out.println("1. Existing users");
 		System.out.println("2. New users");
-		System.out.println("3. Main menu");
+		System.out.println("3. Game Menu");
 		
 		menuChoice=keyboard.nextInt();
 		keyboard.nextLine();
@@ -109,8 +107,8 @@ public class MainInterface
 					try {
 						new Player(username, password);
 						loggedIn = true;
-					} catch (IllegalArgumentException e) {
-						System.out.println(e);
+					} catch (Exception IllegalArgumentException) {
+						System.out.println("Invalid entry, try again!");
 					}
 				}
 				
@@ -120,25 +118,26 @@ public class MainInterface
 		 	   
 		 	   while(!loggedIn){
 		 		   System.out.println("Enter username: ");
-		 	       newusername= keyboard.nextLine();
+		 	       username= keyboard.nextLine();
 		 	   
 		 	       System.out.println("Enter password: ");
-		 	       newuserpass= keyboard.nextLine();
+		 	       password = keyboard.nextLine();
 		 	       
+			 	   try {
+			 			new Player(username, password);
+			 			loggedIn = true;
+			 			
+			 		} catch (Exception IllegalArgumentException ) {
+			 			System.out.println("Invalid entry, try again!");
+			 			loggedIn = false;
+			 		}
 		 	   }
-		 	   try {
-		 			
-		 			new Player(newusername, newuserpass);
-		 			loggedIn = true;
-		 			
-		 		} catch (Exception IllegalArgumentException ) {
-		 			System.out.println("Invalid entry, try again!");
-		 		}
 		 
 		    }
 		}
 		return new Player(username, password);
 	}
+	
 	
 	/**
 	 * Modify profile menu shows options such as change real name, age, and password

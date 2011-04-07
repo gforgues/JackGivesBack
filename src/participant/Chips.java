@@ -11,12 +11,17 @@ public class Chips {
 		this.chips = chips;
 		if (bet <= this.chips && bet >= 0) {
 			this.bet = bet;
-		} else if (Math.abs(bet) > this.chips) {
+		} else if (bet > this.chips) {
 				throw new IllegalArgumentException("Bet is greater than the amount of chips");
 			} else if (bet < 0) {
 				throw new IllegalArgumentException("The bet is negative");
-			}		
-	}
+			}	else if( bet % 10!= 0){
+				throw new IllegalArgumentException("The bet should be a multiple of 10");
+			}//else if{()
+				//throw new IllegalArgumentException("The bet should be a number "); needs to show error for multiple tries, OR guide to exit
+			//}
+			}
+
 	
 	public Chips(int chips) throws IllegalArgumentException {
 		if (chips >= 0) {
