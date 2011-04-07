@@ -49,6 +49,8 @@ public class Chips {
 			this.bet = amount;
 		} else if (amount < 0) {
 			throw new IllegalArgumentException("New bet amount is negative.");
+		} else if (amount % 10 != 0) {
+			throw new IllegalArgumentException("Bet amount must be a multiple of 10.");
 		} else {
 			throw new IllegalArgumentException("New bet is greater than the amount" +
 					" of chips the player has.");
