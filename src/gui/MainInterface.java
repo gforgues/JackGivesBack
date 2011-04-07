@@ -6,7 +6,7 @@ import storage.*;
 
 /**
  * MainInterface displays the command line interface for the main menu
- * @author Gabriel
+ * @author JackGivesBack
  *
  */
 public class MainInterface
@@ -69,24 +69,73 @@ public class MainInterface
 	 * Login gets a username and password from keyboard and validates it with the Player class
 	 * @return The Player object that is created when a user correctly logs in
 	 */
-	public static Player login() {
-		Scanner keyboard = new Scanner(System.in);
+     public static Player login() {
+		
+		int menuChoice=-1;
+		final int EXUSER = 1;
+		final int NEWUSER = 2;
+		final int EXIT= 3;
 		String username = "";
 		String password = "";
+		String newusername="";
+		String newuserpass="";
 		boolean loggedIn = false;
-		System.out.println("-----Login-----");
-		while (!loggedIn) {
-			System.out.println("Enter username: ");
-			username = keyboard.nextLine();
-			System.out.println("Enter password: ");
-			password = keyboard.nextLine();
-			System.out.println(password);
-			try {
-				new Player(username, password);
-				loggedIn = true;
-			} catch (IllegalArgumentException e) {
-				System.out.println(e);
-			}
+		
+		
+		Scanner keyboard = new Scanner(System.in);
+		
+		while (menuChoice != EXIT) {
+		
+	
+		System.out.println("---User Menu---");
+		System.out.println("1. Existing users");
+		System.out.println("2. New users");
+		System.out.println("3. Main menu");
+		
+		menuChoice=keyboard.nextInt();
+		keyboard.nextLine();
+			
+		    if(menuChoice==EXUSER){
+		    	
+		        System.out.println("---Existing user---");
+		    	while (!loggedIn) {
+		    		
+					System.out.println("Enter username: ");
+					username = keyboard.nextLine();
+					
+					System.out.println("Enter password: ");
+					password = keyboard.nextLine();
+					
+					try {
+						new Player(username, password);
+						loggedIn = true;
+					} catch (IllegalArgumentException e) {
+						System.out.println(e);
+					}
+				}
+				
+		    }
+		    else if (menuChoice==NEWUSER){
+		    	System.out.println("---Create new user---");
+		 	   
+		 	   while(!loggedIn){
+		 		   System.out.println("Enter username: ");
+		 	       newusername= keyboard.nextLine();
+		 	   
+		 	       System.out.println("Enter password: ");
+		 	       newuserpass= keyboard.nextLine();
+		 	       
+		 	   }
+		 	   try {
+		 			
+		 			new Player(newusername, newuserpass);
+		 			loggedIn = true;
+		 			
+		 		} catch (Exception IllegalArgumentException ) {
+		 			System.out.println("Invalid entry, try again!");
+		 		}
+		 
+		    }
 		}
 		return new Player(username, password);
 	}
