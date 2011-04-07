@@ -52,17 +52,9 @@ import cards.*;
 
 		}
 
-		/* Currently, storage/blackjackStorage can only save and load one hand for each player
-		 * so players.size() must equal to hand.size() */
-
-		public GameEngine(ArrayList<Player> players, ArrayList<Hand> hand, Deck deck) {
-			ArrayList<BlackjackHand> bh = new ArrayList<BlackjackHand>();
-
-			for (int i=0; i<players.size(); i++) {
-				bh.add((BlackjackHand) hand.get(i));
-				playersAndHands.put(players.get(i), bh);
-				bh.clear();
-			}
+		public GameEngine(Deck deck) {
+			myGame = new Blackjack();
+			myGame.setDeck(deck);
 		}
 
 		public void reset() {

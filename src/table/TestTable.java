@@ -9,9 +9,7 @@ import cards.*;
 import cards.Card.Rank;
 import cards.Card.Suit;
 import participant.*;
-import storage.BlackjackStorage;
-import storage.Statistics;
-import storage.Storage;
+import storage.*;
 
 public class TestTable extends TestCase {
 	private Player p1; 
@@ -178,85 +176,48 @@ public class TestTable extends TestCase {
 		assertEquals(table.getAllSpectators().size(), 1);
 	}
 	
-	public void testSaveAndLoadDeck() {
+	public void testSaveAndLoadGameOnePlayerWithDeck() {
 		Deck deck = new Deck();
 		deck.addDeck(1);
-		deck.draw();
-		deck.draw();
-		deck.draw();
-		expectedValue = 49;
+		//Player player = new Player("jessica", "password");
 		
-		BlackjackStorage.saveDeck(deck, 1);
-		actualValue = BlackjackStorage.loadDeck(1).size();
+		table.saveGame(deck, 4);
+		GameEngine game = table.loadGame(4);
 		
-		assertEquals(expectedValue, actualValue);
+		ArrayList<Player> players = table.getAllPlayers();
+		ArrayList<String> playerNames = new ArrayList<String>();
+		
+		for (int i=0; i<players.size(); i++) {
+			playerNames.add(players.get(i).getUsername());
+		}
+		
+		String expectedString = table.getPlayer(0).getUsername();
+		assertEquals(expectedString, playerNames.get(0));
 	}
 	
-	public void testSaveAndLoadThreeDecks() {
+	public void testSaveAndLoadGameThreePlayersWithDeck() {
 		Deck deck = new Deck();
-		deck.addDeck(3);
-		expectedValue = 52*3;
+		deck.addDeck(1);
 		
-		BlackjackStorage.saveDeck(deck, 3);
-		actualValue = BlackjackStorage.loadDeck(3).size();
+		p1.requestJoin(table, true);
+		p2.requestJoin(table, true);
+		p3.requestJoin(table, true);
 		
-		assertEquals(expectedValue, actualValue);
+		table.saveGame(deck, 5);
+		GameEngine game = table.loadGame(5);
+		
+		ArrayList<Player> players = table.getAllPlayers();
+		ArrayList<String> playerNames = new ArrayList<String>();
+		
+		for (int i=0; i<players.size(); i++) {
+			playerNames.add(players.get(i).getUsername());
+		}
+		
+		String expectedString = table.getPlayer(0).getUsername();
+		assertEquals(expectedString, playerNames.get(0));
+		String s2 = table.getPlayer(1).getUsername();
+		assertEquals(s2, playerNames.get(1));
+		String s3 = table.getPlayer(2).getUsername();
+		assertEquals(s3, playerNames.get(2));
 	}
-	
-//	public void testSaveAndLoadGameOnePlayer() {
-//		
-//	}
-	
-//	public void testSaveAndLoadOnePlayerWithThreeCards() {
-//		Deck deck = new Deck();
-//		HashMap<Player, ArrayList<BlackjackHand>> playersAndHands = new HashMap<Player, ArrayList<BlackjackHand>>();
-//		ArrayList<BlackjackHand> hand = new ArrayList<BlackjackHand>();
-//		BlackjackHand h = new BlackjackHand();
-//		
-//		p1.requestJoin(table, true);
-//		deck.addDeck(1);
-//		for (int i=0; i<3; i++) {
-//			h.addCard(deck.draw());
-//			hand.add(h);
-//		}
-//		playersAndHands.put(p1, hand);
-//		table.saveGame(deck, 2, playersAndHands);
-//		
-//		String expectedStringValue = p1.getUsername();
-//		expectedValue = playersAndHands.get(p1).size();
-//		table.loadPlayers(2);
-//		String actualStringValue = table.getAllPlayers().get(1).getUsername();
-//		
-//		assertEquals(expectedStringValue, actualStringValue);
-//	}
-	
-//	public void testLoadOnePlayerAndHand() {
-//		failed = false;
-//		
-//		try {
-//			ArrayList<Player> players = table.loadPlayers(1);
-//			assertEquals(players.size(), 1);
-//		} catch (IllegalArgumentException e) {
-//			failed = true;
-//		}
-//		assertEquals(failed, false);
-//		
-//	}
-//	
-//	public void testLoadThreePlayersAndHands() {
-//		
-//	}
-	
-//	public void testSaveHands() {
-//		p1.requestJoin(table, true);
-//		p2.requestJoin(table, true);
-//		HashMap<Player,BlackjackHand> playerHand = new HashMap<Player,BlackjackHand>();
-//		Hand hand = new Hand();
-////		hand.addCard(new Card(Rank.ACE, Suit.DIAMONDS));
-////		hand.addCard(new Card(Rank.TEN, Suit.HEARTS));
-//		
-//		//playerHand.put(p1,);
-//		
-//		//assertEquals(table.saveHands(hand, 2), true);
-//	}
 }

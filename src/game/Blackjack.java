@@ -59,7 +59,11 @@ public class Blackjack implements Game {
   */
  public Deck getDeck() {
   return this.gameDeck;
- } 
+ }
+ 
+ public void setDeck(Deck deck) {
+	 this.gameDeck = deck;
+ }
  
  /**
   * Check if Deck is low on cards

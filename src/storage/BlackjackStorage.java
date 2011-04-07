@@ -31,6 +31,7 @@ public class BlackjackStorage {
 		ArrayList<String> string = new ArrayList<String>();
 		try {
 			Scanner reader = new Scanner(new File("saves/" + gameId + ".csv"));
+			reader.nextLine();
 			while (reader.hasNextLine()) {
 				String[] parsedLine = reader.nextLine().split(",");
 				string.add(parsedLine[0]);
@@ -43,18 +44,18 @@ public class BlackjackStorage {
 		}
 	}
 	
-	public static boolean saveHand(String username, Hand hand, int gameID) {
+	public static boolean savePlayerNames(String username, int gameID) { //Hand(String username, Hand hand, int gameID) {
 		try {
 			FileWriter fstream = new FileWriter("saves/" + gameID + ".csv", true);
 			BufferedWriter writer = new BufferedWriter(fstream);
 			
-			writer.write(username + ",");
-			while (hand.getNumberCards() > 1) {
-				Card card = hand.removeCard(0);
-				writer.write(card + ":");
-			}
-			writer.write(hand.removeCard(0).toString());
-			writer.write("\r\n");
+			writer.write(username + "\r\n");
+//			while (hand.getNumberCards() > 1) {
+//				Card card = hand.removeCard(0);
+//				writer.write(card + ":");
+//			}
+//			writer.write(hand.removeCard(0).toString());
+//			writer.write("\r\n");
 			writer.close();
 			return true;	
 			

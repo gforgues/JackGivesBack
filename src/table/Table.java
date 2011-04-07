@@ -40,7 +40,12 @@ public class Table implements Observer {
 	}
  
 	public Player getPlayer(int index) {
-		return players.get(index);
+		if (index >= 0 && index<players.size()) {
+			return players.get(index);
+		} else {
+			System.out.println("Index is out of bounds. Returns the Table Owner");
+			return this.tableOwner;
+		}
 	}
  
 	public Spectator getSpectator(int index) {
@@ -205,19 +210,20 @@ public class Table implements Observer {
 //}
  
 	//need save and close methods for both player and spectator 
-//	public boolean savePlayers() {
-//		boolean allSuccessful = true;
-//		
-//		for (int i=0; i<players.size(); i++) {
-//			if (!Storage.savePlayer(players.get(i).toStatistics())) {
-//				allSuccessful = false;
-//			}
-//		}
-//		
-//		return allSuccessful;
-//	}
+	private boolean savePlayers(int gameID) {
+		boolean allSuccessful = true;
+		
+		for (int i=0; i<players.size(); i++) {
+			if (BlackjackStorage.savePlayerNames(players.get(i).getUsername(), gameID)) {
+			//if (!Storage.savePlayer(players.get(i).toStatistics())) {
+				allSuccessful = false;
+			}
+		}
+		
+		return allSuccessful;
+	}
 	
-	public ArrayList<Player> loadPlayers(int gameId) {		
+	private ArrayList<Player> loadPlayers(int gameId) {		
 		ArrayList<String> playerNames = BlackjackStorage.loadPlayerNames(gameId);
 		ArrayList<Player> players = new ArrayList<Player>();
 		String password;
@@ -225,7 +231,8 @@ public class Table implements Observer {
 		boolean loggedIn = false;
 		
 		for (int i=0; i<playerNames.size(); i++) {
-			while (!loggedIn) {
+			loggedIn = false;
+			while (loggedIn == false) {
 				System.out.println(playerNames.get(i) + ", Please enter your password");
 				password = keyboard.nextLine();
 				try {
@@ -240,45 +247,46 @@ public class Table implements Observer {
 		return players;
 	}
 
-	public boolean saveHands(HashMap<Player,ArrayList<BlackjackHand>> playerHand, int gameID) {
-		Set set = playerHand.keySet();
-		Iterator itr = set.iterator();
-		Player player;
-		boolean allSuccessful = true;
-		
-		while (itr.hasNext()) {
-			player = ((Player)itr.next());
-			for (int i=0; i<playerHand.get(player).size(); i++) {
-				if (!BlackjackStorage.saveHand(player.getUsername(), playerHand.get(player).get(i), gameID)) {
-					allSuccessful = false;
-				}
-			}
-		}
-		
-		return allSuccessful;
-	}
+//	public boolean saveHands(HashMap<Player,ArrayList<BlackjackHand>> playerHand, int gameID) {
+//		Set set = playerHand.keySet();
+//		Iterator itr = set.iterator();
+//		Player player;
+//		boolean allSuccessful = true;
+//		
+//		while (itr.hasNext()) {
+//			player = ((Player)itr.next());
+//			for (int i=0; i<playerHand.get(player).size(); i++) {
+//				if (!BlackjackStorage.saveHand(player.getUsername(), playerHand.get(player).get(i), gameID)) {
+//					allSuccessful = false;
+//				}
+//			}
+//		}
+//		
+//		return allSuccessful;
+//	}
 	
-	public ArrayList<Hand> loadHand(int gameId) {
-		ArrayList<String> playerNames = BlackjackStorage.loadPlayerNames(gameId);
-		ArrayList<Hand> hands = new ArrayList<Hand>();
-		
-		for (int i=0; i<playerNames.size(); i++) {
-			hands.add(BlackjackStorage.loadHand(playerNames.get(i), gameId));
-		}
-		
-		return hands;
-	}
+//	public ArrayList<Hand> loadHand(int gameId) {
+//		ArrayList<String> playerNames = BlackjackStorage.loadPlayerNames(gameId);
+//		ArrayList<Hand> hands = new ArrayList<Hand>();
+//		
+//		for (int i=0; i<playerNames.size(); i++) {
+//			hands.add(BlackjackStorage.loadHand(playerNames.get(i), gameId));
+//		}
+//		
+//		return hands;
+//	}
 	
-	public Deck loadDeck(int gameId) {
+	private Deck loadDeck(int gameId) {
 		return BlackjackStorage.loadDeck(gameId);
 	}
  
 	//how are we saving the hands if they're stored in the blackjacks
-	public boolean saveGame(Deck deck, int gameID, HashMap<Player, ArrayList<BlackjackHand>> playersAndHands){
+	public boolean saveGame(Deck deck, int gameID) { //HashMap<Player, ArrayList<BlackjackHand>> playersAndHands){
 		boolean isSuccessful = true;
 		//HashMap<Player, ArrayList<BlackjackHand>> playersAndHands = game.getPlayersAndHands();
 		
-		if (!BlackjackStorage.saveDeck(deck, gameID) || !this.saveHands(playersAndHands, gameID)) {
+		if (!BlackjackStorage.saveDeck(deck, gameID) || !this.savePlayers(gameID)) {
+		//if (!BlackjackStorage.saveDeck(deck, gameID) || !this.saveHands(playersAndHands, gameID)) {
 			isSuccessful = false;
 		}
 		//this.saveSpectators();
@@ -293,10 +301,13 @@ public class Table implements Observer {
 	 */
 	public GameEngine loadGame(int gameId) {		
 		ArrayList<Player> players = this.loadPlayers(gameId);
-		ArrayList<Hand> hand = this.loadHand(gameId);
+		//this.players.clear();
+		this.players = players;
+		//ArrayList<Hand> hand = this.loadHand(gameId);
 		Deck deck = this.loadDeck(gameId);
 		
-		return new GameEngine(players, hand, deck);
+		return new GameEngine(deck);
+		//return new GameEngine(players, hand, deck);
 	}
 	
 	public String toString() {
