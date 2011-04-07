@@ -39,10 +39,9 @@ import cards.*;
 
 		private final int BLACKJACK_PAYOUT_CONSTANT = 3;
 
-		private final int MIN_BET = 0;
+		private final int MIN_BET = 10;
 
-		private final int MAX_BET = 500;
-
+		private final int MAX_BET = 100;
 
 
 
@@ -52,11 +51,13 @@ import cards.*;
 
 		}
 
-		public GameEngine(Deck deck) {
-			myGame = new Blackjack();
+		/* Currently, storage/blackjackStorage can only save and load one hand for each player
+		 * so players.size() must equal to hand.size() */
+
+		public GameEngine(Deck deck){
+			myGame=new Blackjack();
 			myGame.setDeck(deck);
 		}
-
 		public void reset() {
 			myGame = new Blackjack();
 			playersAndHands = new HashMap<Player, ArrayList<BlackjackHand>>();
@@ -78,34 +79,6 @@ import cards.*;
 
 			reset();
 
-
-			/*
-			 * temporarily adding players here for testing purposes, 
-			 * later needs to be modified to create/accept players/spectators
-			 */
-
-			/*
-			Player bob = new Player("bob","bob");
-			BlackjackHand hb = new BlackjackHand();
-			ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
-			hbb.add(hb);
-			
-			Player bab = new Player("bab","bab");
-			BlackjackHand hb2 = new BlackjackHand();
-			ArrayList<BlackjackHand> hbb2 = new ArrayList<BlackjackHand>();
-			hbb2.add(hb2);
-			
-			
-			
-		//	playersAndHands.put(bob, hbb);
-		//	playersAndHands.put(bab, hbb2);
-			
-			//temporarily testing adding players to the table
-			//later to be implemented is the actual passing of players to requestJoin
-			
-			gameTable.requestJoin(bob);
-			gameTable.requestJoin(bab);
-			*/
 			//deal dealer's hand now
 			myGame.deal(dealerHand);
 
@@ -132,9 +105,10 @@ import cards.*;
 
 				//set the bet and remove the chips
 				try { 
-
+					Chips chips = playersAndChips.get(players.get(i));
 					playersAndChips.get(players.get(i)).setBet(a);
-					playersAndChips.get(players.get(i)).addChips(players.get(i), -a);
+					chips.addChips(players.get(i), -a);
+					//playersAndChips.get(players.get(i)).addChips(players.get(i), -a);
 
 					System.out.println(" you want to bet " + a);
 
@@ -159,8 +133,6 @@ import cards.*;
 
 			}
 
-
-
 			//shows dealer's initial hand, game is over if dealer gets blackjack,
 			//else then dealer hits until it is above 16 pts 
 
@@ -174,8 +146,6 @@ import cards.*;
 				while (dealerHand.getBlackjackValue() < MUST_HIT) 
 					myGame.hit(dealerHand);
 				dealerHand.setDone();
-
-
 
 			/*
 			 * Deal everyone
@@ -199,8 +169,6 @@ import cards.*;
 					System.out.println(players.get(i).getUsername() + ", your second hand is currently: " + b.get(1).toString());
 				}
 			}
-
-
 
 				/*
 				 * Ask for input moves
@@ -355,49 +323,6 @@ import cards.*;
 
 			}
 
-//			for (int i=0;i<getPlayers().size();i++) {
-//				ArrayList<BlackjackHand> handList = playersAndHands.get(gameTable.getPlayer(i));
-//				for (int j=0;j<handList.size();j++){
-//					BlackjackHand tmpHand = new BlackjackHand();
-//					myGame.deal(tmpHand);
-//					handList.set(i, tmpHand);
-//				}
-//			}
-
-
-//			for (ArrayList<BlackjackHand> b : playersAndHands.values()) {
-//				int numHands = b.size();
-//				for ( int j = 0 ; j < numHands ; j++ ) {
-//					BlackjackHand tmpHand = new BlackjackHand();
-//					myGame.deal(tmpHand);
-//					b.add(tmpHand);
-//						
-//					System.out.println(tmpHand.toString());
-//					
-//					BlackjackHand winnerHand = processWinner(tmpHand);
-//					if (winnerHand == null)
-//					System.out.print("Draw!");
-//					else if (winnerHand.getBlackjackValue() == dealerHand.getBlackjackValue())
-//						System.out.println("Dealer wins!");
-//					else if (winnerHand.getBlackjackValue() == tmpHand.getBlackjackValue())
-//						System.out.println("You win!");
-//					}
-//
-//			}
-
-
-
-
-
-//			for ( int i = 0 ; i < playersHands.size() ; i++ ) {
-//				Scanner keyboard = new Scanner(System.in);
-//				int a= keyboard.nextInt();
-//				System.out.print(a);
-//			}
-
-
-
-
 		}
 
 		/**
@@ -479,7 +404,7 @@ import cards.*;
 			for ( int i = 0 ; i < getPlayers().size() ; i++ ) {
 				Player tmpPlayer = getPlayers().get(i);
 				if (!playersAndChips.containsKey(tmpPlayer)) {
-					playersAndChips.put(tmpPlayer, new Chips(STARTING_CHIPS));
+					playersAndChips.put(tmpPlayer, new Chips(tmpPlayer.getChips()));
 				} 
 			}
 		}
@@ -519,54 +444,10 @@ import cards.*;
 
 
 
-//		public void resetKeepPlayers() {
-//			myGame = new Blackjack();
-//			winner = null;
-//			
-//			HashMap<Player, Hand> tmpPlayers = new HashMap<Player, Hand>();
-//			for (int i = 0 ; i < gameTable.getAllPlayers().size() ; i++) {
-//				Player tmpPlayer = gameTable.getPlayer(i);
-//				tmpPlayers.put(tmpPlayer, new Hand());
-//			}
-//			playersHands = tmpPlayers;
-//
-//		}
 
 		public int getNumberOfPlayers() {
 			return playersAndHands.size();
 		}
-//		
-//		public void playDoubleDown() {
-//	    	if ( hasSufficientChips(player, chipCount)) {
-//	    		player.chips -= chipCount;
-//	    		chipCount += chipCount;
-//			
-//		}
-
-		/**
-		 * Checks if there is sufficient specified amount of chips
-		 * @param amount The amount to be checked
-		 * @return True if there is sufficient chips, false otherwise
-		 */
-//	    public boolean hasSufficientChips(Player player, int amount) {
-//	    	if ( player.getChips() < amount ) {
-//	    		return false;
-//	    	}
-//	    	return true;
-//	    }
-
-		/**
-		 *
-		 * @param
-		 * @return
-		 */
-//	    public void bet(Player player, int amount) {
-//	    	if ( hasSufficientChips(player,amount) ) {
-//	    		chipCount += amount;
-//	    		player.getChips() -= amount;
-//	    	}
-//	    }	  
-
 
 
 	}
