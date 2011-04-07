@@ -121,7 +121,7 @@ import cards.*;
 						//playersAndChips.get(players.get(i)).addChips(players.get(i), a);
 
 //						System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i)).getChips()  + " or less" );
-						System.out.println(IllegalArgumentException.getMessage() + " Sorry, please enter " + players.get(i).getChips()  + " or less" );
+						System.out.println(IllegalArgumentException.getMessage() + " You currently have " + players.get(i).getChips());
 						//System.out.println("sorry not enough chips, please enter " + playersAndChips.get(gameTable.getAllPlayers().get(i)).getChips()  + " or less" );
 						a = keyboard.nextInt();
 
