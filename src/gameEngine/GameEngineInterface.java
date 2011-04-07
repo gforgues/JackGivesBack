@@ -59,7 +59,7 @@ public class GameEngineInterface {
 				addSpectator();
 			}
 			if (menuChoice == SAVEGAME) {
-				System.out.println("Choose a save slot number (1-9) :");
+				System.out.println("Input any number to save game :");
 				int saveNumber = keyboard.nextInt();
 				keyboard.nextLine();
 				try {
