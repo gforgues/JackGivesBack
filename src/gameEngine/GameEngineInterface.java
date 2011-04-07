@@ -50,7 +50,7 @@ public class GameEngineInterface {
 				int saveNumber = keyboard.nextInt();
 				keyboard.nextLine();
 				try {
-					gameEngine.getTable().saveGame(gameEngine.getDeck(), saveNumber,gameEngine.getPlayersAndHands());
+					gameEngine.getTable().saveGame(gameEngine.getDeck(), saveNumber);
 					System.out.println("Save successful.");
 				} catch (Exception e) {
 					System.out.println("Save unsuccessful.");
