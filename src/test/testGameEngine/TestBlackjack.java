@@ -22,13 +22,14 @@ public class TestBlackjack extends TestCase {
 		hand = new BlackjackHand();
 	}
 	
-	public void testCheckDeckLessThanDeckResetValue() {
+	public void testCheckDeckWithDeckSizeLessThanDeckResetValue() {
+		Deck deck = new Deck();
 		deck.addDeck(1);
-		blackjack.setDeck(deck);
+		Blackjack jack = new Blackjack();
 		
-		expectedValue = 6*52;
-		blackjack.checkDeck();
-		actualValue = blackjack.getDeck().size();
+		expectedValue = deck.size() + 5*52;
+		jack.checkDeck();
+		actualValue = jack.getDeck().size();
 		
 		assertEquals(expectedValue, actualValue);
 	}
@@ -39,6 +40,76 @@ public class TestBlackjack extends TestCase {
 		expectedValue = 6*52;
 		blackjack.checkDeck();
 		actualValue = blackjack.getDeck().size();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testHitNumberOfCards(){
+		Deck deck= new Deck();
+		deck.addDeck(1);
+		Card card = deck.draw();
+		Blackjack jack = new Blackjack();
+		BlackjackHand hand = new BlackjackHand();
+		hand.addCard(card);
+		expectedValue = hand.getNumberCards();
+		hand.removeCard(card);
+		jack.hit(hand);
+		actualValue = hand.getNumberCards();
+		assertEquals(expectedValue, actualValue);
+	}
+	public void testHitCardValue(){
+		Deck deck= new Deck();
+		deck.addDeck(1);
+		Card card = deck.draw();
+		Blackjack jack = new Blackjack();
+		BlackjackHand hand = new BlackjackHand();
+		hand.addCard(card);
+		expectedValue = hand.getBlackjackValue();
+		System.out.println(hand.toString());
+		hand.removeCard(card);
+		jack.hit(hand);
+		actualValue = hand.getBlackjackValue();
+		System.out.println(hand.toString());
+		assertNotSame(expectedValue, actualValue);
+	}
+	
+	public void testDoubleDownNumberofCards(){
+		Deck deck= new Deck();
+		deck.addDeck(1);
+		Card card = deck.draw();
+		Blackjack jack = new Blackjack();
+		BlackjackHand hand = new BlackjackHand();
+		hand.addCard(card);
+		expectedValue = hand.getNumberCards();
+		hand.removeCard(card);
+		jack.doubleDown(hand);
+		actualValue = hand.getNumberCards();
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testSplitNumberofCards(){
+		Deck deck= new Deck();
+		deck.addDeck(1);
+		Blackjack jack = new Blackjack();
+		BlackjackHand hand = new BlackjackHand();
+		ArrayList<BlackjackHand> twoHands=new ArrayList<BlackjackHand>();
+		
+		//BlackjackHand hand = new BlackjackHand();
+		hand.addCard(AllCards.CAH);
+		hand.addCard(AllCards.CAD);
+		twoHands.add(hand);
+		
+		expectedValue = 0;
+		
+		for (int i=0; i<twoHands.size(); i++) {
+			expectedValue += twoHands.get(i).getNumberCards();
+		}
+		ArrayList<BlackjackHand> h = jack.split(hand);
+		
+		actualValue = 0;
+		for (int i=0; i<h.size(); i++) {
+			actualValue += h.get(i).getNumberCards();
+		}
 		
 		assertEquals(expectedValue, actualValue);
 	}
@@ -59,14 +130,53 @@ public class TestBlackjack extends TestCase {
 
 	}
 	
-	public void testPlaysSplitHands() {
+	public void testDealNumberOfCards() {
+		blackjack.deal(hand);
+		
+		expectedValue = 2;
+		actualValue = hand.getNumberCards();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testDealHand() {
+		BlackjackHand h = blackjack.dealHand(hand);
+		
+		expectedValue = 2;
+		actualValue = h.getNumberCards();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testHitWithOneCard() {
 		hand.addCard(AllCards.C2C);
-		hand.addCard(AllCards.C2D);
 		
-		expectedValue = hand.getNumberCards();
-		ArrayList<BlackjackHand> bothHands = blackjack.split(hand);
+		expectedValue = hand.getNumberCards() + 1;
+		blackjack.hit(hand);
+		actualValue = hand.getNumberCards();
 		
-		blackjack.playsSplitHands(bothHands);
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testHitThreeTimes() {
+		hand.addCard(AllCards.C3C);
+		hand.addCard(AllCards.CAD);
+		
+		expectedValue = hand.getNumberCards() + 3;
+		blackjack.hit(hand);
+		blackjack.hit(hand);
+		blackjack.hit(hand);
+		actualValue = hand.getNumberCards();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
+	public void testStand() {
+		blackjack.stand(hand);
+		
+		boolean playable = hand.isPlayable();
+		
+		assertEquals(playable, false);
 	}
 	
 }
