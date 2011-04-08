@@ -8,21 +8,27 @@ import storage.*;
 import table.Table;
 
 /**
- * A simple database interface
- * 
+ * Player class: Implements simple player options: modifyProfile, requestJoin, requestLeave, viewStatistics etc 
+ * Player object has a contained storage object that assigns values for username, password, chip amounts etc
  * @author JackGivesBack
  *
  */
 
-public class Player { //cards.Hand implements Participant {
-  Statistics player;
+public class Player { 
+	Statistics player;
   
   public Player(String username, String password){
 	  this.player = Storage.loadPlayer(username, password);
   }
   
+  /**
+   * Allows the player to modify their player profile- password, name and age
+   * @param  String inputPassword, the current password of the player
+   * @param  String newPassword, the new modified password of the player
+   * @param  int age, the age of the player
+   * @return
+   */	
   public void modifyProfile(String inputPassword, String newPassword, String realName, int age) {
-	  //this.player.validatePassword(newPassword);
 	  if (this.player.validatePassword(inputPassword)) {
 		  this.player.changePassword(newPassword);
 	  }
@@ -31,43 +37,56 @@ public class Player { //cards.Hand implements Participant {
 	  this.player.setAge(age);
   }
   
+  
   public void modifyProfile(String inputPassword, String newPassword) {
 	  this.modifyProfile(inputPassword, newPassword, "noName", -1);
   }
-    
+  
+  
   public void requestJoin(Table table, boolean canJoin) {
 	  table.requestJoin(this, canJoin);
   }
   
-//DO NOT NEED A SAVE GAME METHOD IN PLAYER SINCE IT'S TABLEOWNER THAT IS THE ONLY
-//ONE THAT SAVES THE GAME
-//  //Should we say Table.saveGame(this)- cuz it has to do with a particular
-//  //player..?
-//  public void saveGame(Table table) {
-//	  table.saveGame(this);
-//  }
-  
-  //is the save game method in Table class a static method?
   public void requestLeave(Table table, boolean canLeave) {
 	  table.requestLeave(this, canLeave);
   }
   
+  /**
+   * Returns the user name of the current  player
+   * @param 
+   * @return String, Returns the user name of the player
+   */	
   public String getUsername() {
 	  return this.player.getUsername();
-	  //return this.userName;
   }
   
+  /**
+   * Returns the real name of the current player
+   * @param 
+   * @return String, Returns the real name of the current player
+   */	
   public String getRealName() {
 	  return this.player.getRealName();
   }
   
+  /**
+   * Returns the age of the current player
+   * @param 
+   * @return int, Returns the age of the current player
+   */	
   public int getAge() {
 	  return this.player.getAge();
   }
   
+  /**
+   * Returns the number of chips that the current player has
+   * @param 
+   * @return int, Returns the number of chips of the current player's hand
+   */	
   public int getChips() {
 	  return this.player.getChips();
   }
+  
   
   public void setChips(int numChips) {
 	  this.player.setChips(numChips);
@@ -89,11 +108,7 @@ public class Player { //cards.Hand implements Participant {
 	  return this.player.toString();
   }
   
-//  public String getStats() {
-//	  return this.player.getStats();
-//  }
-  
-  public void displaySatitistics() {
+  public void displayStatistics() {
 	  this.player.displayStatistics();
   }
   
