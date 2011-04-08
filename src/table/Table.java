@@ -65,14 +65,25 @@ public class Table implements Observer {
 	}
 	
 	public boolean requestJoin(Player player){
-		boolean join;
+		boolean join=false;
+		boolean validInput=false;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player ," 
-				+ player.getUsername() + ", join the game? Enter true or false:");
-		join = keyboard.nextBoolean();
+		System.out.println("TableOwner, " + this.tableOwner.getUsername() + ", can player " 
+				+ player.getUsername() + " join the game? Enter true or false:");
+		
+		while (!validInput) {
+			try {
+				join = keyboard.nextBoolean();
+				validInput = true;
+			} catch (Exception e) {
+				// Discard the invalid keyboard input and loop back
+				keyboard.nextLine();
+				System.out.println("Please enter true or false");
+			}
+		}
    
-		if(join==true){
+		if (join) {
 			System.out.println("Request join accepted");
 			players.add(player);
 		} else {
@@ -197,18 +208,6 @@ public class Table implements Observer {
 		return index;
 	}
 	
-//	public boolean saveSpectators() {
-//	boolean allSuccessful = true;
-//	
-//	for (int i=0; i<players.size(); i++) {
-////		if (!Storage.savePlayer(spectators.get(i).toStatistics())) {
-////			allSuccessful = false;
-////		}
-//	}
-//	
-//	return allSuccessful;
-//}
- 
 	//need save and close methods for both player and spectator 
 	private boolean savePlayers(int gameID) {
 		boolean allSuccessful = true;
@@ -246,54 +245,20 @@ public class Table implements Observer {
 			
 		return players;
 	}
-
-//	public boolean saveHands(HashMap<Player,ArrayList<BlackjackHand>> playerHand, int gameID) {
-//		Set set = playerHand.keySet();
-//		Iterator itr = set.iterator();
-//		Player player;
-//		boolean allSuccessful = true;
-//		
-//		while (itr.hasNext()) {
-//			player = ((Player)itr.next());
-//			for (int i=0; i<playerHand.get(player).size(); i++) {
-//				if (!BlackjackStorage.saveHand(player.getUsername(), playerHand.get(player).get(i), gameID)) {
-//					allSuccessful = false;
-//				}
-//			}
-//		}
-//		
-//		return allSuccessful;
-//	}
-	
-//	public ArrayList<Hand> loadHand(int gameId) {
-//		ArrayList<String> playerNames = BlackjackStorage.loadPlayerNames(gameId);
-//		ArrayList<Hand> hands = new ArrayList<Hand>();
-//		
-//		for (int i=0; i<playerNames.size(); i++) {
-//			hands.add(BlackjackStorage.loadHand(playerNames.get(i), gameId));
-//		}
-//		
-//		return hands;
-//	}
 	
 	private Deck loadDeck(int gameId) {
 		return BlackjackStorage.loadDeck(gameId);
 	}
  
-	//how are we saving the hands if they're stored in the blackjacks
 	public boolean saveGame(Deck deck, int gameID) { //HashMap<Player, ArrayList<BlackjackHand>> playersAndHands){
 		boolean isSuccessful = true;
-		//HashMap<Player, ArrayList<BlackjackHand>> playersAndHands = game.getPlayersAndHands();
 		
 		if (!BlackjackStorage.saveDeck(deck, gameID) || !this.savePlayers(gameID)) {
-		//if (!BlackjackStorage.saveDeck(deck, gameID) || !this.saveHands(playersAndHands, gameID)) {
 			isSuccessful = false;
 		}
-		//this.saveSpectators();
 		
 		return isSuccessful;
-		//return Storage.savePlayer(spectator);
-	}
+		}
 	
 	/*
 	 * Loads the game and returns a new GameEngine with all of the loaded
@@ -301,13 +266,10 @@ public class Table implements Observer {
 	 */
 	public GameEngine loadGame(int gameId) {		
 		ArrayList<Player> players = this.loadPlayers(gameId);
-		//this.players.clear();
 		this.players = players;
-		//ArrayList<Hand> hand = this.loadHand(gameId);
 		Deck deck = this.loadDeck(gameId);
 		
 		return new GameEngine(deck);
-		//return new GameEngine(players, hand, deck);
 	}
 	
 	public String toString() {
