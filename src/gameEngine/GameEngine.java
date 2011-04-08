@@ -74,71 +74,56 @@ import cards.*;
 		public HashMap<Player, ArrayList<BlackjackHand>> getPlayersAndHands() {
 			return this.playersAndHands;
 		}
+		
+		private int checkValidInputBet(Player player) {
+			boolean invalid = false;
+			System.out.println("how much do you want to bet?");
+			int a = 0;
+			Scanner keyboard = new Scanner(System.in);
+			
+			while (invalid == false) {
+				try { 
+					a = keyboard.nextInt();
+					playersAndChips.get(player).setBet(a);
+					playersAndChips.get(player).addChips(player, -a);
+	
+					System.out.println(" you want to bet " + a);
+					invalid = true;
+	
+				} catch (Exception IllegalArgumentException) {
+						System.out.println(IllegalArgumentException.getMessage() + " You currently have " + player.getChips() + " chips.");
+						System.out.println("Please try again.");
+	
+				}
+			}
+			
+			return a;
+		}
 
 		public void gameStart() {
 
 			reset();
-
-			//deal dealer's hand now
-			myGame.deal(dealerHand);
-
-
-			//these are not quite implemented but they ideally are supposed to load from a previous saved game...? 
+			myGame.deal(dealerHand); 
 			loadPlayers();
-			loadHands();
-
-
 			loadChips();
 
-
-			//gathering bet amounts from all players
-
 			ArrayList<Player> players = gameTable.getAllPlayers();
+			Player player;
 			Scanner keyboard = new Scanner(System.in);
 
 			for (int i=0; i<players.size(); i++) {
-			//for (int i=0;i<getNumberOfPlayers();i++){
-				System.out.println(players.get(i).getUsername() + ", you have " + players.get(i).getChips() + " chips.");
-				System.out.println("how much do you want to bet?");
-				int a = keyboard.nextInt();
-
+			
+				player = players.get(i);
+				System.out.println(player.getUsername() + ", you have " + player.getChips() + " chips.");
+				
+				int a = this.checkValidInputBet(player);
 
 				//set the bet and remove the chips
-				try { 
-//					Chips chips = playersAndChips.get(players.get(i));
-					playersAndChips.get(players.get(i)).setBet(a);
-//					chips.addChips(players.get(i), -a);
-					playersAndChips.get(players.get(i)).addChips(players.get(i), -a);
 
-					System.out.println(" you want to bet " + a);
-
-				} catch (Exception IllegalArgumentException) {
-
-//					while (a > playersAndChips.get(players.get(i)).getChips() || a < MIN_BET || a > MAX_BET) {
-//					while (a > players.get(i).getChips() || a < MIN_BET || a > MAX_BET) {
-//					while (a > players.get(i).getChips()) {
-						//add back chips after evaluating while loop condition
-						//playersAndChips.get(players.get(i)).addChips(players.get(i), a);
-
-//						System.out.println("sorry not enough chips, please enter " + playersAndChips.get(players.get(i)).getChips()  + " or less" );
-						System.out.println(IllegalArgumentException.getMessage() + " You currently have " + players.get(i).getChips());
-						//System.out.println("sorry not enough chips, please enter " + playersAndChips.get(gameTable.getAllPlayers().get(i)).getChips()  + " or less" );
-						a = keyboard.nextInt();
-
-						playersAndChips.get(players.get(i)).setBet(a);
-						playersAndChips.get(players.get(i)).addChips(players.get(i), -a);
-
-						System.out.println(" you want to bet " + a);
-
-//					}
-
-				}
 
 			}
 
-			//shows dealer's initial hand, game is over if dealer gets blackjack,
-			//else then dealer hits until it is above 16 pts 
-
+			
 			System.out.println("Dealer's hand: " + dealerHand.toString());	
 
 			if (dealerHand.checkBlackjack()) {
@@ -165,7 +150,6 @@ import cards.*;
 			}
 
 			for (int i=0;i<getNumberOfPlayers();i++){
-//				ArrayList<BlackjackHand> b = playersAndHands.get(gameTable.getPlayer(i));
 				ArrayList<BlackjackHand> b = playersAndHands.get(players.get(i));
 				System.out.println(players.get(i).getUsername() + ", your first hand is currently: " + b.get(0).toString());
 				if (b.size() == 2) {
@@ -173,27 +157,20 @@ import cards.*;
 				}
 			}
 
-				/*
-				 * Ask for input moves
-				 */
+				
 
 				for (int i=0; i<players.size(); i++){
 
 					ArrayList<BlackjackHand> b = playersAndHands.get(players.get(i));
 
-//					System.out.println(gameTable.getPlayer(i).getUsername()+": ");
 					System.out.println(players.get(i).getUsername()+": ");
-					//Scanner keyboard = new Scanner (System.in);
-//					String s = "";
+				
 
 
 					for (int j=0; j < b.size(); j++) {
 
 
 						while (b.get(j).isPlayable() && !(b.get(j).isBust())){
-
-//							System.out.println(b.get(j).isPlayable() +"isplayable");
-//							System.out.println(!(b.get(j).isBust()) +"isbust");
 
 							System.out.println("Hit, stand, doubledown or split?");
 							String s = keyboard.next();
@@ -403,9 +380,6 @@ import cards.*;
 			return gameTable.getAllPlayers();
 		}
 
-		public void loadHands() {
-
-		}
 
 		public void loadChips() {
 			for ( int i = 0 ; i < getPlayers().size() ; i++ ) {
@@ -426,6 +400,8 @@ import cards.*;
 		 * @param hand BlackjackHand to compare
 		 * @return 1 if dealer won, 0 if no winner, -1 if player won
 		 */
+		
+		
 		public int processWinner(BlackjackHand hand) {
 
 			if ((hand.isBust()) && !(dealerHand.isBust()))
@@ -453,8 +429,6 @@ import cards.*;
 				return DRAW;
 
 		}
-
-
 
 
 		public int getNumberOfPlayers() {
