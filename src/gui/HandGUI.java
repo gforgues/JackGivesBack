@@ -9,10 +9,10 @@ import javax.swing.JPanel;
 
 import participant.Player;
 
-import cards.BlackjackHand;
-import cards.Card;
-import cards.Hand;
-import cards.CardImages;
+//import cards.BlackjackHand;
+//import cards.Card;
+//import cards.Hand;
+//import cards.CardImages;
 
 import game.Observer;
 import gameEngine.GameEngine;
@@ -45,15 +45,15 @@ public class HandGUI extends MainApplication implements Observer
 		
 		playerLabel.setLocation(HEIGHT * TWO - 6, HEIGHT);
 		
-		for (int i=0 ; i < ge.getPlayerHand(player).size(); i++) {
-			hand = (BlackjackHand) ge.getPlayerHand(player).get(i).clone();
-			for (Card tmp : hand.getHand()) {
-				aCard = new JLabel(CardImages.getCard(tmp));
-				aCard.setSize(CARD_SIZE);
-				aCard.setName(tmp.toCompactString());
-			}
-			handPanel.add(aCard);
-		}
+//		for (int i=0 ; i < ge.getPlayerHand(player).size(); i++) {
+//			hand = (BlackjackHand) ge.getPlayerHand(player).get(i).clone();
+//			for (Card tmp : hand.getHand()) {
+//				aCard = new JLabel(CardImages.getCard(tmp));
+//				aCard.setSize(CARD_SIZE);
+//				aCard.setName(tmp.toCompactString());
+//			}
+//			handPanel.add(aCard);
+//		}
 		
 		handPanel.setPreferredSize(new Dimension(0, 0));
 		return handPanel;
@@ -102,9 +102,9 @@ public class HandGUI extends MainApplication implements Observer
 
 	private JPanel handPanel = new JPanel();
 
-	private JLabel aCard, playerLabel;
+	private JLabel playerLabel;
 	
-	private BlackjackHand hand;
+	//private BlackjackHand hand;
 	
 	private Player player;
 	
@@ -112,10 +112,10 @@ public class HandGUI extends MainApplication implements Observer
 	
 	private final int TWO = 2;
 	
-	private static final Dimension CARD_SIZE = new Dimension(80, 100);
+	//private static final Dimension CARD_SIZE = new Dimension(80, 100);
 
 	private static final Dimension NAME_SIZE = new Dimension(80, 20);
 	
-	private static final Dimension AUTOBUTTON_SIZE = new Dimension(80, 20);
+	//private static final Dimension AUTOBUTTON_SIZE = new Dimension(80, 20);
 	
 }

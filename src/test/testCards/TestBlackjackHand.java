@@ -1,9 +1,6 @@
 package test.testCards;
 
-import cards.Card.Rank;
-import cards.Card.Suit;
 import cards.*;
-import game.*;
 import junit.framework.*;
 
 public class TestBlackjackHand extends TestCase {

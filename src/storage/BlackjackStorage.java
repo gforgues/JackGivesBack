@@ -8,7 +8,7 @@ import cards.*;
 /**
  * BlackjackStorage handles blackjack game saving and loading. It contains methods to save and load decks, save and load hands,
  * and save and load playernames.
- * @author Gabriel
+ * @author JackGivesBack
  */
 public class BlackjackStorage {
 

@@ -3,7 +3,7 @@ package gameEngine;
  * @author JackGivesBack
  */
 import game.Blackjack;
-import game.Observer;
+//import game.Observer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class GameEngine {
 
 	private Table gameTable;
 
-	private ArrayList<Observer> observerList = new ArrayList<Observer>();
+	//private ArrayList<Observer> observerList = new ArrayList<Observer>();
 
 	private BlackjackHand dealerHand = new BlackjackHand();
 

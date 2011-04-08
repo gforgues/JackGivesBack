@@ -3,24 +3,25 @@ package gui;
 import gameEngine.GameEngine;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
+//import java.awt.Graphics;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+//import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
+//import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.text.html.Option;
+//import javax.swing.text.html.Option;
 
 import participant.Player;
-import cards.BlackjackHand;
+//import cards.BlackjackHand;
 
 /**
  * 
@@ -28,8 +29,10 @@ import cards.BlackjackHand;
  *
  */
 public class MainApplication
-{
+{	
 	
+	private static JComponent playArea;
+
 	/**
 	 * Start a new game
 	 */
@@ -136,7 +139,7 @@ public class MainApplication
 		miEnglish.addActionListener(new ActionListener() {;
 			public void actionPerformed(ActionEvent e) {
 
-				mainEngine.notifyObservers();
+				//mainEngine.notifyObservers();
 			}
 		});
 		
@@ -144,7 +147,7 @@ public class MainApplication
 		miFrench.addActionListener(new ActionListener() {;
 			public void actionPerformed(ActionEvent e) {
 
-				mainEngine.notifyObservers();
+				//mainEngine.notifyObservers();
 			}
 		});
 		
@@ -261,18 +264,18 @@ public class MainApplication
 		
 		private final static GameEngine mainEngine = new GameEngine(wat);
 		
-		private static HandGUI playerView = null;
+		//private static HandGUI playerView = null;
 		
 		private final static GUI gui = new GUI(mainEngine);
 
 		private static JFrame frame;
 		
-		private final static JPanel playArea = new JPanel(new GridBagLayout()) {
-			 public void paintComponent(Graphics g) {
-				 super.paintComponent(g);
-				 ImageIcon img = new ImageIcon(this.getClass().getResource("/images/bg5.jpg"));
-				 g.drawImage(img.getImage(), 0, 0,img.getIconWidth(),img.getIconHeight(), null);
-			 }
-		};
+//		private final static JPanel playArea = new JPanel(new GridBagLayout()) {
+//			 public void paintComponent(Graphics g) {
+//				 super.paintComponent(g);
+//				 ImageIcon img = new ImageIcon(this.getClass().getResource("/images/bg5.jpg"));
+//				 g.drawImage(img.getImage(), 0, 0,img.getIconWidth(),img.getIconHeight(), null);
+//			 }
+//		};
 		
 	}

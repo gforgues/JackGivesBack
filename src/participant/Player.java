@@ -1,7 +1,6 @@
 package participant;
 
-import java.io.*;
-import java.util.*;
+
 import java.lang.String;
 
 import storage.*;

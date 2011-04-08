@@ -5,7 +5,7 @@ import java.util.*;
 
 /**
  * Hall Of Fame searches through player profiles and return the top five scoring players (in terms of total chips won)
- * @author Gabriel
+ * @author JackGivesBack
  */
 public class HallOfFame {
 	

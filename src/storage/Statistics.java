@@ -1,11 +1,11 @@
 package storage;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 /**
  * Creates Statistics objects representing a stored player's stats with getters
  * and setters for all variables.
- * @author Gabriel
+ * @author JackGivesBack
  *
  */
 public class Statistics {

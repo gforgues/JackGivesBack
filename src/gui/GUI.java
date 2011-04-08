@@ -1,6 +1,6 @@
 package gui;
 
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JLabel;
@@ -32,7 +32,7 @@ public class GUI extends MainApplication implements Observer
 
 	
 	public GUI(final GameEngine ge) {
-		currentGameEngine = ge;
+		//currentGameEngine = ge;
 		table.setOpaque(false);
 		table.setLayout(null);
 	}
@@ -88,7 +88,7 @@ public class GUI extends MainApplication implements Observer
 		
 	}
 	
-	private static GameEngine currentGameEngine;
+	//private static GameEngine currentGameEngine;
 	
 	private final static JPanel table = new JPanel(); 
 	
@@ -104,7 +104,7 @@ public class GUI extends MainApplication implements Observer
 	 */
 	private static final Dimension CARD_SIZE = new Dimension(73, 97);
 	
-	private static final Color borderColor = new Color(255,0,0);
+	//private static final Color borderColor = new Color(255,0,0);
 
 	
 }
