@@ -47,7 +47,7 @@ public class Blackjack implements Game {
 	  * @param pHand A given BlackjackHand of a player
 	  */
 	public void resetHandState(BlackjackHand pHand) {
-		pHand = new BlackjackHand();
+		pHand.clearHand();
 	}
 
 	 /**

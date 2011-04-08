@@ -22,6 +22,18 @@ public class TestBlackjack extends TestCase {
 		hand = new BlackjackHand();
 	}
 	
+	public void testResetHandState() {
+		hand.addCard(AllCards.C3S);
+		hand.addCard(AllCards.C5H);
+		hand.addCard(AllCards.CTD);
+		
+		expectedValue = 0;
+		blackjack.resetHandState(hand);
+		actualValue = hand.getNumberCards();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
 	public void testCheckDeckWithDeckSizeLessThanDeckResetValue() {
 		Deck deck = new Deck();
 		deck.addDeck(1);
@@ -44,46 +56,40 @@ public class TestBlackjack extends TestCase {
 		assertEquals(expectedValue, actualValue);
 	}
 	
+	public void testCheckDeckAtDeckResetValue() {
+		int DECK_RESET_VALUE = 104;
+		for (int i=0; i<DECK_RESET_VALUE; i++) {
+			deck.addCard(AllCards.C2C);
+		}
+		
+		expectedValue = deck.size();
+		blackjack.setDeck(deck);
+		blackjack.checkDeck();
+		actualValue = blackjack.getDeck().size();
+		
+		assertEquals(expectedValue, actualValue);
+	}
+	
 	public void testHitNumberOfCards(){
-		Deck deck= new Deck();
 		deck.addDeck(1);
-		Card card = deck.draw();
-		Blackjack jack = new Blackjack();
-		BlackjackHand hand = new BlackjackHand();
-		hand.addCard(card);
+		hand.addCard(AllCards.C3H);
+		
 		expectedValue = hand.getNumberCards();
-		hand.removeCard(card);
-		jack.hit(hand);
+		hand.removeCard(0);
+		blackjack.hit(hand);
 		actualValue = hand.getNumberCards();
 		assertEquals(expectedValue, actualValue);
 	}
-	public void testHitCardValue(){
-		Deck deck= new Deck();
-		deck.addDeck(1);
-		Card card = deck.draw();
-		Blackjack jack = new Blackjack();
-		BlackjackHand hand = new BlackjackHand();
-		hand.addCard(card);
-		expectedValue = hand.getBlackjackValue();
-		System.out.println(hand.toString());
-		hand.removeCard(card);
-		jack.hit(hand);
-		actualValue = hand.getBlackjackValue();
-		System.out.println(hand.toString());
-		assertNotSame(expectedValue, actualValue);
-	}
 	
 	public void testDoubleDownNumberofCards(){
-		Deck deck= new Deck();
 		deck.addDeck(1);
-		Card card = deck.draw();
-		Blackjack jack = new Blackjack();
-		BlackjackHand hand = new BlackjackHand();
-		hand.addCard(card);
+		hand.addCard(AllCards.C5C);
+		
 		expectedValue = hand.getNumberCards();
-		hand.removeCard(card);
-		jack.doubleDown(hand);
+		hand.removeCard(0);
+		blackjack.doubleDown(hand);
 		actualValue = hand.getNumberCards();
+		
 		assertEquals(expectedValue, actualValue);
 	}
 	
