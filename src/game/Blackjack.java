@@ -9,6 +9,7 @@ import cards.Card.Rank;
 import participant.Player;
 import cards.Hand;
 import storage.Storage;
+import gameEngine.GameEngine;
 
 /**
 *
@@ -194,7 +195,7 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
 
  }
  
- public void playsSplitHands(ArrayList<BlackjackHand> bothHands) {
+ public void playsSplitHands(ArrayList<BlackjackHand> bothHands, GameEngine game, Player player) {
 	boolean invalidInput = false;
 	String handNumber = "";
 	String s;
@@ -231,6 +232,8 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
 			     System.out.println("Invalid input, enter hit/stand: ");
 			}
 		}
+		
+		game.computeWinner(player, bothHands.get(i));
 		   
 	}
   }
