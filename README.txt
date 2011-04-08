@@ -8,10 +8,16 @@ Jessica Makucka
 Chandani Patel
 
 Platforms:
-Windows 7
+Windows 7 Home Premium
+Windows Vista Ultimate
+Windows 7 Starter
+Mac OS X Snow Leopard
+Ubuntu 10.04 Lucid Lynx
 
 Compilers:
 JDK1.6.0_16
+JDK1.6_0_20
+JDK1.6_0_24
 
 Third Party Libraries for Source Code: None
 
@@ -19,7 +25,7 @@ Third Party Libraries for Testing:
 JUnit 
 http://www.junit.org/
 
-Source File Organisation:
+Source File Organization:
 cards: Contains all files dealing with cards
 	AllCards.java
 	BlackjackHand.java
