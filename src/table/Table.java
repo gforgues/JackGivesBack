@@ -15,10 +15,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * Table class for LetsPlayCards specification
+ * @author JackGivesBack
+ *
+ */
 public class Table implements Observer {
 	Player tableOwner;
 	ArrayList<Player> players;
 	ArrayList<Spectator> spectators;
+
 
 	public Table(Player owner) {
 		this.tableOwner = owner;
@@ -26,19 +32,36 @@ public class Table implements Observer {
 		players.add(this.tableOwner);
 		spectators = new ArrayList<Spectator>();
 	}
- 
+    
+	/**
+	 * Displays the tableOwner of the Table
+	 * @return Returns the tableOwner of the type Player
+	 */
 	public Player getTableOwner() {
 		return tableOwner;
 	}
 	
+	/**
+	 * Generates an array list of the players in the Table
+	 * @return returns ArrayList<Player> array list of type Player
+	 */
 	public ArrayList<Player> getAllPlayers() {
 		return players;
 	}
  
+	/**
+	 *  Generates an array list of the spectator in the Table
+	 *  @return returns ArrayList<Spectator> array list of type Spectator
+	 */
 	public ArrayList<Spectator> getAllSpectators(){
 		return spectators;
 	}
- 
+    
+	/**
+	 *  Attempts to find the player at a particular index
+	 *  @param int index, an index for the players ArrayList
+	 *  @return Player, a player of the type Player if the index is in the ArrayList, if not then it returns the tableOwner
+	 */
 	public Player getPlayer(int index) {
 		if (index >= 0 && index<players.size()) {
 			return players.get(index);
@@ -47,11 +70,23 @@ public class Table implements Observer {
 			return this.tableOwner;
 		}
 	}
- 
+    
+	/**
+	 *  Attempts to find the spectator at a particular index
+	 *  @param int index, an index for the spectators ArrayList
+	 *  @return Spectator, a spectator of the type Spectator 
+	 */
 	public Spectator getSpectator(int index) {
 		return spectators.get(index);
 	}
-
+    
+	/**
+	 *  The player requests to join a Table
+	 *  @param Player player, a player who requests to join a Table
+	 *  @param boolean canJoin, a boolean value that determines if the request is accepted or rejected
+	 *  @return boolean, which is true when the request is accepted
+	 *  and returns false when the request is rejected
+	 */
 	public boolean requestJoin(Player player, boolean canJoin) {
    
 		if (canJoin) {
@@ -64,6 +99,11 @@ public class Table implements Observer {
 		return canJoin;
 	}
 	
+	/**
+	 *  The tableOwner accepts or rejects a particular player's requestJoin
+	 *  @param Player player, a player who requests to join
+	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 */
 	public boolean requestJoin(Player player){
 		boolean join=false;
 		boolean validInput=false;
@@ -92,7 +132,14 @@ public class Table implements Observer {
 		
 		return join;
 	}
-
+    
+	/**
+	 *  The player requests to leave a Table
+	 *  @param Player player, a player who requests to join a Table
+	 *  @param boolean canLeave, a boolean value that determines if the request is accepted or rejected
+	 *  @return boolean, which is true when the request is accepted
+	 *  and returns false when the request is rejected
+	 */
 	public boolean requestLeave(Player player, boolean canLeave) {		
 		if (canLeave) {
 			System.out.println("Request leave accepted");
@@ -104,6 +151,11 @@ public class Table implements Observer {
 		return canLeave;
 	}
 	
+	/**
+	 *  The tableOwner accepts or rejects a particular player's requestLeave
+	 *  @param Player player, a player who requests to leave
+	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 */
 	public boolean requestLeave(Player player) {
 		boolean leave;
 		Scanner keyboard = new Scanner(System.in);
@@ -135,7 +187,14 @@ public class Table implements Observer {
 		
 		return index;
 	}
- 
+    
+	/**
+	 *  The spectator requests to view a Table
+	 *  @param Spectator spectator, a spectator who requests to view a game
+	 *  @param boolean canLeave, a boolean value that determines if the request is accepted or rejected
+	 *  @return boolean, which is true when the request is accepted
+	 *  and returns false when the request is rejected
+	 */
 	public boolean requestView(Spectator spectator, boolean canView) {
 		if (canView) {
 			System.out.println("TableOwner accepts spectator");
@@ -147,6 +206,11 @@ public class Table implements Observer {
 		return canView;
 	}
 	
+	/**
+	 *  The tableOwner accepts or rejects a particular spectators's requestView
+	 *  @param Spectator spectator, a spectator who requests to view
+	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 */
 	public boolean requestView(Spectator spectator) {
 		boolean view;
 		Scanner keyboard = new Scanner(System.in);
@@ -164,7 +228,14 @@ public class Table implements Observer {
 		
 		return view;
 	}
- 
+    
+	/**
+	 *  The spectator requests to leave a Table
+	 *  @param Spectator spectator, a spectator who requests to view a Table
+	 *  @param boolean canLeave, a boolean value that determines if the request is accepted or rejected
+	 *  @return boolean, which is true when the request is accepted
+	 *  and returns false when the request is rejected
+	 */
 	public boolean requestLeave(Spectator spectator, boolean canLeave) {		
 	    if (canLeave) {
 			System.out.println("TableOwner accepts spectator from leaving the table");
@@ -175,6 +246,12 @@ public class Table implements Observer {
 	    
 	    return canLeave;
 	}
+	
+	/**
+	 *  The tableOwner accepts or rejects a particular spectators's requestLeave
+	 *  @param Spectator spectator, a spectator who requests to leave
+	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 */
 	
 	public boolean requestLeave(Spectator spectator) {
 		boolean leave;
@@ -214,7 +291,6 @@ public class Table implements Observer {
 		
 		for (int i=0; i<players.size(); i++) {
 			if (BlackjackStorage.savePlayerNames(players.get(i).getUsername(), gameID)) {
-			//if (!Storage.savePlayer(players.get(i).toStatistics())) {
 				allSuccessful = false;
 			}
 		}
@@ -249,8 +325,14 @@ public class Table implements Observer {
 	private Deck loadDeck(int gameId) {
 		return BlackjackStorage.loadDeck(gameId);
 	}
- 
-	public boolean saveGame(Deck deck, int gameID) { //HashMap<Player, ArrayList<BlackjackHand>> playersAndHands){
+    
+	/**
+	 *  Saves the particular game in play
+	 *  @param Deck deck, the deck of the type deck that contains all the cards in play
+	 *  @param intGameID, an integer called gameID
+	 *  @return boolean, returns true if the saveDeck method returns true and the savePlayers returns true or false otherwise
+	 */
+	public boolean saveGame(Deck deck, int gameID) { 
 		boolean isSuccessful = true;
 		
 		if (!BlackjackStorage.saveDeck(deck, gameID) || !this.savePlayers(gameID)) {
@@ -260,10 +342,13 @@ public class Table implements Observer {
 		return isSuccessful;
 		}
 	
-	/*
+	/**
 	 * Loads the game and returns a new GameEngine with all of the loaded
 	 * info (including players, their hands, and the game's deck)
+	 * @param int gameID, the gameID of the game
+	 * @return GameEngine, returns a new GameEngine with all the loaded information
 	 */
+	
 	public GameEngine loadGame(int gameId) {		
 		ArrayList<Player> players = this.loadPlayers(gameId);
 		this.players = players;
@@ -272,6 +357,11 @@ public class Table implements Observer {
 		return new GameEngine(deck);
 	}
 	
+	/**
+     * Generates the string output of the table owner, players and spectators at the table
+     * @param 
+     * @return Returns the string output of the players, tableOwner and spectators
+     */	
 	public String toString() {
 		String string = "Table owner for this table is " + tableOwner.getUsername();
 		
@@ -294,11 +384,10 @@ public class Table implements Observer {
 		
 		return string;
 	}
-	
 	@Override
 	public void handleEvent()
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }
