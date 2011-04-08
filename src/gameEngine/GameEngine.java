@@ -1,440 +1,327 @@
 package gameEngine;
 
-import java.util.*;
+import game.Blackjack;
+import game.Observer;
 
-import gui.MainInterface;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 import participant.Chips;
 import participant.Player;
 import table.Table;
-import game.*;
-import game.Observable;
-import game.Observer;
-import cards.*;
+import cards.BlackjackHand;
+import cards.Deck;
 
-	public class GameEngine	implements Observable {
-		private Blackjack myGame;
+public class GameEngine {
+	private Blackjack myGame;
 
-		private Table gameTable;
+	private Table gameTable;
 
-		private ArrayList<Observer> observerList = new ArrayList<Observer>();
+	private ArrayList<Observer> observerList = new ArrayList<Observer>();
 
-		private BlackjackHand dealerHand = new BlackjackHand();
+	private BlackjackHand dealerHand = new BlackjackHand();
 
-		private HashMap<Player, ArrayList<BlackjackHand>> playersAndHands;
+	private HashMap<Player, BlackjackHand> playersAndHands;
 
-		private HashMap<Player, Chips> playersAndChips;
+	private HashMap<Player, Chips> playersAndChips;
 
-		private final int MUST_HIT = 16;
+	private final int DEALER_WON = 1;
 
-		private final int STARTING_CHIPS = 500;
+	private final int PLAYER_WON = -1;
 
-		private final int DEALER_WON = 1;
+	private final int DRAW = 0;
 
-		private final int PLAYER_WON = -1;
+	private final int WIN_CONSTANT = 2;
 
-		private final int DRAW = 0;
+	private final int BLACKJACK_PAYOUT_CONSTANT = 3;
 
-		private final int WIN_CONSTANT = 2;
-
-		private final int BLACKJACK_PAYOUT_CONSTANT = 3;
-
-		private final int MIN_BET = 10;
-
-		private final int MAX_BET = 100;
-
-
-
-		public GameEngine(Player player) {
-
-			gameTable = new Table(player);
-
-		}
-
-		/* Currently, storage/blackjackStorage can only save and load one hand for each player
-		 * so players.size() must equal to hand.size() */
-
-		public GameEngine(Deck deck){
-			myGame=new Blackjack();
-			myGame.setDeck(deck);
-		}
-		public void reset() {
-			myGame = new Blackjack();
-			playersAndHands = new HashMap<Player, ArrayList<BlackjackHand>>();
-			playersAndChips = new HashMap<Player, Chips>();
-			dealerHand = new BlackjackHand();
-			this.notifyObservers();
-		}
-
-		public void resetKeepPlayers() {
-			myGame = new Blackjack();
-			this.notifyObservers();
-		}
-
-		public HashMap<Player, ArrayList<BlackjackHand>> getPlayersAndHands() {
-			return this.playersAndHands;
-		}
-		
-		private int checkValidInputBet(Player player) {
-			boolean invalid = false;
-			System.out.println("how much do you want to bet?");
-			int betValue = 0;
-			Scanner keyboard = new Scanner(System.in);
-			
-			while (invalid == false) {
-				try { 
-					betValue = keyboard.nextInt();
-					playersAndChips.get(player).setBet(betValue);
-					playersAndChips.get(player).addChips(player, -betValue);
 	
-					System.out.println(" you want to bet " + betValue);
-					invalid = true;
-				} catch (IllegalArgumentException e) {
-					System.out.println("Please enter a valid bet amount.");
-				} catch (InputMismatchException IE) {
-                    System.out.println("This is not a valid integer!");
-                    System.out.println("You currently have " + player.getChips() + " chips.");
-                    System.out.println("Please try again.");
-                    keyboard.nextLine();
-				}
-			}
-				
-			
-			return betValue;
-		}
+	public GameEngine(Player player) {
 
-		public void gameStart() {
-
-			reset();
-			myGame.deal(dealerHand); 
-			loadPlayers();
-			loadChips();
-
-			ArrayList<Player> players = gameTable.getAllPlayers();
-			Player player;
-			Scanner keyboard = new Scanner(System.in);
-
-			for (int i=0; i<players.size(); i++) {
-			
-				player = players.get(i);
-				System.out.println(player.getUsername() + ", you have " + player.getChips() + " chips.");
-				
-				int a = this.checkValidInputBet(player);
-
-				//set the bet and remove the chips
-			}
-
-			
-			System.out.println("Dealer's hand: " + dealerHand.toString());	
-
-			if (dealerHand.checkBlackjack()) {
-				dealerHand.setDone();
-				System.out.println("Game over!");	
-			} else {
-
-				while (dealerHand.getBlackjackValue() < MUST_HIT) 
-					myGame.hit(dealerHand);
-				dealerHand.setDone();
-
-			/*
-			 * Deal everyone
-			 */
-			System.out.println("Dealing everyone...");
-			for (int i=0; i<players.size(); i++){
-				System.out.println(players.get(i).getUsername());
-			}
-
-			for (ArrayList<BlackjackHand> hand : playersAndHands.values()) {
-				BlackjackHand tmpHand = new BlackjackHand();
-				myGame.deal(tmpHand);
-				hand.add(tmpHand);
-			}
-
-			for (int i=0;i<getNumberOfPlayers();i++){
-				ArrayList<BlackjackHand> hand = playersAndHands.get(players.get(i));
-				System.out.println(players.get(i).getUsername() + ", your first hand is currently: " + hand.get(0).toString());
-				if (hand.size() == 2) {
-					System.out.println(players.get(i).getUsername() + ", your second hand is currently: " + hand.get(1).toString());
-				}
-			}
-
-				
-
-				for (int i=0; i<players.size(); i++){
-
-					ArrayList<BlackjackHand> hand = playersAndHands.get(players.get(i));
-
-					System.out.println(players.get(i).getUsername()+": ");
-				
-
-
-					for (int j=0; j < hand.size(); j++) {
-
-
-						while (hand.get(j).isPlayable() && !(hand.get(j).isBust())){
-
-							System.out.println("Hit, stand, doubledown or split?");
-							String s = keyboard.next();
-
-							if (s.equals("hit")){
-								myGame.hit(hand.get(j));
-								System.out.println("hand update: " +hand.get(j).toString());
-							}
-							else if (s.equals("stand")){
-								myGame.stand(hand.get(j));
-								System.out.println("final hand: "+hand.get(j).toString());
-							}
-							else if (s.equals("doubledown")){
-								if (players.get(j).getChips() < 2*playersAndChips.get(players.get(j)).getBet()) {
-									System.out.print("Sorry not enough chips, please enter a different move" );
-									s = "";
-								}
-								else { 
-									if(hand.get(j).getNumberCards()>2){
-										System.out.println("Cannot double down, you have already hit, please hit again or stand");
-									}else{
-									playersAndChips.get(players.get(j)).addChips(players.get(j), -(playersAndChips.get(players.get(j)).getBet()));
-								    int doubleBet;
-								    doubleBet=((playersAndChips.get(players.get(j))).getBet())*2;
-								    (playersAndChips.get(players.get(j))).setBet(doubleBet);
-									myGame.doubleDown(hand.get(j));
-									System.out.println("bet update: "+ doubleBet);
-									System.out.println("hand update: "+hand.get(j).toString());
-									}
-								}
-
-							}
-							else if (s.equals("split")){
-								ArrayList<BlackjackHand> bothHands = myGame.split(hand.get(j));
-
-						        if(bothHands.size() != 0){
-						         myGame.playsSplitHands(bothHands);
-						         //System.out.println("split to be implemented: "+b.get(j).toString());
-						        } else {
-						        System.out.println("please enter something valid");
-						        s = "";
-						       }
-						      } else {
-								System.out.println("please enter something valid");
-								s = "";
-							}
-						}
-					}
-				}
-
-
-			//shows dealer's final hand
-			System.out.println("Dealer's new hand: " + dealerHand.toString());	
-			if (dealerHand.isBust()) 
-					System.out.println("Dealer bust!");
-
-
-			/*
-			 * Compute all winners
-			 */
-			for (int i=0;i<getNumberOfPlayers();i++){
-
-				ArrayList<BlackjackHand> hand = playersAndHands.get(players.get(i));
-
-				if (hand.size() == 1) {
-					if (processWinner(hand.get(0)) == 1) {
-						players.get(i).addChips(playersAndChips.get(players.get(i)).getBet());
-						players.get(i).addLoss(playersAndChips.get(players.get(i)).getBet());
-						System.out.println("Dealer wins!");
-					}
-					if (processWinner(hand.get(0)) == -1) {
-						if (hand.get(0).checkBlackjack()) {
-//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
-							players.get(i).addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(players.get(i)).getBet());
-							System.out.println("BLACKJACK! X2 PAYOUT! " + gameTable.getPlayer(i).getUsername()+ " wins!");
-						} else {
-							players.get(i).addWin(WIN_CONSTANT * playersAndChips.get(players.get(i)).getBet());
-//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
-							System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
-						}
-					}
-					if (processWinner(hand.get(0)) == 0) {
-						playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(gameTable.getPlayer(i)).getBet());
-						System.out.println("Draw!");
-					}
-
-				} else {
-
-					if (processWinner(hand.get(0)) == 1) {
-						players.get(i).addChips(playersAndChips.get(players.get(i)).getBet());
-						players.get(i).addLoss(playersAndChips.get(players.get(i)).getBet());
-						System.out.println("Dealer wins!");
-					}
-					if (processWinner(hand.get(0)) == -1) {
-						if (hand.get(0).checkBlackjack()) {
-							players.get(i).addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(players.get(i)).getBet());
-//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
-							System.out.println("BLACKJACK! X2 PAYOUT! " + gameTable.getPlayer(i).getUsername()+ " wins!");
-						} else {
-							players.get(i).addWin(WIN_CONSTANT * playersAndChips.get(players.get(i)).getBet());
-//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
-							System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
-						}
-					}
-					if (processWinner(hand.get(0)) == 0) {
-						playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(gameTable.getPlayer(i)).getBet());
-						System.out.println("Draw!");
-					}
-
-					if (processWinner(hand.get(1)) == 1) {
-						players.get(i).addChips(playersAndChips.get(players.get(i)).getBet());
-						players.get(i).addLoss(playersAndChips.get(players.get(i)).getBet());
-						System.out.println("Dealer wins!");
-					}
-					if (processWinner(hand.get(1)) == -1) {
-						if (hand.get(0).checkBlackjack()) {
-							players.get(i).addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(players.get(i)).getBet());
-//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
-							System.out.println("BLACKJACK! X2 PAYOUT! " + gameTable.getPlayer(i).getUsername()+ " wins!");
-						} else {
-							players.get(i).addWin(WIN_CONSTANT * playersAndChips.get(players.get(i)).getBet());
-//							playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), WIN_CONSTANT * playersAndChips.get(gameTable.getPlayer(i)).getBet());
-							System.out.println(gameTable.getPlayer(i).getUsername()+ " wins!");
-						}
-					}
-					if (processWinner(hand.get(1)) == 0) {
-						playersAndChips.get(gameTable.getPlayer(i)).addChips(players.get(i), playersAndChips.get(gameTable.getPlayer(i)).getBet());
-						System.out.println("Draw!");
-					}
-
-				}
-
-			}
-
-			}
-
-		}
-
-		/**
-		 * Returns the current game's Deck object
-		 * @return Deck object
-		 */
-		public Deck getDeck() {
-			return myGame.getDeck();
-		}
-
-		/**
-		 * Returns the current game's Table object
-		 * @return Table object
-		 */
-		public Table getTable() {
-			return gameTable;
-		}
-
-
-
-		public void addPlayer(Player player) {
-			BlackjackHand hb = new BlackjackHand();
-			ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
-			hbb.add(hb);
-			gameTable.requestJoin(player);
-		}
-
-		@Override
-		public void notifyObservers()
-		{
-			if (!observerList.isEmpty()){
-				for (Observer ob : observerList) {
-					ob.handleEvent();
-				}
-			}			
-		}
-
-		@Override
-		public void addObservers(Observer obsToAdd)
-		{
-			observerList.add(obsToAdd);
-
-		}
-
-		@Override
-		public void removeObservers(Observer obsToRemove)
-		{
-			observerList.remove(obsToRemove);
-
-		}
-
-		public void resetObservers() {
-			observerList = new ArrayList<Observer>();
-		}
-
-		public void loadTable(Table table) {
-			gameTable = table;
-		}
-
-		public void loadPlayers() {
-
-			for ( int i = 0 ; i < getPlayers().size() ; i++ ) {
-				Player tmpPlayer = getPlayers().get(i);
-				if (!playersAndHands.containsKey(tmpPlayer)) {
-					playersAndHands.put(tmpPlayer, new ArrayList<BlackjackHand>());
-				} 
-			}
-		}
-
-		public ArrayList<Player> getPlayers() {
-			return gameTable.getAllPlayers();
-		}
-
-
-		public void loadChips() {
-			for ( int i = 0 ; i < getPlayers().size() ; i++ ) {
-				Player tmpPlayer = getPlayers().get(i);
-				if (!playersAndChips.containsKey(tmpPlayer)) {
-					playersAndChips.put(tmpPlayer, new Chips(tmpPlayer.getChips()));
-				} 
-			}
-		}
-
-
-		public ArrayList<BlackjackHand> getPlayerHand(Player player) {
-			 return playersAndHands.get(player);
-		}
-
-		/**
-		 * Returns winner between hands of dealer and player
-		 * @param hand BlackjackHand to compare
-		 * @return 1 if dealer won, 0 if no winner, -1 if player won
-		 */
-		
-		
-		public int processWinner(BlackjackHand hand) {
-
-			if ((hand.isBust()) && !(dealerHand.isBust()))
-
-				return DEALER_WON;
-
-			if (!(hand.isBust()) && !(dealerHand.isBust()) && (dealerHand.getBlackjackValue() > hand.getBlackjackValue()))
-
-				return DEALER_WON;
-			
-			if ((hand.isBust()) && (dealerHand.isBust()))
-
-				return DEALER_WON;
-
-			if (!(hand.isBust()) && (dealerHand.isBust()))
-
-				return PLAYER_WON;
-
-			if (!(hand.isBust()) && !(dealerHand.isBust()) && dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
-
-				return PLAYER_WON;
-				
-			}
-
-				return DRAW;
-
-		}
-
-
-		public int getNumberOfPlayers() {
-			return playersAndHands.size();
-		}
-
+		gameTable = new Table(player);
 
 	}
+	/* Currently, storage/blackjackStorage can only save and load one hand for each player
+	 * so players.size() must equal to hand.size() */
+
+	public GameEngine(Deck deck){
+		myGame=new Blackjack();
+		myGame.setDeck(deck);
+	}
+	
+	public void reset() {
+		myGame = new Blackjack();
+		playersAndHands = new HashMap<Player, BlackjackHand>();
+		playersAndChips = new HashMap<Player, Chips>();
+		dealerHand = new BlackjackHand();
+//		this.notifyObservers();
+	}
+	
+	public void resetKeepPlayers() {
+		myGame = new Blackjack();
+//		this.notifyObservers();
+	}
+	
+	public void loadPlayers() {
+
+		for ( int i = 0 ; i < gameTable.getAllPlayers().size() ; i++ ) {
+			Player tmpPlayer = gameTable.getAllPlayers().get(i);
+			if (!playersAndHands.containsKey(tmpPlayer)) {
+				playersAndHands.put(tmpPlayer, new BlackjackHand());
+			} 
+		}
+	}
+	
+	public void loadChips() {
+		for ( int i = 0 ; i < gameTable.getAllPlayers().size() ; i++ ) {
+			Player tmpPlayer = gameTable.getAllPlayers().get(i);
+			if (!playersAndChips.containsKey(tmpPlayer)) {
+				playersAndChips.put(tmpPlayer, new Chips(tmpPlayer.getChips()));
+			} 
+		}
+	}
+	
+//	public ArrayList<Player> getAllPlayers() {
+//		return this.players;
+//	}
+	
+	private void setAllBets(Player player) {
+		boolean invalid = false;
+		System.out.println("how much do you want to bet?");
+		int betValue = 0;
+		Scanner keyboard = new Scanner(System.in);
+		
+		while (invalid == false) {
+			try { 
+				betValue = keyboard.nextInt();
+				playersAndChips.get(player).setBet(betValue);
+				playersAndChips.get(player).addChips(player, -betValue);
+
+				System.out.println(" you want to bet " + betValue);
+				System.out.println(" you currently have " + player.getChips() + " chips.");
+				invalid = true;
+			} catch (IllegalArgumentException e) {
+				System.out.println("Please enter a valid bet amount.");
+			} catch (InputMismatchException IE) {
+                System.out.println("This is not a valid integer!");
+                System.out.println("You currently have " + player.getChips() + " chips.");
+                System.out.println("Please try again.");
+                keyboard.nextLine();
+			}
+		}
+			
+		
+		//return betValue;
+	}
+	
+	private void playThroughEachPlayer(Player player, BlackjackHand hand) {
+		Scanner keyboard = new Scanner(System.in);
+		while (hand.isPlayable() && !hand.isBust()){
+			System.out.println("Your current hand is: " + hand.toString());
+			System.out.println("Hit, stand, doubledown or split?");
+			String s = keyboard.next();
+
+			if (s.equals("hit")){
+				myGame.hit(hand);
+				System.out.println("hand update: " +hand.toString());
+			}
+			else if (s.equals("stand")){
+				myGame.stand(hand);
+				System.out.println("final hand: "+hand.toString());
+			}
+			else if (s.equals("doubledown")){
+				if (player.getChips() < 2*playersAndChips.get(player).getBet()) {
+					System.out.print("Sorry not enough chips, please enter a different move" );
+					s = "";
+				}
+				else { 
+					if(hand.getNumberCards() > 2){
+						System.out.println("Cannot double down, you have already hit, please hit again or stand");
+					}else{
+					playersAndChips.get(player).addChips(player, -(playersAndChips.get(player).getBet()));
+				    int doubleBet =((playersAndChips.get(player)).getBet())*2;
+				    playersAndChips.get(player).setBet(doubleBet);
+					myGame.doubleDown(hand);
+					System.out.println("bet update: "+ doubleBet);
+					System.out.println("hand update: "+hand.toString());
+					}
+				}
+
+			}
+			else if (s.equals("split")){
+				ArrayList<BlackjackHand> bothHands = myGame.split(hand);
+
+		        if(bothHands.size() != 0){
+		         myGame.playsSplitHands(bothHands);
+		         //System.out.println("split to be implemented: "+b.get(j).toString());
+		        } else {
+		        System.out.println("please enter something valid");
+		        s = "";
+		       }
+		      } else {
+				System.out.println("please enter something valid");
+				s = "";
+			}
+		}
+	}
+	
+	private void showDealerFinalHand() {
+		//shows dealer's final hand
+		System.out.println("Dealer's new hand: " + dealerHand.toString());	
+		if (dealerHand.isBust()) 
+				System.out.println("Dealer bust!");
+	}
+	
+	private int processWinner(BlackjackHand hand) {
+
+		if ((hand.isBust()) && !(dealerHand.isBust()))
+
+			return DEALER_WON;
+
+		if (!(hand.isBust()) && !(dealerHand.isBust()) && (dealerHand.getBlackjackValue() > hand.getBlackjackValue()))
+
+			return DEALER_WON;
+		
+		if ((hand.isBust()) && (dealerHand.isBust()))
+
+			return DEALER_WON;
+
+		if (!(hand.isBust()) && (dealerHand.isBust()))
+
+			return PLAYER_WON;
+
+		if (!(hand.isBust()) && !(dealerHand.isBust()) && dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
+
+			return PLAYER_WON;
+			
+		}
+
+			return DRAW;
+
+	}
+	
+	private void computeWinner(Player player) {
+
+			BlackjackHand hand = playersAndHands.get(player);
+
+				if (processWinner(hand) == 1) {
+					
+					player.addChips(playersAndChips.get(player).getBet());
+					player.addLoss(playersAndChips.get(player).getBet());
+					System.out.println("Dealer wins!");
+					
+				}
+				if (processWinner(hand) == -1) {
+					
+					if (hand.checkBlackjack()) {
+						
+						player.addWin(BLACKJACK_PAYOUT_CONSTANT * playersAndChips.get(player).getBet());
+						System.out.println("BLACKJACK! X2 PAYOUT! " + player.getUsername()+ " wins!");
+						
+					} else {
+						
+						player.addWin(WIN_CONSTANT * playersAndChips.get(player).getBet());
+						System.out.println(player.getUsername()+ " wins!");
+					}
+					
+				if (processWinner(hand) == 0) {
+					playersAndChips.get(player).addChips(player, playersAndChips.get(player).getBet());
+					System.out.println("Draw!");
+				}
+
+		}
+	}
+	
+	public void gameStart() {
+		reset();
+		myGame.deal(dealerHand); 
+		loadPlayers();
+		loadChips();
+
+		Player player;
+		Scanner keyboard = new Scanner(System.in);
+		ArrayList<Player> players = gameTable.getAllPlayers();
+		
+		System.out.println("Dealing everyone...");
+		for (int i=0; i<players.size(); i++) {
+			System.out.println(players.get(i).getUsername());
+		}
+		
+		for (int i=0; i<players.size(); i++) {
+			this.dealPlayers(players.get(i));
+		}
+		//this.dealEveryonesHand(players);
+		
+		for (int i=0; i<players.size(); i++) {
+			this.setAllBets(players.get(i));
+		}
+		
+		for (int i=0; i<players.size(); i++) {
+			BlackjackHand hand = playersAndHands.get(players.get(i));
+			this.playThroughEachPlayer(players.get(i), hand);
+		}
+		
+		this.showDealerFinalHand();
+		
+		for (int i=0;i<players.size();i++){ 
+			this.computeWinner(players.get(i));
+		}
+	}
+	
+	private void dealEveryonesHand(ArrayList<Player> players) {
+		System.out.println("Dealing everyone...");
+		for (int i=0; i<players.size(); i++){
+			System.out.println(players.get(i).getUsername());
+		}
+
+//		for (BlackjackHand hand : playersAndHands.values()) {
+//			//BlackjackHand tmpHand = new BlackjackHand();
+//			BlackjackHand tmpHand = myGame.dealHand(new BlackjackHand());
+//			//hand.add(tmpHand);
+//		}
+
+		for (int i=0; i < players.size(); i++){
+			BlackjackHand pHand = new BlackjackHand();
+			playersAndHands.put(players.get(i), myGame.dealHand(pHand));
+			BlackjackHand hand = playersAndHands.get(players.get(i));
+			//BlackjackHand tmpHand = playersAndHands.get(players.get(i));
+			System.out.println(players.get(i).getUsername() + ", your hand is currently: " + hand.toString());
+		}
+	}
+	
+	private void dealPlayers(Player player) {
+
+		for (BlackjackHand hand : playersAndHands.values()) {
+			//BlackjackHand tmpHand = new BlackjackHand();
+			myGame.deal(new BlackjackHand());
+			playersAndHands.put(player, hand);
+			//hand.add(tmpHand);
+		}
+	}
+	
+
+	/**
+	 * Returns the current game's Table object
+	 * @return Table object
+	 */
+	public Table getTable() {
+		return gameTable;
+	}
+	
+	/**
+	 * Returns the current game's Deck object
+	 * @return Deck object
+	 */
+	public Deck getDeck() {
+		return myGame.getDeck();
+	}
+
+	public void addPlayer(Player player) {
+		BlackjackHand hb = new BlackjackHand();
+		ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
+		hbb.add(hb);
+		gameTable.requestJoin(player);
+	}
+}

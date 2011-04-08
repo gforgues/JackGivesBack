@@ -101,6 +101,16 @@ public class Blackjack implements Game {
    pHand.addCard(gameDeck.draw());
   }
  }
+ 
+ public BlackjackHand dealHand(BlackjackHand pHand) {
+	 resetHandState(pHand);
+	 checkDeck();
+	 for (int i=0; i < INITIAL_DEAL_VALUE; i++) {
+		 pHand.addCard(gameDeck.draw());
+	 }
+	 
+	 return pHand;
+ }
 
  /**
   * Adds a card to a Hand
