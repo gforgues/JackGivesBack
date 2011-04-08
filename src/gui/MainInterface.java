@@ -1,4 +1,5 @@
 package gui;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import gameEngine.*;
 import participant.*;
@@ -22,7 +23,7 @@ public class MainInterface
 	 * MainInterface prints the options to screen, which the user selects with the keyboard input
 	 */
 	MainInterface() {
-		
+
 		int menuChoice=-1;
 		final int PLAYGAME = 1;
 		final int MODIFYPROFILE = 2;
@@ -30,7 +31,7 @@ public class MainInterface
 		final int HALLOFFAME = 4;
 		final int SWITCHUSER = 5;
 		final int EXIT = 6;
-		
+
 		Scanner keyboard = new Scanner(System.in);
 		Player player = login();
 		while (menuChoice != EXIT) {
@@ -42,35 +43,41 @@ public class MainInterface
 			System.out.println("4. Show Hall of Fame");
 			System.out.println("5. Switch user");
 			System.out.println("6. Exit");
-			menuChoice = keyboard.nextInt();
-			keyboard.nextLine();
-			
-			if (menuChoice == PLAYGAME) {
-				GameEngine gameEngine = new GameEngine(player);
-				new GameEngineInterface(gameEngine);
-			}
-			if (menuChoice == MODIFYPROFILE) {
-				modifyProfile(player);
-			}
-			if (menuChoice == VIEWSTATISTICS) {
-				viewStats(player);
-			}
-			if (menuChoice == HALLOFFAME) {
-				HallOfFame.display();
-			}
-			if (menuChoice == SWITCHUSER) {
-				player = login();
+
+			try{
+				menuChoice = keyboard.nextInt();
+				keyboard.nextLine();
+				if (menuChoice == PLAYGAME) {
+					GameEngine gameEngine = new GameEngine(player);
+					new GameEngineInterface(gameEngine);
+				}
+				if (menuChoice == MODIFYPROFILE) {
+					modifyProfile(player);
+				}
+				if (menuChoice == VIEWSTATISTICS) {
+					viewStats(player);
+				}
+				if (menuChoice == HALLOFFAME) {
+					HallOfFame.display();
+				}
+				if (menuChoice == SWITCHUSER) {
+					player = login();
+				}
+			} catch (InputMismatchException IE) {
+                System.out.println("This is not a valid integer!");
+                System.out.println("Please try again.");
+                keyboard.nextLine();
 			}
 		}
-		
-	}
-	
+		}
+
+
 	/**
 	 * Login gets a username and password from keyboard and validates it with the Player class
 	 * @return The Player object that is created when a user correctly logs in
 	 */
 public static Player login() {
-		
+
 		int menuChoice=-1;
 		final int EXUSER = 1;
 		final int NEWUSER = 2;
@@ -78,68 +85,75 @@ public static Player login() {
 		String username = "";
 		String password = "";
 		boolean loggedIn = false;
-		
-		
+
+
 		Scanner keyboard = new Scanner(System.in);
 		while (menuChoice != EXIT) {
-		
-	
+
+
 			System.out.println("---User Menu---");
 			System.out.println("1. Existing users");
 			System.out.println("2. New users");
-		
-			menuChoice=keyboard.nextInt();
-			keyboard.nextLine();
-			
-		    if(menuChoice==EXUSER){
-		    	
-		        System.out.println("---Existing user---");
-		    	while (!loggedIn) {
-		    		
-					System.out.println("Enter username: ");
-					username = keyboard.nextLine();
-					
-					System.out.println("Enter password: ");
-					password = keyboard.nextLine();
-					
-					try {
-						new Player(username, password);
-						menuChoice = EXIT;
-						loggedIn = true;
-					} catch (Exception IllegalArgumentException) {
-						System.out.println("Invalid entry, try again!");
+
+			try{
+				menuChoice=keyboard.nextInt();
+				keyboard.nextLine();
+
+			    if(menuChoice==EXUSER){
+
+			        System.out.println("---Existing user---");
+			    	while (!loggedIn) {
+
+						System.out.println("Enter username: ");
+						username = keyboard.nextLine();
+
+						System.out.println("Enter password: ");
+						password = keyboard.nextLine();
+
+							new Player(username, password);
+							menuChoice = EXIT;
+							loggedIn = true;
+
 					}
-				}
-				
-		    }
-		    else if (menuChoice==NEWUSER){
-		    	System.out.println("---Create new user---");
-		 	   
-		 	   while(!loggedIn){
-		 		   System.out.println("Enter username: ");
-		 	       username= keyboard.nextLine();
-		 	   
-		 	       System.out.println("Enter password: ");
-		 	       password = keyboard.nextLine();
-		 	       
-			 	   try {
-			 		   Storage.addNewPlayer(username, password);
-			 		   new Player(username, password);
-			 		   menuChoice = EXIT;
-			 		   loggedIn = true;
-			 			
-			 		} catch (Exception IllegalArgumentException ) {
-			 			System.out.println("Invalid entry, try again!");
-			 			loggedIn = false;
-			 		}
-		 	   }
-		 
-		    }
+
+			    }
+			    else if (menuChoice==NEWUSER){
+			    	System.out.println("---Create new user---");
+
+			 	   while(!loggedIn){
+			 		   System.out.println("Enter username: ");
+			 	       username= keyboard.nextLine();
+
+			 	       System.out.println("Enter password: ");
+			 	       password = keyboard.nextLine();
+
+				 	   try {
+				 		   Storage.addNewPlayer(username, password);
+				 		   new Player(username, password);
+				 		   menuChoice = EXIT;
+				 		   loggedIn = true;
+
+				 		} catch (Exception IllegalArgumentException ) {
+				 			System.out.println("Invalid entry, try again!");
+				 			loggedIn = false;
+				 		}
+			 	   }
+
+			    }
+			} catch (IllegalArgumentException e) {
+				System.out.println("Invalid entry, try again!");
+                System.out.println("Please try again.");
+                keyboard.nextLine();
+			} catch (InputMismatchException IE) {
+				System.out.println("Invalid entry, try again!");
+                System.out.println("Please try again.");
+                keyboard.nextLine();
+			}
 		}
 		return new Player(username, password);
 	}
-	
-	
+
+
 	/**
 	 * Modify profile menu shows options such as change real name, age, and password
 	 * @param player The player whose profile will be modified
@@ -150,7 +164,7 @@ public static Player login() {
 		final int CHANGEPASS = 1;
 		final int CHANGENAME = 2;
 		final int CHANGEAGE = 3;
-		
+
 		Scanner keyboard = new Scanner(System.in);
 		while (menuChoice != EXIT) {
 			System.out.println("------Modify Profile------");
@@ -158,10 +172,10 @@ public static Player login() {
 			System.out.println("2. Change real name");
 			System.out.println("3. Change age");
 			System.out.println("4. Back to main menu");
-			
+
 			menuChoice = keyboard.nextInt();
 			keyboard.nextLine();
-			
+
 			if (menuChoice == CHANGEPASS) {
 				System.out.println("Enter your old password: ");
 				String oldPass = keyboard.nextLine();
@@ -189,7 +203,7 @@ public static Player login() {
 			}
 		}
 	}
-	
+
 	/**
 	 * ViewStats uses the Statistics file's toString method to display player statistics
 	 * @param player The player whose statistics will be displayed

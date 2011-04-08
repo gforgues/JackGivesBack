@@ -187,7 +187,7 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
    bothHands.add(pHand);
    bothHands.add(newHand);
    return bothHands;
-	  //}
+	  
    
   }
   return bothHands;
@@ -200,19 +200,19 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
 	String handNumber = "";
 	String s;
 	boolean isBust = false;
-//	BlackjackHand firstHand = 
+
 	   
 	Scanner keyboard=new Scanner(System.in);
 	
 	for (int i=0; i<MAX_HAND_SIZE; i++) {
 		if (i==0) {
 			handNumber = "First hand";
-//			hand = bothHands.get(0);
+
 		} else if (i==1) {
 			handNumber = "Second hand"; 
 		}
 		
-		while (!invalidInput || bothHands.get(i).isPlayable() || !isBust) { //|| !bothHands.get(i).isBust()) {
+		while (!invalidInput || bothHands.get(i).isPlayable() || !isBust) { 
 			invalidInput = false;
 			System.out.println(handNumber + ": " + bothHands.get(i).toString());
 			System.out.println("For your " + handNumber + ", do you want to hit or stand");

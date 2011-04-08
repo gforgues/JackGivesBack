@@ -9,26 +9,27 @@ import java.util.*;
 public class BlackjackHand extends Hand {
  
  
- /*
-  * Field to keep track state of BlackjackHand
-  */
+  // Field to keep track state of BlackjackHand
+  
  boolean playable = true;
+ 
  /**
   * Get Hand total value
   * @param
   * @return value Integer value of Hand's total value of all Cards
   */
+ 
  public int getBlackjackValue() {
   int value = 0;
-  /*
-   * int cardPoints;
-   */
+
+  // int cardPoints;
+
   Card currentCard;
   int cardValue;
   boolean ace = false;
-     /*
-      * Gather all points from each card in player's hand
-      */
+     
+      // Gather all points from each card in player's hand
+      
   for (int i=0; i<getNumberCards(); i++) {
    currentCard = hand.get(i);
    
@@ -73,6 +74,12 @@ public class BlackjackHand extends Hand {
    return false;  }
  }
  
+ /**
+  * Checks whether a Hand has gone over the 21 value limit
+  * @param
+  * @return Returns true if the hand has a matching pair, remember to ignore the suits
+  * and returns false otherwise
+  */
  public boolean checkPair() {
   boolean paired = false;
   if (getNumberCards() == 2) {
@@ -178,45 +185,47 @@ public class BlackjackHand extends Hand {
   * @param 
   * @return True if Blackjack, false otherwise
   */
-    public boolean checkBlackjack() {
-     /*
-      * Check hand size exactly 2
-      */
-     if ( getNumberCards() == 2 ) {
-      /*
-       * Check if 1 ace present
-       */
-      if ( getCardsOfRank(Rank.ACE).getNumberCards() == 1 ) {
-       /*
-        * Check if 1 ten,jack,queen,king present
-        */
-       if ( getCardsOfRank(Rank.TEN).getNumberCards() == 1 || getCardsOfRank(Rank.JACK).getNumberCards() == 1 ||
-         getCardsOfRank(Rank.QUEEN).getNumberCards() == 1 || getCardsOfRank(Rank.KING).getNumberCards() == 1 )
-       return true;
-      }
-     } 
-     return false;
-    }
+		    public boolean checkBlackjack() {
+		     
+		      // Check hand size exactly 2
+		      
+		     if ( getNumberCards() == 2 ) {
+		      
+		       // Check if 1 ace present
+		       
+		      if ( getCardsOfRank(Rank.ACE).getNumberCards() == 1 ) {
+		       
+		        // Check if 1 ten,jack,queen,king present
+		        
+		       if ( getCardsOfRank(Rank.TEN).getNumberCards() == 1 || getCardsOfRank(Rank.JACK).getNumberCards() == 1 ||
+		            getCardsOfRank(Rank.QUEEN).getNumberCards() == 1 || getCardsOfRank(Rank.KING).getNumberCards() == 1 )
+		    	   
+		       return true;
+		      }
+		     } 
+		     return false;
+		    }
     
-    public String toString() {
-     StringBuilder string = new StringBuilder();
-     
-     for (int i=0; i<hand.size(); i++) {
-      string.append(hand.get(i).toString() + "\n");
-     }
-     
-     return string.toString();
-    }
- public BlackjackHand clone() {
-  BlackjackHand fClonedHand = new BlackjackHand();
-  fClonedHand.addAll(this);
-  fClonedHand.removeCard(1);
-  fClonedHand.removeCard(0);
-  /*
-   *  Instantiate a copy for now.
-   */
-  return fClonedHand;
- }
+	    public String toString() {
+	     StringBuilder string = new StringBuilder();
+	     
+	     for (int i=0; i<hand.size(); i++) {
+	      string.append(hand.get(i).toString() + "\n");
+	     }
+	     
+	     return string.toString();
+	    }
+    
+		 public BlackjackHand clone() {
+		  BlackjackHand fClonedHand = new BlackjackHand();
+		  fClonedHand.addAll(this);
+		  fClonedHand.removeCard(1);
+		  fClonedHand.removeCard(0);
+		  
+		   //  Instantiate a copy for now.
+		   
+		  return fClonedHand;
+		 }
 
  
  
