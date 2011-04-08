@@ -19,7 +19,7 @@ public class Hand implements Cloneable {
 	}
 	 /**
 	  * Clears the cards in the Hand
-	  *@param the card to be added
+	  *@param card - The card to be added
 	  */
 	public void addCard(Card card) {
 		hand.add(card);
@@ -27,7 +27,7 @@ public class Hand implements Cloneable {
 	
 	 /**
 	  * Clears the card in the Hand at a certain position
-	  *@param the position where the cards needs to be removed
+	  *@param position - The position where the cards needs to be removed
 	  *@return the removed card
 	  */
 	public Card removeCard(int position) {
@@ -36,7 +36,7 @@ public class Hand implements Cloneable {
 	
 	 /**
 	  * Checks if the removed card is in the hand
-	  *@param the card to be removed
+	  *@param card - The card to be removed
 	  *@return true if the card was in the hand
 	  */
 	public boolean removeCard(Card card) {
@@ -60,7 +60,7 @@ public class Hand implements Cloneable {
 	
 	/**
 	 * Adds all the cards in one hand to the given hand.
-	 * @param the Hand of cards to add.
+	 * @param pHand - The Hand of cards to add.
 	 */
 	public void addAll(Hand pHand) {
 		for (int i=0; i<pHand.getNumberCards(); i++) {
