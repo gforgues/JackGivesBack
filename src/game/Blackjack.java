@@ -12,35 +12,35 @@ import storage.Storage;
 import gameEngine.GameEngine;
 
 /**
-*
 * @author JackGivesBack
 */
+
 public class Blackjack implements Game {
- /**
-  * Deal exactly 2 cards for the first initial deal to a player
-  */
+ 
+  // Deal exactly 2 cards for the first initial deal to a player
+  
  private final int INITIAL_DEAL_VALUE = 2;
  
  private final int MAX_HAND_SIZE = 2;
- /**
-  * Number of decks to use
-  */
+ 
+  // Number of decks to use
+  
  private final int NUM_DECKS = 6;
- /**
- * Number of cards left to trigger new deck
- */
+ 
+ // Number of cards left to trigger new deck
+ 
  private final int DECK_RESET_VALUE = 104;
- /**
-  * Field to store chip count
-  */
+ 
+  // Field to store chip count
+  
  public int chipCount;
- /**
-  * Initialize new deck
-  */
+ 
+  // Initialize new deck
+  
  private Deck gameDeck;
- /**
-  * Blackjack game initialization
-  */
+ 
+  // Blackjack game initialization
+  
 
  public Blackjack() {
   gameDeck = new Deck();
@@ -64,6 +64,7 @@ public class Blackjack implements Game {
   return this.gameDeck;
  } 
  
+
  public void setDeck(Deck deck){
 	 this.gameDeck=deck;
  }
@@ -74,6 +75,7 @@ public class Blackjack implements Game {
   * @param
   * @return True if Deck is low on cards, false otherwise
   */
+ 
  public void checkDeck() {
   if ( gameDeck.size() < DECK_RESET_VALUE ) {
    gameDeck = new Deck();
@@ -87,22 +89,27 @@ public class Blackjack implements Game {
   * @param pHand BlackjackHand to deal
   */
  public void deal(BlackjackHand pHand) {
-  /*
-   * Clear player's hand first
-   */
+  
+   // Clear player's hand first
+   
   resetHandState(pHand);
-  /*
-   * Check deck status
-   */
+  
+   // Check deck status
+   
   checkDeck();
-  /*
-   * Deal exactly two cards for the first initial deal
-   */
+  
+   // Deal exactly two cards for the first initial deal
+   
   for ( int i = 0 ; i < INITIAL_DEAL_VALUE ; i++ ){
    pHand.addCard(gameDeck.draw());
   }
  }
  
+ /**
+  * Deals a card to a hand
+  * @param pHand BlackjackHand to add card to
+  * @return dealHand BlackjackHand with the cards added
+  */
  public BlackjackHand dealHand(BlackjackHand pHand) {
 	 resetHandState(pHand);
 	 checkDeck();
@@ -119,17 +126,17 @@ public class Blackjack implements Game {
   * @return
   */
  public void hit(BlackjackHand pHand) {
-  /*
-   * Check deck status
-   */
+  
+   // Check deck status
+   
   checkDeck();
-  /*
-   * Check if player's hand state is done or not
-   */
+  
+   // Check if player's hand state is done or not
+   
   if ( pHand.isPlayable() )
-   /*
-    * Draws a card from the Deck and adds it to the Hand
-    */
+   
+    // Draws a card from the Deck and adds it to the Hand
+    
    pHand.addCard(gameDeck.draw());
  }
 
@@ -143,16 +150,13 @@ public class Blackjack implements Game {
  }
 
  /**
-  *
   * @param pHand BlackjackHand to apply doubledown to
   * @return
   */
  public void doubleDown(BlackjackHand pHand) {
-  /*
-   * Check deck status
-   */
   
-  
+   // Check deck status
+   
   checkDeck();
   hit(pHand);
   stand(pHand);
@@ -170,20 +174,16 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
    System.out.println("You dont have a pair! Select a different move");
  
   } else {
-   /*
-    * Clones the BlackjackHand
-    */
-	 // while(pHand.getNumberCards()<=2){
+   
+    // Clones the BlackjackHand
+    
    BlackjackHand newHand =  pHand.clone();
    
-   /*
-    * Remove first card in given hand and second card in cloned hand
-    */
    
+    // Remove first card in given hand and second card in cloned hand
+    
    pHand.removeCard(0);
-   //pHand.addCard(gameDeck.draw());
    newHand.removeCard(1);
-   //newHand.addCard(gameDeck.draw());
    bothHands.add(pHand);
    bothHands.add(newHand);
    return bothHands;
@@ -195,6 +195,13 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
 
  }
  
+/**
+ * Plays the "split" hands derived from the user operation split
+ * @param bothHands ArrayList<BlackjackHand>, array list of type BlackjackHand that contains both the "split" hands
+ * @param game GameEngine, game of the type GameEngine 
+ * @param player Player, player of the type Player
+ * @return
+ */
  public void playsSplitHands(ArrayList<BlackjackHand> bothHands, GameEngine game, Player player) {
 	boolean invalidInput = false;
 	String handNumber = "";
