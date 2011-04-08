@@ -89,7 +89,7 @@ public class GameEngine {
 	
 	private void setAllBets(Player player) {
 		boolean invalid = false;
-		System.out.println("You currently have " + player.getChips() + " chips.");
+		System.out.println(player.getUsername() + ", you currently have " + player.getChips() + " chips.");
 		System.out.println("How much do you want to bet?");
 		int betValue = 0;
 		Scanner keyboard = new Scanner(System.in);
@@ -100,7 +100,7 @@ public class GameEngine {
 				playersAndChips.get(player).setBet(betValue);
 				playersAndChips.get(player).addChips(player, -betValue);
 
-				System.out.println("You want to bet " + betValue);
+				System.out.println(player.getUsername() + ", you want to bet " + betValue);
 				invalid = true;
 			} catch (IllegalArgumentException e) {
 				System.out.println("Please enter a valid bet amount. Bets must be multiples of 10, between 10 and 100");
@@ -118,18 +118,20 @@ public class GameEngine {
 	
 	private void playThroughEachPlayer(Player player, BlackjackHand hand) {
 		Scanner keyboard = new Scanner(System.in);
+		
 		while (hand.isPlayable() && !hand.isBust()){
-			System.out.println("Your current hand is: " + hand.toString());
-			System.out.println("Hit, stand, doubledown or split?");
+			System.out.println(player.getUsername() + ", your current hand is: " + hand.toString());
+			System.out.println("Do you want to hit, stand, doubledown or split?");
 			String s = keyboard.next();
 
 			if (s.equals("hit")){
 				myGame.hit(hand);
-				System.out.println("hand update: " +hand.toString());
+				System.out.println("hand update: " + hand.toString());
 			}
 			else if (s.equals("stand")){
 				myGame.stand(hand);
-				System.out.println("final hand: "+hand.toString());
+				System.out.println("final hand: "+ hand.toString());
+				break;
 			}
 			else if (s.equals("doubledown")){
 				if (player.getChips() < 2*playersAndChips.get(player).getBet()) {
@@ -240,8 +242,8 @@ public class GameEngine {
 		loadPlayers();
 		loadChips();
 
-		Player player;
-		Scanner keyboard = new Scanner(System.in);
+//		Player player;
+//		Scanner keyboard = new Scanner(System.in);
 		ArrayList<Player> players = gameTable.getAllPlayers();
 		
 		for (int i=0; i<players.size(); i++) {
@@ -249,18 +251,20 @@ public class GameEngine {
 		}
 		
 		System.out.println("Dealing everyone...");
-		System.out.println("Dealer's current hand : " + dealerHand);
-		this.dealEveryonesHand(players);
+		
 		for (int i=0; i<players.size(); i++) {
 			System.out.println(players.get(i).getUsername());
 		}
+		this.dealEveryonesHand(players);
 		
+		System.out.println("Dealer's current hand : " + dealerHand);
 		for (int i=0; i<players.size(); i++) {
 			this.dealPlayers(players.get(i));
 		}
 		
 		for (int i=0; i<players.size(); i++) {
 			BlackjackHand hand = playersAndHands.get(players.get(i));
+			//System.out.println("hand= " + hand.toString());
 			this.playThroughEachPlayer(players.get(i), hand);
 		}
 		
