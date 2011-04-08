@@ -22,8 +22,7 @@ public class Storage {
 	 * @param username
 	 * @param password
 	 */
-	
-	private static boolean addNewPlayer(String username, String password) throws IllegalArgumentException{
+	public static boolean addNewPlayer(String username, String password) throws IllegalArgumentException{
 		File fileName = new File("profiles/" + username + ".csv");
 		if (fileName.isFile()) {
 			throw new IllegalArgumentException("Player already exists.");
@@ -78,8 +77,7 @@ public class Storage {
 				 throw new IllegalArgumentException("Invalid password");
 			 }
 		} catch (FileNotFoundException e){
-			addNewPlayer(inputName, inputPassword);
-			return loadPlayer(inputName, inputPassword);
+			throw new IllegalArgumentException("Player does not exist.");
 		}
 	}
 	/**

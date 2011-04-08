@@ -81,17 +81,15 @@ public static Player login() {
 		
 		
 		Scanner keyboard = new Scanner(System.in);
-		
 		while (menuChoice != EXIT) {
 		
 	
-		System.out.println("---User Menu---");
-		System.out.println("1. Existing users");
-		System.out.println("2. New users");
-		System.out.println("3. Game Menu");
+			System.out.println("---User Menu---");
+			System.out.println("1. Existing users");
+			System.out.println("2. New users");
 		
-		menuChoice=keyboard.nextInt();
-		keyboard.nextLine();
+			menuChoice=keyboard.nextInt();
+			keyboard.nextLine();
 			
 		    if(menuChoice==EXUSER){
 		    	
@@ -106,6 +104,7 @@ public static Player login() {
 					
 					try {
 						new Player(username, password);
+						menuChoice = EXIT;
 						loggedIn = true;
 					} catch (Exception IllegalArgumentException) {
 						System.out.println("Invalid entry, try again!");
@@ -124,8 +123,10 @@ public static Player login() {
 		 	       password = keyboard.nextLine();
 		 	       
 			 	   try {
-			 			new Player(username, password);
-			 			loggedIn = true;
+			 		   Storage.addNewPlayer(username, password);
+			 		   new Player(username, password);
+			 		   menuChoice = EXIT;
+			 		   loggedIn = true;
 			 			
 			 		} catch (Exception IllegalArgumentException ) {
 			 			System.out.println("Invalid entry, try again!");
