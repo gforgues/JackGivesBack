@@ -78,26 +78,29 @@ import cards.*;
 		private int checkValidInputBet(Player player) {
 			boolean invalid = false;
 			System.out.println("how much do you want to bet?");
-			int a = 0;
+			int betValue = 0;
 			Scanner keyboard = new Scanner(System.in);
 			
 			while (invalid == false) {
 				try { 
-					a = keyboard.nextInt();
-					playersAndChips.get(player).setBet(a);
-					playersAndChips.get(player).addChips(player, -a);
+					betValue = keyboard.nextInt();
+					playersAndChips.get(player).setBet(betValue);
+					playersAndChips.get(player).addChips(player, -betValue);
 	
-					System.out.println(" you want to bet " + a);
+					System.out.println(" you want to bet " + betValue);
 					invalid = true;
-	
-				} catch (Exception IllegalArgumentException) {
-						System.out.println(IllegalArgumentException.getMessage() + " You currently have " + player.getChips() + " chips.");
-						System.out.println("Please try again.");
-	
+				} catch (IllegalArgumentException e) {
+					System.out.println("Please enter a valid bet amount.");
+				} catch (InputMismatchException IE) {
+                    System.out.println("This is not a valid integer!");
+                    System.out.println("You currently have " + player.getChips() + " chips.");
+                    System.out.println("Please try again.");
+                    keyboard.nextLine();
 				}
 			}
+				
 			
-			return a;
+			return betValue;
 		}
 
 		public void gameStart() {
@@ -119,8 +122,6 @@ import cards.*;
 				int a = this.checkValidInputBet(player);
 
 				//set the bet and remove the chips
-
-
 			}
 
 			
