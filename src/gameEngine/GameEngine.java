@@ -89,7 +89,8 @@ public class GameEngine {
 	
 	private void setAllBets(Player player) {
 		boolean invalid = false;
-		System.out.println("how much do you want to bet?");
+		System.out.println("You currently have " + player.getChips() + " chips.");
+		System.out.println("How much do you want to bet?");
 		int betValue = 0;
 		Scanner keyboard = new Scanner(System.in);
 		
@@ -99,11 +100,10 @@ public class GameEngine {
 				playersAndChips.get(player).setBet(betValue);
 				playersAndChips.get(player).addChips(player, -betValue);
 
-				System.out.println(" you want to bet " + betValue);
-				System.out.println(" you currently have " + player.getChips() + " chips.");
+				System.out.println("You want to bet " + betValue);
 				invalid = true;
 			} catch (IllegalArgumentException e) {
-				System.out.println("Please enter a valid bet amount.");
+				System.out.println("Please enter a valid bet amount. Bets must be multiples of 10, between 10 and 100");
 			} catch (InputMismatchException IE) {
                 System.out.println("This is not a valid integer!");
                 System.out.println("You currently have " + player.getChips() + " chips.");
@@ -244,18 +244,19 @@ public class GameEngine {
 		Scanner keyboard = new Scanner(System.in);
 		ArrayList<Player> players = gameTable.getAllPlayers();
 		
+		for (int i=0; i<players.size(); i++) {
+			this.setAllBets(players.get(i));
+		}
+		
 		System.out.println("Dealing everyone...");
+		System.out.println("Dealer's current hand : " + dealerHand);
+		this.dealEveryonesHand(players);
 		for (int i=0; i<players.size(); i++) {
 			System.out.println(players.get(i).getUsername());
 		}
 		
 		for (int i=0; i<players.size(); i++) {
 			this.dealPlayers(players.get(i));
-		}
-		//this.dealEveryonesHand(players);
-		
-		for (int i=0; i<players.size(); i++) {
-			this.setAllBets(players.get(i));
 		}
 		
 		for (int i=0; i<players.size(); i++) {
