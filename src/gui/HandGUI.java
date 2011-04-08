@@ -31,7 +31,7 @@ public class HandGUI extends MainApplication implements Observer
 		handPanel.setLayout(null);
 		handPanel.setOpaque(false);
 		
-		playerLabel = new JLabel (player.getName());
+		playerLabel = new JLabel (player.getUsername());
 		playerLabel.setForeground(Color.orange);
 		playerLabel.setFont(new Font(playerLabel.getFont().getFamily(), Font.BOLD,16));
 		
