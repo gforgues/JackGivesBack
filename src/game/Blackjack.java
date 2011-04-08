@@ -162,7 +162,7 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
    /*
     * Clones the BlackjackHand
     */
-	  while(pHand.getNumberCards()<=2){
+	 // while(pHand.getNumberCards()<=2){
    BlackjackHand newHand =  pHand.clone();
    
    /*
@@ -170,13 +170,13 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
     */
    
    pHand.removeCard(0);
-   pHand.addCard(gameDeck.draw());
+   //pHand.addCard(gameDeck.draw());
    newHand.removeCard(1);
-   newHand.addCard(gameDeck.draw());
+   //newHand.addCard(gameDeck.draw());
    bothHands.add(pHand);
    bothHands.add(newHand);
    return bothHands;
-	  }
+	  //}
    
   }
   return bothHands;
@@ -185,53 +185,44 @@ public ArrayList<BlackjackHand> split(BlackjackHand pHand) {
  }
  
  public void playsSplitHands(ArrayList<BlackjackHand> bothHands) {
-  boolean invalidInput = false;
-  for( int i=0; i<MAX_HAND_SIZE;i++){
-   
-   Scanner keyboard=new Scanner(System.in);
-   
-//   while (invalidInput == false) {
-   while (i==0 && bothHands.get(i).isPlayable() && !(bothHands.get(i).isBust())) {
-	System.out.println("FirstHand:");   
-	System.out.println(bothHands.get(0).toString());
-    System.out.println("For your First hand, do you want to hit or stand");
-    String s = keyboard.next();
-    if (s.equals("hit")){
-     this.hit(bothHands.get(i));
-     System.out.println("hand update: " +bothHands.get(i).toString());
-     invalidInput = true;
-    }
-    else if (s.equals("stand")){
-     this.stand(bothHands.get(i));
-     System.out.println("final hand: "+bothHands.get(i).toString());
-     invalidInput = true;
-   
-    }  else {
-     System.out.println("Invalid input, enter hit/stand: ");
-    }
-   }
-   
-   while (i==1 && bothHands.get(i).isPlayable() && !(bothHands.get(i).isBust())) {
-	   System.out.println("Second Hand: ");  
-	   System.out.println(bothHands.get(1).toString());
-	    System.out.println("For your Second hand, do you want to hit or stand");
-	    String s = keyboard.next();
-	    if (s.equals("hit")){
-	     this.hit(bothHands.get(i));
-	     System.out.println("hand update: " +bothHands.get(i).toString());
-	     invalidInput = true;
-	    }
-	    else if (s.equals("stand")){
-	     this.stand(bothHands.get(i));
-	     System.out.println("final hand: "+bothHands.get(i).toString());
-	     invalidInput = true;
+	boolean invalidInput = false;
+	String handNumber = "";
+	String s;
+	boolean isBust = false;
+//	BlackjackHand firstHand = 
 	   
-	    }  else {
-	     System.out.println("Invalid input, enter hit/stand: ");
-	    }
-	   }
-   
+	Scanner keyboard=new Scanner(System.in);
+	
+	for (int i=0; i<MAX_HAND_SIZE; i++) {
+		if (i==0) {
+			handNumber = "First hand";
+//			hand = bothHands.get(0);
+		} else if (i==1) {
+			handNumber = "Second hand"; 
+		}
+		
+		while (!invalidInput || bothHands.get(i).isPlayable() || !isBust) { //|| !bothHands.get(i).isBust()) {
+			invalidInput = false;
+			System.out.println(handNumber + ": " + bothHands.get(i).toString());
+			System.out.println("For your " + handNumber + ", do you want to hit or stand");
+			s = keyboard.next();
+			
+			if (s.equals("hit")) {
+				this.hit(bothHands.get(i));
+				System.out.println("hand update: " + bothHands.get(i).toString());
+				isBust = bothHands.get(i).isBust();
+				invalidInput = true;
+			} else if (s.equals("stand")){
+			     this.stand(bothHands.get(i));
+			     System.out.println("final hand: "+bothHands.get(i).toString());
+			     invalidInput = true;
+			     break;
+			} else {
+			     System.out.println("Invalid input, enter hit/stand: ");
+			}
+		}
+		   
+	}
   }
- }
 }
  

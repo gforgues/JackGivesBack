@@ -85,7 +85,8 @@ public class BlackjackHand extends Hand {
  /**
   * Checks whether a Hand has gone over the 21 value limit
   * @param
-  * @return Returns whether a Hand has gone over the 21 value limit
+  * @return Returns true if a Hand has gone over the 21 value limit,
+  * and returns false otherwise
   */
    public boolean isBust() {
        if ( getBlackjackValue() > 21 ) {
@@ -214,7 +215,6 @@ public class BlackjackHand extends Hand {
   /*
    *  Instantiate a copy for now.
    */
-  System.out.println(fClonedHand.toString());
   return fClonedHand;
  }
 
