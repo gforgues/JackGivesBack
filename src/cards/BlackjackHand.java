@@ -1,10 +1,10 @@
 package cards;
 
-import participant.Player;
+
 import cards.Card.Rank;
 import cards.Card.Suit;
 
-import java.util.*;
+
 
 public class BlackjackHand extends Hand {
  
@@ -25,10 +25,9 @@ public class BlackjackHand extends Hand {
   // int cardPoints;
 
   Card currentCard;
-  int cardValue;
   boolean ace = false;
      
-      // Gather all points from each card in player's hand
+  // Gather all points from each card in player's hand
       
   for (int i=0; i<getNumberCards(); i++) {
    currentCard = hand.get(i);
@@ -205,7 +204,13 @@ public class BlackjackHand extends Hand {
 		     } 
 		     return false;
 		    }
-    
+  
+		    /**
+		     * Generates the string output of the hand
+		     * @param 
+		     * @return Returns the string from of the current player's hand
+		     */	
+		    
 	    public String toString() {
 	     StringBuilder string = new StringBuilder();
 	     
@@ -215,6 +220,12 @@ public class BlackjackHand extends Hand {
 	     
 	     return string.toString();
 	    }
+	    
+	    /**
+	     * Generates the cloned version of the player's hand
+	     * @param 
+	     * @return Returns the cloned version of player's hand which is of datatype black hack hand
+	     */
     
 		 public BlackjackHand clone() {
 		  BlackjackHand fClonedHand = new BlackjackHand();
