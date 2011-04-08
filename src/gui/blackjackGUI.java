@@ -243,7 +243,7 @@ public class blackjackGUI extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         
-    	mainEngine.getPlayerHand(dealer).toString();
+    	
     
     }                                           
 
