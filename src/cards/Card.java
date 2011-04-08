@@ -1,8 +1,8 @@
 package cards;
 
 import cards.Card;
-import cards.Card.Rank;
-import cards.Card.Suit;
+//import cards.Card.Rank;
+//import cards.Card.Suit;
 
 /**
  * An immutable description of a playing card.
