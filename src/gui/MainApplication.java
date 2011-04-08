@@ -22,6 +22,11 @@ import javax.swing.text.html.Option;
 import participant.Player;
 import cards.BlackjackHand;
 
+/**
+ * 
+ * @author JackGivesBack
+ *
+ */
 public class MainApplication
 {
 	

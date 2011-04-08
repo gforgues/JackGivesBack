@@ -1,5 +1,7 @@
 package gameEngine;
-
+/**
+ * @author JackGivesBack
+ */
 import game.Blackjack;
 import game.Observer;
 

@@ -2,6 +2,7 @@ package gameEngine;
 
 /**
  * Indicates a misuse of a GameEngine class.
+ * @author JackGivesBack
  */
 @SuppressWarnings("serial")
 public class GameEngineException extends RuntimeException  {

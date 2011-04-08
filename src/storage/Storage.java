@@ -12,7 +12,7 @@ import java.util.Scanner;
  *  realName is an optional attribute and has default value "noName" <br>
  *  age is an optional attribute and has default value -1 <br>
  *  
- *  @author Gabriel
+ *  @author JackGivesBack
  */
 
 public class Storage {

@@ -10,7 +10,7 @@ import storage.BlackjackStorage;
 
 /**
  * the GameEngine Interface displays the command line menu for the blackjack game
- * @author Gabriel
+ * @author JackGivesBack
  *
  */
 public class GameEngineInterface {

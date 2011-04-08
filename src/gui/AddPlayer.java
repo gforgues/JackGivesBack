@@ -3,7 +3,11 @@ package gui;
 import javax.swing.JFrame;
 
 import gameEngine.GameEngine;
-
+/**
+ * 
+ * @author JackGivesBack
+ *
+ */
 public class AddPlayer
 {
 

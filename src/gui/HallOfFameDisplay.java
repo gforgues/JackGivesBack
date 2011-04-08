@@ -3,7 +3,11 @@ package gui;
 import gameEngine.GameEngine;
 
 import javax.swing.JFrame;
-
+/**
+ * 
+ * @author JackGivesBack
+ *
+ */
 public class HallOfFameDisplay
 {
 	

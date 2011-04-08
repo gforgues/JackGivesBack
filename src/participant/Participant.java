@@ -1,5 +1,10 @@
 package participant;
 
+/**
+ * 
+ * @author JackGivesBack
+ *
+ */
 public interface Participant {
 
     void saveGame();

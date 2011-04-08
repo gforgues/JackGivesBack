@@ -4,6 +4,12 @@ package cards;
 import cards.Card.Rank;
 import cards.Card.Suit;
 
+/**
+ * 
+ * BlackjackHand object: hand specified for the Blackjack game 
+ * @author JackGivesBack
+ */
+
 
 
 public class BlackjackHand extends Hand {

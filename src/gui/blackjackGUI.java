@@ -11,7 +11,7 @@ import participant.*;
 
 /**
  *
- * @author Client
+ * @author JackGivesBack
  */
 public class blackjackGUI extends javax.swing.JFrame {
 	

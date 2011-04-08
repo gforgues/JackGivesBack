@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 /**
  * A class to store and manage images of the 52 cards.
+ * @author JackGivesBack
  */
 public final class CardImages  {
 	/**

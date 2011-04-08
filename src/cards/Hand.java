@@ -1,6 +1,12 @@
 package cards;
 
 import java.util.ArrayList;
+/**
+ * 
+ * Hand object: List of cards
+ * @author JackGivesBack
+ *
+ */
 
 public class Hand implements Cloneable {
 	ArrayList<Card> hand;

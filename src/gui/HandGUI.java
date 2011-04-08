@@ -17,6 +17,11 @@ import cards.CardImages;
 import game.Observer;
 import gameEngine.GameEngine;
 
+/**
+ * 
+ * @author JackGivesBack
+ *
+ */
 public class HandGUI extends MainApplication implements Observer 
 {
 

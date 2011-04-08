@@ -1,11 +1,12 @@
 package participant;
 
 /**
-* @author JackGivesBack
-*/
+ * 
+ * Chips object : Implement bets and chips
+ * @author JackGivesBack
+ */
 
 public class Chips {
-	//Player player;
 	int chips;
 	int bet;
 	private final int MIN_BET = 10;
@@ -13,8 +14,8 @@ public class Chips {
 	
 	/**
 	 * Constructs a new Chips object.
-	 * @param chips - The amount of chips
-	 * @param bet - The amount of bet
+	 * @param chips The amount of chips
+	 * @param bet The amount of bet
 	 * @throws  IllegalArgumentException if the entered bet is either: negative, 
 	 * 									 not a a multiple of 10 or 
 	 * 									 more than the amount of chips left
@@ -35,7 +36,7 @@ public class Chips {
 
 	/**
 	 * Constructs a new Chips object
-	 * @param chips - The amount of chips
+	 * @param chips The amount of chips
 	 * @throws  IllegalArgumentException if the entered bet is negative 
 	 * 
 	 */
@@ -57,8 +58,8 @@ public class Chips {
 	
 	/**
 	 * Sets the new amount of chips for the Player
-	 * @param player - The player to which the chips need to be set to
-	 * @param amount - The amount of chips 
+	 * @param player The player to which the chips need to be set to
+	 * @param amount The amount of chips 
 	 */
 	public void setChips(Player player, int amount) {//throws IllegalArgumentException {
 		player.setChips(amount);
@@ -67,8 +68,8 @@ public class Chips {
 	/**
 	 * Replaces the new amount of chips for the Player to the amount of chips 
 	 * already stored in this object
-	 * @param player - The player to which the chips need to be set to
-	 * @param amount - The amount of chips 
+	 * @param player The player to which the chips need to be set to
+	 * @param amount The amount of chips 
 	 */
 	public boolean addChips(Player player, int amount) {
 		return player.addChips(amount);

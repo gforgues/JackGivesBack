@@ -5,7 +5,10 @@ import cards.Card;
 //import cards.Card.Suit;
 
 /**
+ * 
  * An immutable description of a playing card.
+ * @author JackGivesBack
+ * 
  */
 public final class Card
 {

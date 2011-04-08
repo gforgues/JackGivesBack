@@ -6,6 +6,7 @@ import java.util.Collections;
 
 /**
  * Models a deck of 52 cards (no joker).
+ * @author JackGivesBack
  */
 public class Deck  {
 	private final ArrayList<Card> cDeck;

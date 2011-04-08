@@ -4,6 +4,7 @@ import game.Observer;
 
 /**
  * Observable Interface.
+ * @author JackGivesBack
  */
 public interface Observable {
 	/**

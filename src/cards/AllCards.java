@@ -4,6 +4,7 @@ import cards.Card;
 
 /**
  * Convenience constants for all cards in the deck.
+ * @author JackGivesBack
  */
 public final class AllCards {
 	
