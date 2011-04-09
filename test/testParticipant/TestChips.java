@@ -20,9 +20,9 @@ public class TestChips extends TestCase {
 	
 	public void testGetBetWithPlayer() {
 		Player player = new Player("emily", "abc");
-		Chips chips = new Chips(player.getChips(), 4);
+		Chips chips = new Chips(player.getChips(), 1);
 		
-		expectedValue = 4;
+		expectedValue = 1;
 		actualValue = chips.getBet();
 		
 		assertEquals(expectedValue, actualValue);

@@ -115,51 +115,7 @@ public class TestPlayer extends TestCase {
 		}
 		assertEquals(failed, true);
 	}
-	
-	public void testAddChipsPositiveAmountGreaterThanActualChips() {
-		failed = false;
-		Player player = new Player("jessica", "password");
-		try {
-			player.addChips(10000000);
-			expectedValue = 35000;
-			actualValue = player.getChips();
-			
-			assertEquals(expectedValue, actualValue);
-		} catch (IllegalArgumentException e) {
-			failed = true;
-		}
-		assertEquals(failed, true);
-	}
-	
-	public void testAddChipsNegativeAmountGreaterThanActualChips() {
-		failed = false;
-		Player player = new Player("jessica", "password");
-		try {
-			player.addChips(-10000000);
-			expectedValue = 35000;
-			actualValue = player.getChips();
-			
-			assertEquals(expectedValue, actualValue);
-		} catch (IllegalArgumentException e) {
-			failed = true;
-		}
-		assertEquals(failed, true);
-	}
-	
-	public void testAddChipsNegativeAmountEqualToChipAmount() {
-		failed = false;
-		Player player = new Player("bill", "Black");
-		try {
-			expectedValue = player.getChips() - 400;
-			player.addChips(-400);
-			actualValue = player.getChips();
-			
-			assertEquals(expectedValue, actualValue);
-		} catch (IllegalArgumentException e) {
-			failed = true;
-		}
-		assertEquals(failed, false);
-	}
+
 	
 	public void testAddWinBetAmountEqualToChips() {
 		Player player = new Player("jack", "Black");
