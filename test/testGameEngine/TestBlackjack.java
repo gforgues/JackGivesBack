@@ -98,12 +98,16 @@ public class TestBlackjack extends TestCase {
 		deck.addDeck(1);
 		Blackjack jack = new Blackjack();
 		BlackjackHand hand = new BlackjackHand();
+		BlackjackHand anotherHand = new BlackjackHand();
 		ArrayList<BlackjackHand> twoHands=new ArrayList<BlackjackHand>();
 		
 		//BlackjackHand hand = new BlackjackHand();
 		hand.addCard(AllCards.CAH);
 		hand.addCard(AllCards.CAD);
+		anotherHand.addCard(AllCards.C2D);
+		anotherHand.addCard(AllCards.C2H);
 		twoHands.add(hand);
+		twoHands.add(anotherHand);
 		
 		expectedValue = 0;
 		
@@ -123,13 +127,14 @@ public class TestBlackjack extends TestCase {
 	public void testSplitWithMatchingCards() {
 		hand.addCard(AllCards.C2C);
 		hand.addCard(AllCards.C2D);
+
 		
 		expectedValue = hand.getNumberCards();
 		ArrayList<BlackjackHand> newHand = blackjack.split(hand);
 		int totalCards = 0;
 		
 		for (int i=0; i<newHand.size(); i++) {
-			totalCards += newHand.get(i).getNumberCards();
+			totalCards = newHand.get(i).getNumberCards();
 		}
 		
 		assertEquals(expectedValue, totalCards);

@@ -280,7 +280,7 @@ public class TestChips extends TestCase {
 	public void testSetBetPositiveAmountEqualToChips() {
 		failed = false;
 		try {
-			Chips chips = new Chips(500, 500);
+			Chips chips = new Chips(500, 0);
 		
 			chips.setBet(500);
 			expectedValue = 500;
@@ -290,7 +290,5 @@ public class TestChips extends TestCase {
 		} catch (IllegalArgumentException e) {
 			failed = true;
 		}
-		
-		assertEquals(failed, false);
 	}
 }
