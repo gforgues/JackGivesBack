@@ -22,9 +22,9 @@ public class Player {
   
   /**
    * Allows the player to modify their player profile- password, name and age
-   * @param  String inputPassword, the current password of the player
-   * @param  String newPassword, the new modified password of the player
-   * @param  int age, the age of the player
+   * @param  inputPassword the current password of the player
+   * @param  newPassword the new modified password of the player
+   * @param  age the age of the player
    * @return
    */	
   public void modifyProfile(String inputPassword, String newPassword, String realName, int age) {
@@ -52,8 +52,7 @@ public class Player {
   
   /**
    * Returns the user name of the current  player
-   * @param 
-   * @return String, Returns the user name of the player
+   * @return the user name of the player
    */	
   public String getUsername() {
 	  return this.player.getUsername();
@@ -61,8 +60,7 @@ public class Player {
   
   /**
    * Returns the real name of the current player
-   * @param 
-   * @return String, Returns the real name of the current player
+   * @return the real name of the current player
    */	
   public String getRealName() {
 	  return this.player.getRealName();
@@ -70,8 +68,7 @@ public class Player {
   
   /**
    * Returns the age of the current player
-   * @param 
-   * @return int, Returns the age of the current player
+   * @return the age of the current player
    */	
   public int getAge() {
 	  return this.player.getAge();
@@ -79,8 +76,7 @@ public class Player {
   
   /**
    * Returns the number of chips that the current player has
-   * @param 
-   * @return int, Returns the number of chips of the current player's hand
+   * @return the number of chips of the current player's hand
    */	
   public int getChips() {
 	  return this.player.getChips();

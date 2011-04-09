@@ -30,7 +30,7 @@ public class Table implements Observer {
     
 	/**
 	 * Displays the tableOwner of the Table
-	 * @return Returns the tableOwner of the type Player
+	 * @return the tableOwner of the type Player
 	 */
 	public Player getTableOwner() {
 		return tableOwner;
@@ -38,7 +38,7 @@ public class Table implements Observer {
 	
 	/**
 	 * Generates an array list of the players in the Table
-	 * @return returns ArrayList<Player> array list of type Player
+	 * @return ArrayList<Player> array list of type Player
 	 */
 	public ArrayList<Player> getAllPlayers() {
 		return players;
@@ -46,7 +46,7 @@ public class Table implements Observer {
  
 	/**
 	 *  Generates an array list of the spectator in the Table
-	 *  @return returns ArrayList<Spectator> array list of type Spectator
+	 *  @return ArrayList<Spectator> array list of type Spectator
 	 */
 	public ArrayList<Spectator> getAllSpectators(){
 		return spectators;
@@ -54,8 +54,8 @@ public class Table implements Observer {
     
 	/**
 	 *  Attempts to find the player at a particular index
-	 *  @param int index, an index for the players ArrayList
-	 *  @return Player, a player of the type Player if the index is in the ArrayList, if not then it returns the tableOwner
+	 *  @param index an index for the players ArrayList
+	 *  @return a player of the type Player if the index is in the ArrayList, if not then it returns the tableOwner
 	 */
 	public Player getPlayer(int index) {
 		if (index >= 0 && index<players.size()) {
@@ -68,8 +68,8 @@ public class Table implements Observer {
     
 	/**
 	 *  Attempts to find the spectator at a particular index
-	 *  @param int index, an index for the spectators ArrayList
-	 *  @return Spectator, a spectator of the type Spectator 
+	 *  @param index an index for the spectators ArrayList
+	 *  @return a spectator of the type Spectator 
 	 */
 	public Spectator getSpectator(int index) {
 		return spectators.get(index);
@@ -77,10 +77,9 @@ public class Table implements Observer {
     
 	/**
 	 *  The player requests to join a Table
-	 *  @param Player player, a player who requests to join a Table
-	 *  @param boolean canJoin, a boolean value that determines if the request is accepted or rejected
-	 *  @return boolean, which is true when the request is accepted
-	 *  and returns false when the request is rejected
+	 *  @param player a player who requests to join a Table
+	 *  @param canJoin a boolean value that determines if the request is accepted or rejected
+	 *  @return true when the request is accepted
 	 */
 	public boolean requestJoin(Player player, boolean canJoin) {
    
@@ -96,8 +95,8 @@ public class Table implements Observer {
 	
 	/**
 	 *  The tableOwner accepts or rejects a particular player's requestJoin
-	 *  @param Player player, a player who requests to join
-	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 *  @param player a player who requests to join
+	 *  @return true if the tableOwner says "true"
 	 */
 	public boolean requestJoin(Player player){
 		boolean join=false;
@@ -130,10 +129,9 @@ public class Table implements Observer {
     
 	/**
 	 *  The player requests to leave a Table
-	 *  @param Player player, a player who requests to join a Table
-	 *  @param boolean canLeave, a boolean value that determines if the request is accepted or rejected
-	 *  @return boolean, which is true when the request is accepted
-	 *  and returns false when the request is rejected
+	 *  @param player a player who requests to join a Table
+	 *  @param canLeave a boolean value that determines if the request is accepted or rejected
+	 *  @return true when the request is accepted
 	 */
 	public boolean requestLeave(Player player, boolean canLeave) {		
 		if (canLeave) {
@@ -148,8 +146,8 @@ public class Table implements Observer {
 	
 	/**
 	 *  The tableOwner accepts or rejects a particular player's requestLeave
-	 *  @param Player player, a player who requests to leave
-	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 *  @param player a player who requests to leave
+	 *  @return true if the tableOwner says "true" 
 	 */
 	public boolean requestLeave(Player player) {
 		boolean leave;
@@ -185,10 +183,9 @@ public class Table implements Observer {
     
 	/**
 	 *  The spectator requests to view a Table
-	 *  @param Spectator spectator, a spectator who requests to view a game
-	 *  @param boolean canLeave, a boolean value that determines if the request is accepted or rejected
-	 *  @return boolean, which is true when the request is accepted
-	 *  and returns false when the request is rejected
+	 *  @param spectator a spectator who requests to view a game
+	 *  @param canLeave a boolean value that determines if the request is accepted or rejected
+	 *  @return true when the request is accepted
 	 */
 	public boolean requestView(Spectator spectator, boolean canView) {
 		if (canView) {
@@ -203,8 +200,8 @@ public class Table implements Observer {
 	
 	/**
 	 *  The tableOwner accepts or rejects a particular spectators's requestView
-	 *  @param Spectator spectator, a spectator who requests to view
-	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 *  @param spectator a spectator who requests to view
+	 *  @return true if the tableOwner says "true"
 	 */
 	public boolean requestView(Spectator spectator) {
 		boolean view;
@@ -226,10 +223,9 @@ public class Table implements Observer {
     
 	/**
 	 *  The spectator requests to leave a Table
-	 *  @param Spectator spectator, a spectator who requests to view a Table
-	 *  @param boolean canLeave, a boolean value that determines if the request is accepted or rejected
-	 *  @return boolean, which is true when the request is accepted
-	 *  and returns false when the request is rejected
+	 *  @param spectator a spectator who requests to view a Table
+	 *  @param canLeave a boolean value that determines if the request is accepted or rejected
+	 *  @return true when the request is accepted
 	 */
 	public boolean requestLeave(Spectator spectator, boolean canLeave) {		
 	    if (canLeave) {
@@ -244,8 +240,8 @@ public class Table implements Observer {
 	
 	/**
 	 *  The tableOwner accepts or rejects a particular spectators's requestLeave
-	 *  @param Spectator spectator, a spectator who requests to leave
-	 *  @return boolean, returns true if the tableOwner says "true" and returns false otherwise
+	 *  @param spectator a spectator who requests to leave
+	 *  @return true if the tableOwner says "true" and returns false otherwise
 	 */
 	
 	public boolean requestLeave(Spectator spectator) {
@@ -323,9 +319,9 @@ public class Table implements Observer {
     
 	/**
 	 *  Saves the particular game in play
-	 *  @param Deck deck, the deck of the type deck that contains all the cards in play
-	 *  @param intGameID, an integer called gameID
-	 *  @return boolean, returns true if the saveDeck method returns true and the savePlayers returns true or false otherwise
+	 *  @param deck the deck of the type deck that contains all the cards in play
+	 *  @param gameID an integer called gameID
+	 *  @return true if the saveDeck method returns true and the savePlayers returns true or false otherwise
 	 */
 	public boolean saveGame(Deck deck, int gameID) { 
 		boolean isSuccessful = true;
@@ -340,8 +336,8 @@ public class Table implements Observer {
 	/**
 	 * Loads the game and returns a new GameEngine with all of the loaded
 	 * info (including players, their hands, and the game's deck)
-	 * @param int gameID, the gameID of the game
-	 * @return GameEngine, returns a new GameEngine with all the loaded information
+	 * @param gameID the gameID of the game
+	 * @return a new GameEngine with all the loaded information
 	 */
 	
 	public GameEngine loadGame(int gameId) {		
@@ -354,8 +350,7 @@ public class Table implements Observer {
 	
 	/**
      * Generates the string output of the table owner, players and spectators at the table
-     * @param 
-     * @return Returns the string output of the players, tableOwner and spectators
+     * @return the string output of the players, tableOwner and spectators
      */	
 	public String toString() {
 		String string = "Table owner for this table is " + tableOwner.getUsername();

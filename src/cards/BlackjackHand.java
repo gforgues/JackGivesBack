@@ -18,8 +18,7 @@ public class BlackjackHand extends Hand {
  
 	 /**
 	  * Get Hand total value
-	  * @param
-	  * @return value Integer value of Hand's total value of all Cards
+	  * @return value the Hand's total value of all Cards
 	  */
 	 public int getBlackjackValue() {
 		int value = 0;
@@ -74,9 +73,7 @@ public class BlackjackHand extends Hand {
  
 	 /**
 	  * Checks whether a Hand has gone over the 21 value limit
-	  * @param
-	  * @return Returns true if the hand has a matching pair, remember to ignore the suits
-	  * and returns false otherwise
+	  * @return true if the hand has a matching pair, remember to ignore the suits
 	  */
 	public boolean checkPair() {
 		boolean paired = false;
@@ -89,9 +86,7 @@ public class BlackjackHand extends Hand {
  
 	/**
 	  * Checks whether a Hand has gone over the 21 value limit
-	  * @param
-	  * @return Returns true if a Hand has gone over the 21 value limit,
-	  * and returns false otherwise
+	  * @return true if a Hand has gone over the 21 value limit,
 	  */
 	public boolean isBust() {
 		if ( getBlackjackValue() > 21 ) {
@@ -111,7 +106,7 @@ public class BlackjackHand extends Hand {
 	 
 	 /**
 	  * Checks whether Stand has been played on Hand 
-	  * @return playable True if Stand has not been played, false if it has
+	  * @return true if Stand has not been played, false if it has
 	  */
 	public boolean isPlayable() {
 		return playable;
@@ -120,7 +115,7 @@ public class BlackjackHand extends Hand {
 	 /**
 	  * Returns all the cards in the hand that match a particular suit.
 	  * @param pSuit The suit to match.
-	  * @return A copy of the hand with only the cards matching the suit.
+	  * @return a copy of the hand with only the cards matching the suit.
 	  */
 	 
 	public Hand getCardsOfSuit(Suit pSuit) {
@@ -134,10 +129,9 @@ public class BlackjackHand extends Hand {
 	}
 
 	 /**
-	  * Returns all the cards in the hand that
-	  * do not match a particular suit.
+	  * Returns all the cards in the hand that do not match a particular suit.
 	  * @param pSuit The suit to avoid.
-	  * @return A copy of the hand with only the cards not matching the suit.
+	  * @return a copy of the hand with only the cards not matching the suit.
 	  */
 	public Hand getCardsNotOfSuit(Suit pSuit) {
 		Hand fSuitList = new Hand();
@@ -152,7 +146,7 @@ public class BlackjackHand extends Hand {
 	 /**
 	  * Returns all the cards in the hand that match a particular rank.
 	  * @param pRank The rank to match.
-	  * @return A copy of the hand with only the cards matching the rank.
+	  * @return a copy of the hand with only the cards matching the rank.
 	  */
 	public Hand getCardsOfRank(Rank pRank) {
 		Hand fRankList = new Hand();
@@ -168,7 +162,7 @@ public class BlackjackHand extends Hand {
 	  * Returns all the cards in the hand that
 	  * do not match a particular rank.
 	  * @param pRank The rank to avoid.
-	  * @return A copy of the hand with only the cards not matching the rank.
+	  * @return a copy of the hand with only the cards not matching the rank.
 	  */
 	public Hand getCardsNotOfRank(Rank pRank) {
 		Hand fRankList = new Hand();
@@ -182,8 +176,7 @@ public class BlackjackHand extends Hand {
 	
 	 /**
 	  * Checks to see if a given BlackjackHand contains a Blackjack
-	  * @param 
-	  * @return True if Blackjack, false otherwise
+	  * @return true if Blackjack, false otherwise
 	  */
 	public boolean checkBlackjack() {
 		// Check hand size exactly 2
@@ -202,8 +195,7 @@ public class BlackjackHand extends Hand {
   
 	/**
 	 * Generates the string output of the hand
-	 * @param 
-	 * @return Returns the string from of the current player's hand
+	 * @return the string from of the current player's hand
 	 */	
 	public String toString() {
 		StringBuilder string = new StringBuilder();
@@ -215,8 +207,7 @@ public class BlackjackHand extends Hand {
 
 	/**
 	 * Generates the cloned version of the player's hand
-	 * @param 
-	 * @return Returns the cloned version of player's hand which is of datatype black hack hand
+	 * @return the cloned version of player's hand which is of datatype black hack hand
 	 */
 	public BlackjackHand clone() {
 		BlackjackHand fClonedHand = new BlackjackHand();
