@@ -1,7 +1,5 @@
 package gameEngine;
-/**
- * @author JackGivesBack
- */
+
 import game.Blackjack;
 //import game.Observer;
 
@@ -15,6 +13,10 @@ import participant.Player;
 import table.Table;
 import cards.BlackjackHand;
 import cards.Deck;
+
+/**
+* @author JackGivesBack
+*/
 
 public class GameEngine {
 	private Blackjack myGame;
@@ -43,18 +45,26 @@ public class GameEngine {
 	
 	boolean splitPlayed = false;
 
-
+	/** 
+	 * GameEngine initialization
+	 * @param player a given player to create a table object
+	 */
 	public GameEngine(Player player) {
-
 		gameTable = new Table(player);
-
 	}
 
+	/** 
+	 * GameEngine initialization
+	 * @param deck: a given deck to set the Blackjack's game deck
+	 */
 	public GameEngine(Deck deck){
 		myGame=new Blackjack();
 		myGame.setDeck(deck);
 	}
 
+	/** 
+	 * resets all fields of this class
+	 */
 	public void reset() {
 		myGame = new Blackjack();
 		playersAndHands = new HashMap<Player, BlackjackHand>();
@@ -62,12 +72,20 @@ public class GameEngine {
 		dealerHand = new BlackjackHand();
 	}
 
+	/** 
+	 * resets all fields of this class except all of the players already
+	 * stored in this object
+	 */
 	public void resetKeepPlayers() {
 		myGame = new Blackjack();
 	}
 
+	/** 
+	 * Loads all of the players from the table object and assigns a new
+	 * BlackjackHand to those players through a HashMap
+	 */
+	
 	public void loadPlayers() {
-
 		for ( int i = 0 ; i < gameTable.getAllPlayers().size() ; i++ ) {
 			Player tmpPlayer = gameTable.getAllPlayers().get(i);
 			if (!playersAndHands.containsKey(tmpPlayer)) {
@@ -75,7 +93,11 @@ public class GameEngine {
 			} 
 		}
 	}
-
+	
+	/** 
+	 * Loads all of the players from the table object and assigns a new
+	 * Chips object to those players through a HashMap
+	 */
 	public void loadChips() {
 		for ( int i = 0 ; i < gameTable.getAllPlayers().size() ; i++ ) {
 			Player tmpPlayer = gameTable.getAllPlayers().get(i);
@@ -84,7 +106,10 @@ public class GameEngine {
 			} 
 		}
 	}
-
+	
+	/** 
+	 * private helper method that asks and sets a player's corresponding bet
+	 */
 	private void setAllBets(Player player) {
 		boolean invalid = false;
 		System.out.println(player.getUsername() + ", you currently have " + player.getChips() + " chips.");
@@ -110,8 +135,13 @@ public class GameEngine {
 			}
 		}
 	}
-
-	private void playThroughEachPlayer(Player player, BlackjackHand hand) {
+	
+	/** 
+	 * Private helper method that asks the player what they would like to do to their hand (ex hit, stand, split, etc)
+	 * @param player: the player that is playing through the game
+	 * @param hand: the player's hand that is being played
+	 */
+	private void playThroughPlayer(Player player, BlackjackHand hand) {
 		Scanner keyboard = new Scanner(System.in);
 		while (hand.isPlayable() && !hand.isBust()){
 			System.out.println(player.getUsername() + ", your current hand is: " + hand.toString());
@@ -163,11 +193,19 @@ public class GameEngine {
 		}
 	}
 
+	/** 
+	 * Private helper method that prints out and displays the dealer's final hand
+	 */
 	private void showDealerFinalHand() {
 		//shows dealer's final hand
 		System.out.println("Dealer's new hand: " + dealerHand.toString());	
 	}
 
+	/** 
+	 * Private helper method that determines who is the winner
+	 * @param hand: the player's hand that is being compared to the dealer's hand
+	 * @return 1 if dealer wins, -1 if the player's hand wins, and 0 if it's a draw
+	 */
 	private int processWinner(BlackjackHand hand) {
 
 		if (hand.isBust())
@@ -179,7 +217,7 @@ public class GameEngine {
 			return DEALER_WON;
 
 		if (dealerHand.isBust()) {
-			System.out.println("Dealer is bust!");
+			//System.out.println("Dealer is bust!");
 			return PLAYER_WON;
 		}
 		if (!(dealerHand.isBust()) && dealerHand.getBlackjackValue() < hand.getBlackjackValue()) {
@@ -187,11 +225,16 @@ public class GameEngine {
 			return PLAYER_WON;
 
 		}
-
 			return DRAW;
 
 	}
 
+	/** 
+	 * Determines the winner and displays that information
+	 * @param player: the player for which you are comparing to the dealer
+	 * @param hand: the player's hand that is being compared to the dealer's hand
+	 * @return string: the message that is going to be displayed to the user
+	 */
 	public String computeWinner(Player player, BlackjackHand hand) {
 		String string = "";
 
@@ -222,7 +265,10 @@ public class GameEngine {
 		
 		return string;
 	}
-
+	
+	/** 
+	 * Starts the gameplay
+	 */
 	public void gameStart() {
 		reset();
 		myGame.deal(dealerHand); 
@@ -243,11 +289,14 @@ public class GameEngine {
 		
 		for (int i=0; i<players.size(); i++) {
 			BlackjackHand hand = playersAndHands.get(players.get(i));
-			this.playThroughEachPlayer(players.get(i), hand);
+			this.playThroughPlayer(players.get(i), hand);
 		}
 		
 		this.showDealerFinalHand();
 
+		if (dealerHand.isBust()){
+			System.out.println("dealer is bust!");
+		}
 		for (int i=0;i<players.size();i++){ 
 			Player player = players.get(i);
 			BlackjackHand hand = playersAndHands.get(player);
@@ -255,15 +304,20 @@ public class GameEngine {
 		}
 	}
 
+	/** 
+	 * Private helper method that deals a hand to all of the players in the game
+	 */
 	private void dealEveryonesHand(ArrayList<Player> players) {
 		for (int i=0; i < players.size(); i++){
 			BlackjackHand pHand = new BlackjackHand();
 			playersAndHands.put(players.get(i), myGame.dealHand(pHand));
-		//	BlackjackHand hand = playersAndHands.get(players.get(i));
-			//System.out.println(players.get(i).getUsername() + ", your hand is currently: " + hand.toString());
 		}
 	}
 	
+	/** 
+	 * Private helper method that plays the dealer's hand, based on the blackjack
+	 * dealer rules
+	 */
 	private void playDealerHand(BlackjackHand dealerHand) {
 		if (dealerHand.checkBlackjack()) {
 			dealerHand.setDone();	
@@ -291,10 +345,11 @@ public class GameEngine {
 		return myGame.getDeck();
 	}
 
+	/** 
+	 * Adds a player to the game through the table object
+	 * @param player: the player that is being added to the game
+	 */
 	public void addPlayer(Player player) {
-		BlackjackHand hb = new BlackjackHand();
-		ArrayList<BlackjackHand> hbb = new ArrayList<BlackjackHand>();
-		hbb.add(hb);
 		gameTable.requestJoin(player);
 	}
 }
