@@ -69,8 +69,8 @@ public class TestStorage extends TestCase{
 		ArrayList<Statistics> hallOfFame = new ArrayList<Statistics>();
 		hallOfFame = HallOfFame.getHallOfFame();
 		
-		assertEquals(hallOfFame.get(1).getUsername(), "two");
-		assertEquals(hallOfFame.get(2).getUsername(), "one");
+		assertEquals(hallOfFame.get(0).getUsername(), "two");
+		assertEquals(hallOfFame.get(1).getUsername(), "one");
 	}
 	
 	public void testDisplayHallOfFame() {
