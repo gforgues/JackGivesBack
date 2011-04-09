@@ -1,4 +1,4 @@
-package test.testCards;
+package testCards;
 
 import java.util.Random;
 import javax.swing.JOptionPane;

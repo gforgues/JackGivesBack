@@ -1,4 +1,4 @@
-package test.testParticipant;
+package testParticipant;
 
 import participant.*;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package test.testParticipant;
+package testParticipant;
 
 import game.Blackjack;
 import gameEngine.GameEngine;

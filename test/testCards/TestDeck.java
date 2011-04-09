@@ -1,4 +1,4 @@
-package test.testCards;
+package testCards;
 
 import junit.framework.*;
 import cards.*;
