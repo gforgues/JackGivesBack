@@ -40,7 +40,7 @@ public class BlackjackStorage {
 
 	/**
 	 * loadPlayerNames searches through a gameID file and retrieves all the names present in the saved game
-	 * @param gameID An integer representing game to save
+	 * @param gameId An integer representing game to save
 	 * @return An ArrayList<String> of all the playerNames found
 	 */
 	public static ArrayList<String> loadPlayerNames(int gameId) {

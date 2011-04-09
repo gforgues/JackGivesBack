@@ -97,7 +97,8 @@ public class Statistics {
 	}
 	/**
 	 * Sets a stored player's real name
-	 * @return
+	 * @param realName A String of the real name to set
+	 * @throws IllegalArgumentException If the real name contains a comma
 	 */
 	public void setRealName(String realName) throws IllegalArgumentException{
 		if (!realName.contains(",")) {
