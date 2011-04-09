@@ -70,7 +70,7 @@ public class GameEngineInterface {
 				} 
 			}
 			if (menuChoice == LOADGAME) {
-				System.out.println("Choose a save slot number to load(1-9) :");
+				System.out.println("Enter a valid number to load game :");
 				int saveNumber = keyboard.nextInt();
 				keyboard.nextLine();
 				try {
